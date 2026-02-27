@@ -1,12 +1,20 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import type { ReactElement } from 'react';
 import { CSTerminal } from './components/CSTerminal';
 
 const CS_MUSIC_PATH = '/cs-theme.mp3';
+const MUSIC_VOLUME = 0.5;
 
 export function CSApp(): ReactElement {
-  const [musicPlaying, setMusicPlaying] = useState(false);
+  const [musicPlaying, setMusicPlaying] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.volume = MUSIC_VOLUME;
+    audio.play().catch(() => {});
+  }, []);
 
   const toggleMusic = useCallback((): void => {
     const audio = audioRef.current;
