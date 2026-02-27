@@ -64,6 +64,8 @@ export function ThemeSwitcher({ currentTheme }: ThemeSwitcherProps): ReactElemen
         type="button"
         className="theme-switcher-btn"
         onClick={() => setOpen(prev => !prev)}
+        aria-expanded={open}
+        aria-label="Theme switcher"
       >
         <span className="theme-switcher-btn-icon">{'\u{1F3A8}'}</span>
         <span className="theme-switcher-btn-label">Themes</span>

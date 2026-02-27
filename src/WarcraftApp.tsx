@@ -56,7 +56,8 @@ export function WarcraftApp(): ReactElement {
   }, [musicPlaying]);
 
   return (
-    <div className="wc3-page">
+    <main className="wc3-page">
+      <h1 className="sr-only">Luis Reche — Warcraft III Theme Portfolio</h1>
       <audio ref={audioRef} src={WC3_MUSIC_PATH} loop />
 
       <div className="wc3-background">
@@ -90,6 +91,6 @@ export function WarcraftApp(): ReactElement {
       <WarcraftMenu />
 
       <ThemeSwitcher currentTheme="warcraft" />
-    </div>
+    </main>
   );
 }

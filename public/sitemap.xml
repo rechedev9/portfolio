@@ -3,21 +3,25 @@
   <url>
     <loc>https://luisreche.dev/</loc>
     <lastmod>2026-02-27</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://luisreche.dev/cs</loc>
     <lastmod>2026-02-27</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luisreche.dev/pokemon</loc>
     <lastmod>2026-02-27</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luisreche.dev/warcraft</loc>
     <lastmod>2026-02-27</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 </urlset>

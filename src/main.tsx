@@ -5,6 +5,7 @@ import { App } from './App';
 import { CSApp } from './CSApp';
 import { PokemonApp } from './PokemonApp';
 import { WarcraftApp } from './WarcraftApp';
+import { NotFound } from './NotFound';
 import './index.css';
 
 const root = document.getElementById('root');
@@ -18,6 +19,7 @@ createRoot(root).render(
         <Route path="/cs" element={<CSApp />} />
         <Route path="/pokemon" element={<PokemonApp />} />
         <Route path="/warcraft" element={<WarcraftApp />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,

@@ -50,7 +50,8 @@ export function CSApp(): ReactElement {
   }, [musicPlaying]);
 
   return (
-    <div className="cs-page">
+    <main className="cs-page">
+      <h1 className="sr-only">Luis Reche — CS 1.6 Theme Portfolio</h1>
       <audio ref={audioRef} src={CS_MUSIC_PATH} loop />
 
       {/* CS 1.6 background */}
@@ -74,6 +75,6 @@ export function CSApp(): ReactElement {
       <CSTerminal />
 
       <ThemeSwitcher currentTheme="cs" />
-    </div>
+    </main>
   );
 }

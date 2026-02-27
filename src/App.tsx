@@ -32,7 +32,8 @@ export function App(): ReactElement {
   }, []);
 
   return (
-    <>
+    <main>
+      <h1 className="sr-only">Luis Reche — Fullstack Developer Portfolio</h1>
       <Terminal />
       <ThemeSwitcher currentTheme="matrix" />
 
@@ -46,6 +47,6 @@ export function App(): ReactElement {
       {entering && (
         <div className="fixed inset-0 z-50 animate-enter-matrix pointer-events-none" />
       )}
-    </>
+    </main>
   );
 }

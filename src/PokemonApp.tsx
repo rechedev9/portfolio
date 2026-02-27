@@ -90,7 +90,8 @@ export function PokemonApp(): ReactElement {
   }, []);
 
   return (
-    <div className="poke-page">
+    <main className="poke-page">
+      <h1 className="sr-only">Luis Reche — Pokémon Theme Portfolio</h1>
       <audio ref={palletRef} src={PALLET_TOWN_PATH} loop />
       <audio ref={openingRef} src={OPENING_PATH} />
       <audio ref={bootChimeRef} src={GBC_BOOT_PATH} />
@@ -125,6 +126,6 @@ export function PokemonApp(): ReactElement {
         )}
         {phase === 'ready' && <PokemonTerminal />}
       </GameBoyFrame>
-    </div>
+    </main>
   );
 }
