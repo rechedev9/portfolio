@@ -194,9 +194,16 @@ function ContactOutput(): ReactElement {
           </a>
         </div>
         <div className="flex gap-2">
-          <span className="text-terminal-green w-16 shrink-0">Phone</span>
+          <span className="text-terminal-green w-16 shrink-0">LinkedIn</span>
           <span className="text-terminal-muted">→</span>
-          <span>{CONTACT.phone}</span>
+          <a
+            href={`https://${CONTACT.linkedin}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-terminal-cyan hover:underline"
+          >
+            {CONTACT.linkedin}
+          </a>
         </div>
       </div>
     </div>

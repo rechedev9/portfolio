@@ -40,7 +40,7 @@ export type Education = {
 export type Contact = {
   readonly email: string;
   readonly github: string;
-  readonly phone: string;
+  readonly linkedin: string;
 };
 
 export const PROFILE: Profile = {
@@ -142,7 +142,7 @@ export const EDUCATION: readonly Education[] = [
 export const CONTACT: Contact = {
   email: 'rechedev@hotmail.com',
   github: 'github.com/rechedev9',
-  phone: '667 237 155',
+  linkedin: 'linkedin.com/in/luislucasreche',
 };
 
 export const ASCII_NAME = [
