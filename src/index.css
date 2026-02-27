@@ -1,0 +1,161 @@
+@import "tailwindcss";
+
+@theme {
+  --color-terminal-bg: #0a0a0a;
+  --color-terminal-green: #00ff41;
+  --color-terminal-dim: #008f11;
+  --color-terminal-cyan: #00d4ff;
+  --color-terminal-amber: #ffb300;
+  --color-terminal-red: #ff3333;
+  --color-terminal-header: #1a1a2e;
+  --color-terminal-border: #2a2a2a;
+  --color-terminal-muted: #555;
+  --color-traffic-close: #ff5f57;
+  --color-traffic-minimize: #ffbd2e;
+  --color-traffic-maximize: #28ca41;
+
+  --font-family-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+
+  --animate-fade-in: fade-in 0.5s ease forwards;
+  --animate-blink: blink 1s step-end infinite;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+@keyframes crt-on {
+  0% { opacity: 0; transform: scaleY(0.01); }
+  40% { opacity: 0.6; transform: scaleY(0.01); }
+  50% { transform: scaleY(1); filter: brightness(2); }
+  100% { transform: scaleY(1); filter: brightness(1); }
+}
+
+.crt-on {
+  animation: crt-on 0.5s ease-out;
+  transform-origin: center;
+}
+
+.terminal-glow {
+  box-shadow: 0 0 40px rgba(0, 255, 65, 0.06);
+}
+
+.text-glow {
+  text-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+}
+
+.scanlines {
+  position: relative;
+}
+
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 1px,
+    rgba(0, 0, 0, 0.03) 1px,
+    rgba(0, 0, 0, 0.03) 2px
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-terminal-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-terminal-dim);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-terminal-green);
+}
+
+::selection {
+  background: rgba(0, 255, 65, 0.2);
+  color: #00ff41;
+}
+
+/* 3D pill shapes */
+.pill {
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: pill-float 3s ease-in-out infinite;
+}
+
+.pill-blue {
+  background: linear-gradient(135deg, #60a5fa 0%, #2563eb 40%, #1d4ed8 100%);
+  box-shadow:
+    0 0 25px rgba(37, 99, 235, 0.4),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.3),
+    inset 0 3px 6px rgba(255, 255, 255, 0.15);
+}
+
+.pill-red {
+  background: linear-gradient(135deg, #f87171 0%, #dc2626 40%, #991b1b 100%);
+  box-shadow:
+    0 0 25px rgba(220, 38, 38, 0.4),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.3),
+    inset 0 3px 6px rgba(255, 255, 255, 0.15);
+  animation-delay: 1.5s;
+}
+
+.pill:hover {
+  transform: scale(1.15) translateY(-4px);
+  animation-play-state: paused;
+}
+
+.pill-blue:hover {
+  box-shadow:
+    0 0 40px rgba(37, 99, 235, 0.6),
+    0 0 80px rgba(37, 99, 235, 0.2),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.3),
+    inset 0 3px 6px rgba(255, 255, 255, 0.15);
+}
+
+.pill-red:hover {
+  box-shadow:
+    0 0 40px rgba(220, 38, 38, 0.6),
+    0 0 80px rgba(220, 38, 38, 0.2),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.3),
+    inset 0 3px 6px rgba(255, 255, 255, 0.15);
+}
+
+@keyframes pill-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Red pill → terminal transition */
+@keyframes enter-matrix {
+  0% { background: transparent; }
+  20% { background: rgba(220, 38, 38, 0.3); }
+  40% { background: rgba(0, 255, 65, 0.15); }
+  60% { background: rgba(0, 0, 0, 0.8); }
+  100% { background: #0a0a0a; }
+}
+
+.animate-enter-matrix {
+  animation: enter-matrix 1.2s ease-out forwards;
+}
+
+body {
+  margin: 0;
+  background: #0a0a0a;
+  overflow: hidden;
+}
