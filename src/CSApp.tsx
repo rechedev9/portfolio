@@ -55,7 +55,7 @@ export function CSApp(): ReactElement {
 
       {/* Counter-Strike logo bottom-left */}
       <div className="cs-logo">
-        COUNTER<span className="cs-logo-dash">-</span>STRIKE
+        RECHE<span className="cs-logo-dash">-</span>STRIKE
       </div>
 
       {/* Music toggle */}

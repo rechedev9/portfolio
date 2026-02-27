@@ -176,8 +176,7 @@ body {
 .cs-background {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(135deg, #1a1a10 0%, #2a2a1e 30%, #1e1e14 60%, #252518 100%);
+  background: url('/cs-bg.jpg') center/cover no-repeat;
   z-index: 0;
 }
 
