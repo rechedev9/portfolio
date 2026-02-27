@@ -13,7 +13,25 @@ export function CSApp(): ReactElement {
     const audio = audioRef.current;
     if (!audio) return;
     audio.volume = MUSIC_VOLUME;
-    audio.play().catch(() => {});
+
+    const tryPlay = (): void => {
+      audio.play().catch(() => {});
+    };
+
+    // Browsers block autoplay until user interacts — play on first click
+    tryPlay();
+    const handleInteraction = (): void => {
+      tryPlay();
+      document.removeEventListener('click', handleInteraction);
+      document.removeEventListener('keydown', handleInteraction);
+    };
+    document.addEventListener('click', handleInteraction);
+    document.addEventListener('keydown', handleInteraction);
+
+    return (): void => {
+      document.removeEventListener('click', handleInteraction);
+      document.removeEventListener('keydown', handleInteraction);
+    };
   }, []);
 
   const toggleMusic = useCallback((): void => {
