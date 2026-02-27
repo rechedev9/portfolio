@@ -1,6 +1,7 @@
 import type { ReactElement, KeyboardEvent } from 'react';
 import { useRef, useEffect } from 'react';
 import { useTerminal } from '../hooks/useTerminal';
+import { useCSSound } from '../hooks/useCSSound';
 import { CSCommandOutput } from './CSCommandOutput';
 import { COMMANDS } from '../data/portfolio';
 
@@ -25,6 +26,7 @@ export function CSTerminal(): ReactElement {
     bootComplete,
     visibleBootLines,
   } = useTerminal();
+  const { play } = useCSSound();
 
   const bodyRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -37,9 +39,10 @@ export function CSTerminal(): ReactElement {
 
   useEffect(() => {
     if (bootComplete) {
+      play('hint');
       inputRef.current?.focus();
     }
-  }, [bootComplete]);
+  }, [bootComplete, play]);
 
   const handleConsoleClick = (): void => {
     inputRef.current?.focus();
@@ -47,6 +50,7 @@ export function CSTerminal(): ReactElement {
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === 'Enter') {
+      play('confirm');
       executeCommand(inputValue);
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
@@ -61,13 +65,19 @@ export function CSTerminal(): ReactElement {
   };
 
   const handleCommandClick = (cmd: string): void => {
+    play('click');
     executeCommand(cmd);
     inputRef.current?.focus();
   };
 
   const handleSubmit = (): void => {
+    play('confirm');
     executeCommand(inputValue);
     inputRef.current?.focus();
+  };
+
+  const handleButtonHover = (): void => {
+    play('hover');
   };
 
   return (
@@ -128,6 +138,7 @@ export function CSTerminal(): ReactElement {
                   key={cmd}
                   type="button"
                   onClick={() => handleCommandClick(cmd)}
+                  onMouseEnter={handleButtonHover}
                   className="cs-btn cs-cmd-btn"
                 >
                   {cmd}
@@ -168,6 +179,7 @@ export function CSTerminal(): ReactElement {
         <button
           type="button"
           onClick={handleSubmit}
+          onMouseEnter={handleButtonHover}
           className="cs-btn cs-submit-btn"
         >
           Submit

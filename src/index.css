@@ -170,6 +170,7 @@ body {
   position: relative;
   overflow: hidden;
   background: #2a2a1e;
+  font-family: ArialPixel, system-ui, sans-serif;
 }
 
 .cs-background {
@@ -274,7 +275,7 @@ body {
   overflow-x: hidden;
   padding: 8px 10px;
   cursor: text;
-  font-family: 'Courier New', 'Lucida Console', monospace;
+  font-family: ArialPixel, 'Courier New', monospace;
   font-size: 13px;
   line-height: 1.45;
 }
@@ -366,7 +367,7 @@ body {
 
 .cs-console-prompt {
   color: #90d890;
-  font-family: 'Courier New', 'Lucida Console', monospace;
+  font-family: ArialPixel, 'Courier New', monospace;
   font-size: 13px;
   flex-shrink: 0;
 }
@@ -376,7 +377,7 @@ body {
   background: rgba(20, 22, 16, 0.8) !important;
   color: #d4d4b8 !important;
   border-color: #4a4a32 !important;
-  font-family: 'Courier New', 'Lucida Console', monospace !important;
+  font-family: ArialPixel, 'Courier New', monospace !important;
   font-size: 13px !important;
   padding: 3px 6px !important;
   caret-color: #90d890;
