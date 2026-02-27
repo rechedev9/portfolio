@@ -1,8 +1,10 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import type { ReactElement } from 'react';
+import { Player } from '@remotion/player';
 import { GameBoyFrame } from './components/GameBoyFrame';
 import { PokemonBootScreen } from './components/PokemonBootScreen';
 import { PokemonTerminal } from './components/PokemonTerminal';
+import { PokemonBattle } from './remotion/PokemonBattle';
 
 type Phase = 'off' | 'booting' | 'ready';
 
@@ -10,6 +12,11 @@ const PALLET_TOWN_PATH = '/pokemon/pallet-town.mp3';
 const OPENING_PATH = '/pokemon/opening.mp3';
 const GBC_BOOT_PATH = '/pokemon/gbc-boot.mp3';
 const MUSIC_VOLUME = 0.4;
+
+const BG_FPS = 30;
+const BG_DURATION_FRAMES = 900; // 30-second loop
+const BG_WIDTH = 1920;
+const BG_HEIGHT = 1080;
 
 export function PokemonApp(): ReactElement {
   const [phase, setPhase] = useState<Phase>('off');
@@ -84,7 +91,18 @@ export function PokemonApp(): ReactElement {
       <audio ref={palletRef} src={PALLET_TOWN_PATH} loop />
       <audio ref={openingRef} src={OPENING_PATH} />
       <audio ref={bootChimeRef} src={GBC_BOOT_PATH} />
-      <div className="poke-background" />
+      <div className="poke-background">
+        <Player
+          component={PokemonBattle}
+          durationInFrames={BG_DURATION_FRAMES}
+          compositionWidth={BG_WIDTH}
+          compositionHeight={BG_HEIGHT}
+          fps={BG_FPS}
+          autoPlay
+          loop
+          style={{ width: '100%', height: '100%' }}
+        />
+      </div>
 
       {phase === 'ready' && (
         <button

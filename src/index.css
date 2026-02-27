@@ -407,10 +407,10 @@ body {
 
 .poke-background {
   position: absolute;
-  inset: 0;
-  background: url('/pokemon/pokemon-bg.jpg') center/cover no-repeat;
-  filter: brightness(0.35) blur(2px);
+  inset: -10px;
+  filter: brightness(0.45) blur(1px);
   z-index: 0;
+  overflow: hidden;
 }
 
 /* ---------- Music toggle ---------- */
