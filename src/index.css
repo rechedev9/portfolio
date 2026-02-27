@@ -205,8 +205,8 @@ body {
   top: 12px;
   right: 12px;
   z-index: 20;
-  font-size: 11px !important;
-  padding: 2px 8px !important;
+  font-size: 13px !important;
+  padding: 3px 10px !important;
 }
 
 /* Console window — the main panel */
@@ -243,7 +243,7 @@ body {
   align-items: center;
   gap: 6px;
   color: #e8e8d0;
-  font-size: 12px;
+  font-size: 14px;
   font-family: 'Tahoma', 'Arial', sans-serif;
 }
 
@@ -261,8 +261,8 @@ body {
 }
 
 .cs-console-close {
-  font-size: 14px !important;
-  padding: 0 4px !important;
+  font-size: 16px !important;
+  padding: 0 6px !important;
   line-height: 1 !important;
   min-width: unset !important;
 }
@@ -275,8 +275,8 @@ body {
   padding: 8px 10px;
   cursor: text;
   font-family: ArialPixel, 'Courier New', monospace;
-  font-size: 13px;
-  line-height: 1.45;
+  font-size: 15px;
+  line-height: 1.5;
 }
 
 .cs-console-output::-webkit-scrollbar {
@@ -349,8 +349,8 @@ body {
 }
 
 .cs-cmd-btn {
-  font-size: 11px !important;
-  padding: 1px 6px !important;
+  font-size: 13px !important;
+  padding: 2px 8px !important;
 }
 
 /* Bottom input bar */
@@ -367,7 +367,7 @@ body {
 .cs-console-prompt {
   color: #90d890;
   font-family: ArialPixel, 'Courier New', monospace;
-  font-size: 13px;
+  font-size: 15px;
   flex-shrink: 0;
 }
 
@@ -377,13 +377,675 @@ body {
   color: #d4d4b8 !important;
   border-color: #4a4a32 !important;
   font-family: ArialPixel, 'Courier New', monospace !important;
-  font-size: 13px !important;
-  padding: 3px 6px !important;
+  font-size: 15px !important;
+  padding: 4px 8px !important;
   caret-color: #90d890;
 }
 
 .cs-submit-btn {
   flex-shrink: 0;
-  font-size: 12px !important;
-  padding: 3px 12px !important;
+  font-size: 14px !important;
+  padding: 4px 14px !important;
+}
+
+/* ═══════════════════════════════════════════
+   Pokemon Yellow — Game Boy Color Theme
+   ═══════════════════════════════════════════ */
+
+/* ---------- Page ---------- */
+.poke-page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a1a2e;
+  overflow: hidden;
+  font-family: 'Press Start 2P', monospace;
+}
+
+/* ---------- Music toggle ---------- */
+.poke-music-toggle {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 30;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  padding: 6px 10px;
+  background: #E9D514;
+  color: #306230;
+  border: 2px solid #b8a810;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.poke-music-toggle:hover {
+  background: #f5e636;
+}
+
+/* ---------- GBC Shell ---------- */
+.poke-gbc {
+  width: 420px;
+  background: #E9D514;
+  border-radius: 16px 16px 16px 60px;
+  padding: 16px 20px 24px;
+  position: relative;
+  box-shadow:
+    6px 6px 0 #b8a810,
+    8px 8px 20px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  user-select: none;
+}
+
+/* ---------- Branding ---------- */
+.poke-top-label {
+  text-align: center;
+  font-size: 9px;
+  letter-spacing: 3px;
+  margin-bottom: 2px;
+  font-family: 'Press Start 2P', monospace;
+  font-weight: 700;
+}
+
+.poke-brand-g { color: #2563eb; }
+.poke-brand-a { color: #dc2626; }
+.poke-brand-m { color: #16a34a; }
+.poke-brand-e { color: #E9D514; text-shadow: 0 0 1px #000; }
+.poke-brand-b { color: #2563eb; }
+.poke-brand-o { color: #dc2626; }
+.poke-brand-y { color: #16a34a; }
+.poke-brand-tm { font-size: 5px; vertical-align: super; color: #444; }
+
+.poke-color-label {
+  text-align: center;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  letter-spacing: 4px;
+  color: #7a6a10;
+  margin-bottom: 6px;
+}
+
+/* ---------- Screen Bezel ---------- */
+.poke-bezel {
+  background: #808080;
+  border-radius: 8px;
+  padding: 6px 10px 10px;
+  margin-bottom: 14px;
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.poke-power-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 4px;
+  padding-left: 2px;
+}
+
+.poke-power-led {
+  width: 6px;
+  height: 6px;
+  background: #ff3333;
+  border-radius: 50%;
+  box-shadow: 0 0 4px #ff3333, 0 0 8px rgba(255, 51, 51, 0.5);
+  animation: poke-led-pulse 2s ease-in-out infinite;
+}
+
+@keyframes poke-led-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.poke-power-text {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 5px;
+  color: #555;
+  letter-spacing: 1px;
+}
+
+/* ---------- Screen ---------- */
+.poke-screen {
+  background: #9BBC0F;
+  aspect-ratio: 10 / 9;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    inset 2px 2px 6px rgba(0, 0, 0, 0.2),
+    inset -1px -1px 3px rgba(255, 255, 255, 0.1);
+}
+
+.poke-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 1px,
+    rgba(0, 0, 0, 0.04) 1px,
+    rgba(0, 0, 0, 0.04) 2px
+  );
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ---------- Controls ---------- */
+.poke-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  margin-bottom: 10px;
+}
+
+/* D-Pad */
+.poke-dpad {
+  width: 72px;
+  height: 72px;
+  position: relative;
+}
+
+.poke-dpad-v {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 100%;
+  background: #2d2d2d;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+.poke-dpad-h {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 24px;
+  background: #2d2d2d;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+.poke-dpad-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background: #1a1a1a;
+  border-radius: 50%;
+}
+
+/* A/B Buttons */
+.poke-ab {
+  display: flex;
+  gap: 10px;
+  transform: rotate(-25deg);
+}
+
+.poke-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8b2252 0%, #5c1a3a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.6);
+  box-shadow:
+    2px 2px 4px rgba(0, 0, 0, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15);
+}
+
+/* START / SELECT */
+.poke-meta-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 14px;
+}
+
+.poke-btn-meta {
+  background: #555;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 5px;
+  padding: 4px 10px;
+  border-radius: 10px;
+  letter-spacing: 1px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+  transform: rotate(-5deg);
+}
+
+/* Speaker grille */
+.poke-speaker {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+  padding-right: 20px;
+  transform: rotate(-30deg);
+  transform-origin: right center;
+}
+
+.poke-speaker-line {
+  width: 24px;
+  height: 3px;
+  background: #b8a810;
+  border-radius: 2px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* ═══════════════════════════════════════════
+   Pokemon — Boot Screen
+   ═══════════════════════════════════════════ */
+
+.poke-boot {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0F380F;
+  font-family: 'Press Start 2P', monospace;
+  color: #9BBC0F;
+}
+
+.poke-boot-logo {
+  text-align: center;
+}
+
+.poke-logo-drop {
+  font-size: 16px;
+  font-weight: 700;
+  animation: poke-drop 1.2s ease-out forwards;
+  letter-spacing: 4px;
+}
+
+@keyframes poke-drop {
+  0% { transform: translateY(-100px); opacity: 0; }
+  60% { transform: translateY(5px); opacity: 1; }
+  80% { transform: translateY(-3px); }
+  100% { transform: translateY(0); }
+}
+
+.poke-boot-title,
+.poke-boot-start {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: poke-fade-in 0.5s ease forwards;
+}
+
+.poke-title-pikachu {
+  font-size: 6px;
+  white-space: pre;
+  line-height: 1.3;
+}
+
+.poke-title-text {
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.poke-title-sub {
+  font-size: 6px;
+  color: #306230;
+}
+
+.poke-press-start {
+  font-size: 8px;
+  margin-top: 12px;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes poke-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ═══════════════════════════════════════════
+   Pokemon — Terminal
+   ═══════════════════════════════════════════ */
+
+.poke-terminal {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #9BBC0F;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  line-height: 1.8;
+  color: #306230;
+  cursor: text;
+}
+
+.poke-terminal-output {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 8px;
+}
+
+.poke-terminal-output::-webkit-scrollbar {
+  width: 6px;
+}
+
+.poke-terminal-output::-webkit-scrollbar-track {
+  background: #8BAC0F;
+}
+
+.poke-terminal-output::-webkit-scrollbar-thumb {
+  background: #306230;
+  border-radius: 3px;
+}
+
+.poke-terminal-output::-webkit-scrollbar-thumb:hover {
+  background: #0F380F;
+}
+
+/* ---------- Lines ---------- */
+.poke-line {
+  color: #306230;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.poke-line-title {
+  color: #0F380F;
+  font-weight: 700;
+}
+
+.poke-line-highlight {
+  color: #0F380F;
+}
+
+.poke-line-dim {
+  color: #5a7a30;
+}
+
+.poke-line-error {
+  color: #0F380F;
+  font-weight: 700;
+}
+
+.poke-line-input {
+  color: #0F380F;
+}
+
+.poke-line-effective {
+  color: #0F380F;
+  font-style: italic;
+}
+
+.poke-line-type {
+  color: #5a7a30;
+  font-size: 6px;
+}
+
+.poke-link {
+  color: #0F380F;
+  text-decoration: underline;
+}
+
+.poke-link:hover {
+  color: #306230;
+}
+
+.poke-divider {
+  border-bottom: 1px dashed #306230;
+  margin: 2px 0 4px;
+}
+
+/* ---------- Dialogue box ---------- */
+.poke-dialogue {
+  border: 2px solid #306230;
+  border-radius: 4px;
+  padding: 6px 8px;
+  margin: 4px 0;
+  background: rgba(155, 188, 15, 0.5);
+}
+
+/* ---------- Sections ---------- */
+.poke-section {
+  margin-bottom: 4px;
+}
+
+.poke-output {
+  margin-bottom: 2px;
+}
+
+.poke-entry {
+  margin-bottom: 6px;
+}
+
+.poke-welcome {
+  background: rgba(15, 56, 15, 0.08);
+}
+
+/* ---------- Command buttons ---------- */
+.poke-commands-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 2px 0;
+}
+
+.poke-cmd-btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 6px;
+  padding: 4px 6px;
+  background: transparent;
+  color: #306230;
+  border: 1px solid #306230;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.poke-cmd-btn:hover {
+  background: #306230;
+  color: #9BBC0F;
+}
+
+/* ---------- Input bar ---------- */
+.poke-input-bar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-top: 2px solid #306230;
+  background: #8BAC0F;
+  flex-shrink: 0;
+}
+
+.poke-prompt {
+  color: #0F380F;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  flex-shrink: 0;
+}
+
+.poke-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #0F380F;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  caret-color: #0F380F;
+}
+
+/* ---------- Type badges ---------- */
+.poke-type-badge {
+  display: inline-block;
+  font-size: 5px;
+  padding: 1px 4px;
+  border-radius: 2px;
+  color: #fff;
+  font-weight: 700;
+  vertical-align: middle;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+.poke-type-electric { background: #F7D02C; color: #0F380F; }
+.poke-type-fire { background: #EE8130; }
+.poke-type-water { background: #6390F0; }
+.poke-type-steel { background: #B7B7CE; color: #0F380F; }
+.poke-type-psychic { background: #F95587; }
+.poke-type-normal { background: #A8A77A; color: #0F380F; }
+
+/* ---------- HP Bar ---------- */
+.poke-hp-bar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.poke-hp-label {
+  font-size: 5px;
+  color: #0F380F;
+  font-weight: 700;
+  min-width: 20px;
+}
+
+.poke-hp-track {
+  flex: 1;
+  height: 4px;
+  background: #306230;
+  border-radius: 2px;
+  overflow: hidden;
+  max-width: 120px;
+}
+
+.poke-hp-fill {
+  width: 85%;
+  height: 100%;
+  background: #0F380F;
+  border-radius: 2px;
+  animation: poke-hp-grow 0.8s ease-out forwards;
+}
+
+@keyframes poke-hp-grow {
+  from { width: 0; }
+  to { width: 85%; }
+}
+
+/* ---------- Badge icon ---------- */
+.poke-badge-icon {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #0F380F;
+  clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+  vertical-align: middle;
+}
+
+.poke-badge-entry {
+  margin-bottom: 4px;
+}
+
+.poke-trainer-card {
+  padding: 2px 0;
+}
+
+.poke-move-group {
+  margin-bottom: 4px;
+}
+
+.poke-move-list {
+  font-size: 6px;
+}
+
+.poke-battle-entry {
+  margin-bottom: 4px;
+}
+
+.poke-dex-entry {
+  margin-bottom: 4px;
+}
+
+/* ═══════════════════════════════════════════
+   Pokemon — Responsive
+   ═══════════════════════════════════════════ */
+
+/* Tablets and small desktops */
+@media (max-width: 767px) {
+  .poke-gbc {
+    width: 95vw;
+    max-width: 420px;
+    padding: 12px 14px 18px;
+  }
+
+  .poke-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 7px;
+  }
+
+  .poke-dpad {
+    width: 60px;
+    height: 60px;
+  }
+
+  .poke-dpad-v { width: 20px; }
+  .poke-dpad-h { height: 20px; }
+}
+
+/* Small phones */
+@media (max-width: 479px) {
+  .poke-gbc {
+    width: 100vw;
+    border-radius: 0;
+    padding: 8px 10px 14px;
+  }
+
+  .poke-terminal {
+    font-size: 6px;
+  }
+
+  .poke-title-text {
+    font-size: 8px;
+  }
+
+  .poke-logo-drop {
+    font-size: 12px;
+  }
+
+  .poke-cmd-btn {
+    font-size: 5px;
+    padding: 3px 4px;
+  }
+}
+
+/* Short landscape — hide decorative controls */
+@media (max-height: 599px) {
+  .poke-controls,
+  .poke-meta-row,
+  .poke-speaker {
+    display: none;
+  }
+
+  .poke-gbc {
+    padding-bottom: 10px;
+  }
+
+  .poke-bezel {
+    margin-bottom: 6px;
+  }
+
+  .poke-screen {
+    aspect-ratio: unset;
+    height: 55vh;
+  }
 }

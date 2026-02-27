@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { App } from './App';
 import { CSApp } from './CSApp';
+import { PokemonApp } from './PokemonApp';
 import './index.css';
 
 const root = document.getElementById('root');
@@ -14,6 +15,7 @@ createRoot(root).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/cs" element={<CSApp />} />
+        <Route path="/pokemon" element={<PokemonApp />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
