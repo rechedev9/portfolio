@@ -7,9 +7,9 @@ type PokemonBootScreenProps = {
   readonly onBootComplete: () => void;
 };
 
-const AUTO_SKIP_MS = 5000;
-const LOGO_DURATION_MS = 1500;
-const TITLE_DURATION_MS = 1500;
+const AUTO_SKIP_MS = 10000;
+const LOGO_DURATION_MS = 2500;
+const TITLE_DURATION_MS = 3000;
 
 export function PokemonBootScreen({ onBootComplete }: PokemonBootScreenProps): ReactElement {
   const [phase, setPhase] = useState<BootPhase>('logo');

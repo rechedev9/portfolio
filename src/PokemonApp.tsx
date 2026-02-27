@@ -4,44 +4,63 @@ import { GameBoyFrame } from './components/GameBoyFrame';
 import { PokemonBootScreen } from './components/PokemonBootScreen';
 import { PokemonTerminal } from './components/PokemonTerminal';
 
-const MUSIC_PATH = '/pokemon/pallet-town.mp3';
+type Phase = 'off' | 'booting' | 'ready';
+
+const PALLET_TOWN_PATH = '/pokemon/pallet-town.mp3';
+const OPENING_PATH = '/pokemon/opening.mp3';
+const GBC_BOOT_PATH = '/pokemon/gbc-boot.mp3';
 const MUSIC_VOLUME = 0.4;
 
 export function PokemonApp(): ReactElement {
-  const [booting, setBooting] = useState(true);
+  const [phase, setPhase] = useState<Phase>('off');
   const [musicPlaying, setMusicPlaying] = useState(true);
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const palletRef = useRef<HTMLAudioElement>(null);
+  const openingRef = useRef<HTMLAudioElement>(null);
+  const bootChimeRef = useRef<HTMLAudioElement>(null);
 
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    audio.volume = MUSIC_VOLUME;
+  const handlePowerOn = useCallback((): void => {
+    if (phase !== 'off') return;
 
-    const tryPlay = (): void => {
-      audio.play().catch(() => {});
-    };
+    // Play GBC boot chime
+    const chime = bootChimeRef.current;
+    if (chime) {
+      chime.volume = 0.6;
+      chime.currentTime = 0;
+      chime.play().catch(() => {});
+    }
 
-    tryPlay();
-    const handleInteraction = (): void => {
-      tryPlay();
-      document.removeEventListener('click', handleInteraction);
-      document.removeEventListener('keydown', handleInteraction);
-    };
-    document.addEventListener('click', handleInteraction);
-    document.addEventListener('keydown', handleInteraction);
+    // Play Pokemon Yellow opening after a short delay (GBC logo fades, then game starts)
+    setTimeout(() => {
+      const opening = openingRef.current;
+      if (opening) {
+        opening.volume = MUSIC_VOLUME;
+        opening.currentTime = 0;
+        opening.play().catch(() => {});
+      }
+    }, 1200);
 
-    return (): void => {
-      document.removeEventListener('click', handleInteraction);
-      document.removeEventListener('keydown', handleInteraction);
-    };
-  }, []);
+    setPhase('booting');
+  }, [phase]);
 
   const handleBootComplete = useCallback((): void => {
-    setBooting(false);
+    // Stop opening music, start Pallet Town
+    const opening = openingRef.current;
+    if (opening) {
+      opening.pause();
+      opening.currentTime = 0;
+    }
+
+    const pallet = palletRef.current;
+    if (pallet) {
+      pallet.volume = MUSIC_VOLUME;
+      pallet.play().catch(() => {});
+    }
+
+    setPhase('ready');
   }, []);
 
   const toggleMusic = useCallback((): void => {
-    const audio = audioRef.current;
+    const audio = palletRef.current;
     if (!audio) return;
 
     if (musicPlaying) {
@@ -52,24 +71,36 @@ export function PokemonApp(): ReactElement {
     setMusicPlaying(prev => !prev);
   }, [musicPlaying]);
 
+  // Cleanup on unmount
+  useEffect(() => {
+    return (): void => {
+      openingRef.current?.pause();
+      palletRef.current?.pause();
+    };
+  }, []);
+
   return (
     <div className="poke-page">
-      <audio ref={audioRef} src={MUSIC_PATH} loop />
+      <audio ref={palletRef} src={PALLET_TOWN_PATH} loop />
+      <audio ref={openingRef} src={OPENING_PATH} />
+      <audio ref={bootChimeRef} src={GBC_BOOT_PATH} />
+      <div className="poke-background" />
 
-      <button
-        type="button"
-        onClick={toggleMusic}
-        className="poke-music-toggle"
-      >
-        {musicPlaying ? '\u266B Music ON' : '\u266A Music OFF'}
-      </button>
+      {phase === 'ready' && (
+        <button
+          type="button"
+          onClick={toggleMusic}
+          className="poke-music-toggle"
+        >
+          {musicPlaying ? '\u266B Music ON' : '\u266A Music OFF'}
+        </button>
+      )}
 
-      <GameBoyFrame>
-        {booting ? (
+      <GameBoyFrame powered={phase !== 'off'} onPowerPress={handlePowerOn}>
+        {phase === 'booting' && (
           <PokemonBootScreen onBootComplete={handleBootComplete} />
-        ) : (
-          <PokemonTerminal />
         )}
+        {phase === 'ready' && <PokemonTerminal />}
       </GameBoyFrame>
     </div>
   );

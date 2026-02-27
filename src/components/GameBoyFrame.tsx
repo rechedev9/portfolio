@@ -2,9 +2,11 @@ import type { ReactElement, ReactNode } from 'react';
 
 type GameBoyFrameProps = {
   readonly children: ReactNode;
+  readonly powered: boolean;
+  readonly onPowerPress: () => void;
 };
 
-export function GameBoyFrame({ children }: GameBoyFrameProps): ReactElement {
+export function GameBoyFrame({ children, powered, onPowerPress }: GameBoyFrameProps): ReactElement {
   return (
     <div className="poke-gbc">
       {/* Top branding — colored letters like real GBC */}
@@ -24,10 +26,16 @@ export function GameBoyFrame({ children }: GameBoyFrameProps): ReactElement {
       {/* Screen bezel */}
       <div className="poke-bezel">
         <div className="poke-power-row">
-          <div className="poke-power-led" />
+          <button
+            type="button"
+            className={`poke-power-led ${powered ? 'poke-power-on' : 'poke-power-off'}`}
+            onClick={onPowerPress}
+            aria-label="Power button"
+          />
           <span className="poke-power-text">POWER</span>
+          {!powered && <span className="poke-power-hint">&#9668; Press</span>}
         </div>
-        <div className="poke-screen">
+        <div className={`poke-screen ${powered ? 'poke-screen-on' : 'poke-screen-off'}`}>
           {children}
           <div className="poke-scanlines" />
         </div>
