@@ -7,6 +7,13 @@ const SOUND_PATHS = {
   boot: '/pokemon/sfx-boot-ping.wav',
 } as const;
 
+const SOUND_VOLUMES: Record<SoundName, number> = {
+  select: 0.3,
+  confirm: 0.5,
+  save: 0.5,
+  boot: 0.5,
+};
+
 type SoundName = keyof typeof SOUND_PATHS;
 
 type UsePokemonSound = {
@@ -25,6 +32,7 @@ export function usePokemonSound(): UsePokemonSound {
       audioCache.current.set(path, audio);
     }
 
+    audio.volume = SOUND_VOLUMES[name];
     audio.currentTime = 0;
     audio.play().catch(() => {});
   }, []);

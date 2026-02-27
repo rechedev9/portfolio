@@ -142,7 +142,7 @@ export const EDUCATION: readonly Education[] = [
 export const CONTACT: Contact = {
   email: 'rechedev@hotmail.com',
   github: 'github.com/rechedev9',
-  linkedin: 'linkedin.com/in/luislucasreche',
+  linkedin: 'linkedin.com/in/luisrecheamado',
 };
 
 export const ASCII_NAME = [
