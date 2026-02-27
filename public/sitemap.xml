@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://portfolio-rechedevs-projects.vercel.app/</loc>
+    <loc>https://luisreche.dev/</loc>
     <lastmod>2026-02-27</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://portfolio-rechedevs-projects.vercel.app/cs</loc>
+    <loc>https://luisreche.dev/cs</loc>
     <lastmod>2026-02-27</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-rechedevs-projects.vercel.app/pokemon</loc>
+    <loc>https://luisreche.dev/pokemon</loc>
     <lastmod>2026-02-27</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://portfolio-rechedevs-projects.vercel.app/warcraft</loc>
+    <loc>https://luisreche.dev/warcraft</loc>
     <lastmod>2026-02-27</lastmod>
     <priority>0.8</priority>
   </url>

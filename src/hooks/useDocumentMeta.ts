@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const SITE_URL = 'https://portfolio-rechedevs-projects.vercel.app';
+const SITE_URL = 'https://luisreche.dev';
 
 type DocumentMeta = {
   readonly title: string;

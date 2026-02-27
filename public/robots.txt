@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://portfolio-rechedevs-projects.vercel.app/sitemap.xml
+Sitemap: https://luisreche.dev/sitemap.xml
