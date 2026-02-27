@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <!-- Scanline pattern for Matrix aesthetic -->
+    <pattern id="scanlines" width="1200" height="4" patternUnits="userSpaceOnUse">
+      <rect width="1200" height="2" fill="transparent"/>
+      <rect y="2" width="1200" height="2" fill="rgba(0,255,65,0.03)"/>
+    </pattern>
+
+    <!-- Subtle grid pattern -->
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(0,255,65,0.04)" stroke-width="0.5"/>
+    </pattern>
+
+    <!-- Vignette gradient for depth -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="transparent"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.6)"/>
+    </radialGradient>
+
+    <!-- Glow filter for the main title -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Subtle glow for secondary text -->
+    <filter id="softGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0a0a0a"/>
+
+  <!-- Grid overlay -->
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- Scanlines overlay -->
+  <rect width="1200" height="630" fill="url(#scanlines)"/>
+
+  <!-- Decorative top/bottom terminal bars -->
+  <rect x="0" y="0" width="1200" height="3" fill="#00ff41" opacity="0.15"/>
+  <rect x="0" y="627" width="1200" height="3" fill="#00ff41" opacity="0.15"/>
+
+  <!-- Left decorative line -->
+  <rect x="60" y="60" width="2" height="510" fill="#00ff41" opacity="0.08"/>
+
+  <!-- Cursor blink bracket -->
+  <text x="80" y="225" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="72" fill="#00ff41" opacity="0.3" filter="url(#softGlow)">&gt;</text>
+
+  <!-- Main title: LUIS RECHE -->
+  <text x="140" y="230" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="80" font-weight="700" fill="#00ff41" letter-spacing="6" filter="url(#glow)">LUIS RECHE</text>
+
+  <!-- Subtitle: Fullstack Software Developer -->
+  <text x="144" y="300" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="32" fill="#00ff41" opacity="0.85" filter="url(#softGlow)">Fullstack Software Developer</text>
+
+  <!-- Separator line -->
+  <line x1="144" y1="330" x2="750" y2="330" stroke="#00ff41" stroke-width="1" opacity="0.2"/>
+
+  <!-- Tech stack -->
+  <text x="144" y="380" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="22" fill="#00cc33" opacity="0.7">TypeScript · React · Node.js · Bun · PostgreSQL</text>
+
+  <!-- Terminal prompt hint at bottom -->
+  <text x="80" y="540" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="16" fill="#00ff41" opacity="0.2">visitor@portfolio:~$</text>
+  <rect x="310" y="526" width="10" height="18" fill="#00ff41" opacity="0.25">
+    <animate attributeName="opacity" values="0.25;0;0.25" dur="1.2s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- Vignette overlay for depth -->
+  <rect width="1200" height="630" fill="url(#vignette)"/>
+
+  <!-- Faint decorative dots in top-right corner -->
+  <circle cx="1050" cy="100" r="1.5" fill="#00ff41" opacity="0.12"/>
+  <circle cx="1080" cy="100" r="1.5" fill="#00ff41" opacity="0.08"/>
+  <circle cx="1110" cy="100" r="1.5" fill="#00ff41" opacity="0.12"/>
+  <circle cx="1050" cy="130" r="1.5" fill="#00ff41" opacity="0.08"/>
+  <circle cx="1080" cy="130" r="1.5" fill="#00ff41" opacity="0.12"/>
+  <circle cx="1110" cy="130" r="1.5" fill="#00ff41" opacity="0.08"/>
+  <circle cx="1050" cy="160" r="1.5" fill="#00ff41" opacity="0.12"/>
+  <circle cx="1080" cy="160" r="1.5" fill="#00ff41" opacity="0.08"/>
+  <circle cx="1110" cy="160" r="1.5" fill="#00ff41" opacity="0.12"/>
+</svg>
