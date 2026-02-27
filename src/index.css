@@ -164,41 +164,226 @@ body {
    CS 1.6 Console Theme
    ═══════════════════════════════════════════ */
 
-.cs-bg {
-  background: linear-gradient(180deg, #1a1a0a 0%, #0d0d05 100%);
+.cs-page {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: #2a2a1e;
 }
 
-.cs-header {
-  background: linear-gradient(180deg, #2a2a1a 0%, #1a1a0a 100%);
-}
-
-.cs-text-amber {
-  color: #e8b830;
-}
-
-.cs-text-green {
-  color: #4ade80;
-}
-
-.cs-console-body {
+.cs-background {
+  position: absolute;
+  inset: 0;
   background:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 1px,
-      rgba(232, 184, 48, 0.015) 1px,
-      rgba(232, 184, 48, 0.015) 2px
-    );
+    linear-gradient(135deg, #1a1a10 0%, #2a2a1e 30%, #1e1e14 60%, #252518 100%);
+  z-index: 0;
 }
 
-.cs-console-body::-webkit-scrollbar-track {
-  background: #1a1a0a;
+/* Counter-Strike logo bottom-left */
+.cs-logo {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  font-family: 'Arial Black', 'Impact', sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: #8b8b6a;
+  letter-spacing: 2px;
+  opacity: 0.4;
+  z-index: 1;
+  text-transform: uppercase;
+  user-select: none;
 }
 
-.cs-console-body::-webkit-scrollbar-thumb {
-  background: #4a4a2a;
+.cs-logo-dash {
+  color: #b89b00;
 }
 
-.cs-console-body::-webkit-scrollbar-thumb:hover {
-  background: #e8b830;
+.cs-music-toggle {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 20;
+  font-size: 11px !important;
+  padding: 2px 8px !important;
+}
+
+/* Console window — the main panel */
+.cs-console-window {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(92vw, 750px);
+  height: min(85vh, 560px);
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #6b6b4a;
+  border-radius: 0;
+  z-index: 10;
+  background: rgba(45, 50, 35, 0.92);
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* Title bar */
+.cs-console-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 6px;
+  background: linear-gradient(180deg, #5a5a3e 0%, #3a3a28 100%);
+  border-bottom: 1px solid #6b6b4a;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.cs-console-titlebar-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #e8e8d0;
+  font-size: 12px;
+  font-family: 'Tahoma', 'Arial', sans-serif;
+}
+
+.cs-console-icon {
+  width: 14px;
+  height: 14px;
+  background: #8b8b6a;
+  border: 1px solid #6b6b4a;
+  border-radius: 2px;
+}
+
+.cs-console-titlebar-right {
+  display: flex;
+  gap: 2px;
+}
+
+.cs-console-close {
+  font-size: 14px !important;
+  padding: 0 4px !important;
+  line-height: 1 !important;
+  min-width: unset !important;
+}
+
+/* Scrollable output area */
+.cs-console-output {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 8px 10px;
+  cursor: text;
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.cs-console-output::-webkit-scrollbar {
+  width: 12px;
+}
+
+.cs-console-output::-webkit-scrollbar-track {
+  background: #2a2a1e;
+}
+
+.cs-console-output::-webkit-scrollbar-thumb {
+  background: #5a5a3e;
+  border: 2px solid #2a2a1e;
+}
+
+.cs-console-output::-webkit-scrollbar-thumb:hover {
+  background: #7a7a5a;
+}
+
+/* Console text lines */
+.cs-line {
+  color: #d4d4b8;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.cs-line-highlight {
+  color: #e8c840;
+}
+
+.cs-line-warning {
+  color: #d4a030;
+}
+
+.cs-line-error {
+  color: #e05050;
+}
+
+.cs-line-input {
+  color: #90d890;
+}
+
+.cs-link {
+  color: #80c0e0;
+  text-decoration: none;
+}
+
+.cs-link:hover {
+  text-decoration: underline;
+}
+
+.cs-section {
+  margin-bottom: 4px;
+}
+
+.cs-output {
+  margin-bottom: 2px;
+}
+
+.cs-entry {
+  margin-bottom: 8px;
+}
+
+/* Command quick-buttons row */
+.cs-commands-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 2px 0;
+}
+
+.cs-cmd-btn {
+  font-size: 11px !important;
+  padding: 1px 6px !important;
+}
+
+/* Bottom input bar */
+.cs-console-input-bar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-top: 1px solid #6b6b4a;
+  background: rgba(35, 38, 28, 0.95);
+  flex-shrink: 0;
+}
+
+.cs-console-prompt {
+  color: #90d890;
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.cs-console-input {
+  flex: 1;
+  background: rgba(20, 22, 16, 0.8) !important;
+  color: #d4d4b8 !important;
+  border-color: #4a4a32 !important;
+  font-family: 'Courier New', 'Lucida Console', monospace !important;
+  font-size: 13px !important;
+  padding: 3px 6px !important;
+  caret-color: #90d890;
+}
+
+.cs-submit-btn {
+  flex-shrink: 0;
+  font-size: 12px !important;
+  padding: 3px 12px !important;
 }

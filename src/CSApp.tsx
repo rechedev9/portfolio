@@ -1,20 +1,12 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import type { ReactElement } from 'react';
 import { CSTerminal } from './components/CSTerminal';
 
-const ENTER_DELAY_MS = 800;
 const CS_MUSIC_PATH = '/cs-theme.mp3';
 
-type Phase = 'intro' | 'terminal';
-
 export function CSApp(): ReactElement {
-  const [phase, setPhase] = useState<Phase>('intro');
   const [musicPlaying, setMusicPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
-
-  const handleEnter = useCallback((): void => {
-    setTimeout(() => setPhase('terminal'), ENTER_DELAY_MS);
-  }, []);
 
   const toggleMusic = useCallback((): void => {
     const audio = audioRef.current;
@@ -28,26 +20,29 @@ export function CSApp(): ReactElement {
     setMusicPlaying(prev => !prev);
   }, [musicPlaying]);
 
-  useEffect(() => {
-    if (phase === 'intro') {
-      handleEnter();
-    }
-  }, [phase, handleEnter]);
-
-  if (phase === 'terminal') {
-    return (
-      <div className="h-screen relative cs-bg">
-        <audio ref={audioRef} src={CS_MUSIC_PATH} loop />
-        <CSTerminal musicPlaying={musicPlaying} onToggleMusic={toggleMusic} />
-      </div>
-    );
-  }
-
   return (
-    <div className="h-screen cs-bg flex items-center justify-center">
-      <div className="cs-text-amber text-xl font-mono animate-fade-in">
-        Loading Counter-Strike...
+    <div className="cs-page">
+      <audio ref={audioRef} src={CS_MUSIC_PATH} loop />
+
+      {/* CS 1.6 background */}
+      <div className="cs-background" />
+
+      {/* Counter-Strike logo bottom-left */}
+      <div className="cs-logo">
+        COUNTER<span className="cs-logo-dash">-</span>STRIKE
       </div>
+
+      {/* Music toggle */}
+      <button
+        type="button"
+        onClick={toggleMusic}
+        className="cs-btn cs-music-toggle"
+      >
+        {musicPlaying ? '\u266B Music ON' : '\u266A Music OFF'}
+      </button>
+
+      {/* Console window */}
+      <CSTerminal />
     </div>
   );
 }

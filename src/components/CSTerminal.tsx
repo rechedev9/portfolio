@@ -4,26 +4,17 @@ import { useTerminal } from '../hooks/useTerminal';
 import { CSCommandOutput } from './CSCommandOutput';
 import { COMMANDS } from '../data/portfolio';
 
-const CS_BOOT_MESSAGES = [
+const BOOT_MESSAGES = [
   'Console initialized.',
   'Loading map de_portfolio...',
-  'Connecting to server 127.0.0.1:27015...',
-  'Connected.',
+  'BUILD 3266 SERVER (0 CRC)',
+  'Server # 1',
+  'luis_reche | connected',
+  'luis_reche is joining the Developer force',
+  'Connection established.',
 ] as const;
 
-const VOLUME_ICON_ON = '\u266B';
-const VOLUME_ICON_OFF = '\u266A';
-
-type CSTerminalProps = {
-  readonly musicPlaying: boolean;
-  readonly onToggleMusic: () => void;
-};
-
-function CSPrompt(): ReactElement {
-  return <span className="cs-text-green shrink-0">] </span>;
-}
-
-export function CSTerminal({ musicPlaying, onToggleMusic }: CSTerminalProps): ReactElement {
+export function CSTerminal(): ReactElement {
   const {
     entries,
     inputValue,
@@ -50,7 +41,7 @@ export function CSTerminal({ musicPlaying, onToggleMusic }: CSTerminalProps): Re
     }
   }, [bootComplete]);
 
-  const handleTerminalClick = (): void => {
+  const handleConsoleClick = (): void => {
     inputRef.current?.focus();
   };
 
@@ -74,103 +65,113 @@ export function CSTerminal({ musicPlaying, onToggleMusic }: CSTerminalProps): Re
     inputRef.current?.focus();
   };
 
+  const handleSubmit = (): void => {
+    executeCommand(inputValue);
+    inputRef.current?.focus();
+  };
+
   return (
-    <div className="h-screen flex flex-col font-mono">
-      {/* CS-style header bar */}
-      <div className="flex items-center justify-between px-4 py-2 cs-header border-b border-[#4a4a2a] shrink-0">
-        <div className="flex items-center gap-3">
-          <span className="cs-text-amber font-bold text-sm tracking-wider">COUNTER-STRIKE</span>
-          <span className="text-[#8a8a6a] text-xs">Console</span>
+    <div className="cs-console-window">
+      {/* Title bar — like the real CS console */}
+      <div className="cs-console-titlebar">
+        <div className="cs-console-titlebar-left">
+          <div className="cs-console-icon" />
+          <span>Console</span>
         </div>
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={onToggleMusic}
-            className="cs-text-amber hover:text-[#ffd700] text-sm cursor-pointer bg-transparent border-0 font-mono transition-colors"
-            title={musicPlaying ? 'Pause music' : 'Play CS 1.6 theme'}
-          >
-            {musicPlaying ? VOLUME_ICON_ON : VOLUME_ICON_OFF} {musicPlaying ? 'ON' : 'OFF'}
-          </button>
-          <span className="text-[#8a8a6a] text-xs">v1.6</span>
+        <div className="cs-console-titlebar-right">
+          <button type="button" className="cs-btn cs-console-close">×</button>
         </div>
       </div>
 
-      {/* Console body */}
+      {/* Scrollable console output */}
       <div
         ref={bodyRef}
-        onClick={handleTerminalClick}
-        className="flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-6 text-sm leading-relaxed cursor-text cs-console-body"
+        onClick={handleConsoleClick}
+        className="cs-console-output"
       >
-        {/* Boot sequence */}
-        <div className="space-y-1 mb-4">
-          {CS_BOOT_MESSAGES.slice(0, visibleBootLines).map((msg, i) => (
-            <div key={i} className="text-[#8a8a6a] text-xs">
-              {msg}
-            </div>
-          ))}
-        </div>
+        {/* Boot messages */}
+        {BOOT_MESSAGES.slice(0, visibleBootLines).map((msg, i) => (
+          <div key={i} className="cs-line">
+            {msg}
+          </div>
+        ))}
 
         {bootComplete && (
-          <div className="animate-fade-in">
-            {/* CS-style ASCII banner */}
-            <pre className="cs-text-amber text-[9px] sm:text-xs leading-none mb-3 select-none overflow-x-auto">
-{`   ╔══════════════════════════════════════════╗
-   ║   LUIS LUCAS RECHE                       ║
-   ║   Fullstack Software Developer           ║
-   ║   TypeScript Wizard                      ║
-   ╚══════════════════════════════════════════╝`}
-            </pre>
+          <>
+            {/* Blank separator */}
+            <div className="cs-line">&nbsp;</div>
 
-            {/* Welcome */}
-            <div className="text-[#c8c8a8] mb-4 text-xs sm:text-sm">
-              Type <span className="cs-text-amber">'help'</span> for available commands, or click below.
+            {/* Welcome banner */}
+            <div className="cs-line cs-line-highlight">
+              ═══════════════════════════════════════
             </div>
+            <div className="cs-line cs-line-highlight">
+              LUIS LUCAS RECHE — Fullstack Developer
+            </div>
+            <div className="cs-line cs-line-highlight">
+              TypeScript Wizard
+            </div>
+            <div className="cs-line cs-line-highlight">
+              ═══════════════════════════════════════
+            </div>
+            <div className="cs-line">&nbsp;</div>
 
-            {/* Command buttons */}
-            <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-6">
+            <div className="cs-line">
+              Type <span className="cs-line-highlight">'help'</span> for available commands.
+            </div>
+            <div className="cs-line">&nbsp;</div>
+
+            {/* Quick command buttons */}
+            <div className="cs-commands-row">
               {COMMANDS.map(cmd => (
                 <button
                   key={cmd}
                   type="button"
                   onClick={() => handleCommandClick(cmd)}
-                  className="px-2 py-0.5 text-xs border border-[#4a4a2a] text-[#8a8a6a] hover:cs-text-amber hover:border-[#b89b00] rounded transition-colors duration-200 cursor-pointer bg-transparent font-mono"
+                  className="cs-btn cs-cmd-btn"
                 >
                   {cmd}
                 </button>
               ))}
             </div>
+            <div className="cs-line">&nbsp;</div>
 
             {/* Command history */}
             {entries.map(entry => (
-              <div key={entry.id} className="mb-4">
-                <div className="flex items-start cs-text-green mb-1">
-                  <CSPrompt />
-                  <span>{entry.command}</span>
+              <div key={entry.id} className="cs-entry">
+                <div className="cs-line cs-line-input">
+                  ] {entry.command}
                 </div>
                 <CSCommandOutput command={entry.command} />
               </div>
             ))}
-
-            {/* Active input */}
-            <div className="flex items-center">
-              <CSPrompt />
-              <input
-                ref={inputRef}
-                type="text"
-                value={inputValue}
-                onChange={e => setInputValue(e.target.value)}
-                onKeyDown={handleKeyDown}
-                className="flex-1 bg-transparent cs-text-green outline-none font-mono text-sm p-0 border-0"
-                style={{ caretColor: '#4ade80' }}
-                autoFocus
-                spellCheck={false}
-                autoComplete="off"
-                autoCapitalize="off"
-                aria-label="Console command input"
-              />
-            </div>
-          </div>
+          </>
         )}
+      </div>
+
+      {/* Bottom input area — input + Submit button */}
+      <div className="cs-console-input-bar">
+        <span className="cs-console-prompt">]</span>
+        <input
+          ref={inputRef}
+          type="text"
+          value={inputValue}
+          onChange={e => setInputValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          className="cs-input cs-console-input"
+          autoFocus
+          spellCheck={false}
+          autoComplete="off"
+          autoCapitalize="off"
+          aria-label="Console command input"
+        />
+        <button
+          type="button"
+          onClick={handleSubmit}
+          className="cs-btn cs-submit-btn"
+        >
+          Submit
+        </button>
       </div>
     </div>
   );

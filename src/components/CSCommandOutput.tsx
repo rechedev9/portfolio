@@ -1,11 +1,11 @@
 import type { ReactElement } from 'react';
 import { PROFILE, SKILLS, EXPERIENCE, PROJECTS, EDUCATION, CONTACT } from '../data/portfolio';
 
-function CSHeader({ title }: { readonly title: string }): ReactElement {
-  const border = '═'.repeat(title.length + 4);
+function CSSection({ title, children }: { readonly title: string; readonly children: React.ReactNode }): ReactElement {
   return (
-    <div className="cs-text-amber text-xs mb-3 whitespace-pre leading-tight overflow-x-auto">
-      {`╔${border}╗\n║  ${title}  ║\n╚${border}╝`}
+    <div className="cs-section">
+      <div className="cs-line cs-line-warning">--- {title} ---</div>
+      {children}
     </div>
   );
 }
@@ -19,191 +19,145 @@ function HelpOutput(): ReactElement {
     { name: 'education', desc: 'Training camp' },
     { name: 'contact', desc: 'Add to friends' },
     { name: 'clear', desc: 'Clear console' },
-    { name: 'help', desc: 'Show commands' },
+    { name: 'help', desc: 'Show this message' },
   ] as const;
 
   return (
-    <div className="text-[#c8c8a8]">
-      <div className="cs-text-amber mb-2">Available commands:</div>
-      <div className="space-y-0.5">
-        {commands.map(({ name, desc }) => (
-          <div key={name} className="flex gap-4">
-            <span className="cs-text-green w-24 shrink-0">{name}</span>
-            <span>{desc}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function AboutOutput(): ReactElement {
-  return (
-    <div className="text-[#c8c8a8]">
-      <CSHeader title="PLAYER INFO" />
-      <p className="mb-3 leading-relaxed">{PROFILE.summary}</p>
-      <div className="space-y-0.5">
-        <div className="flex gap-2">
-          <span className="cs-text-amber w-20 shrink-0">Location</span>
-          <span className="text-[#8a8a6a]">»</span>
-          <span>{PROFILE.location}</span>
-        </div>
-        <div className="flex gap-2">
-          <span className="cs-text-amber w-20 shrink-0">Languages</span>
-          <span className="text-[#8a8a6a]">»</span>
-          <span>{PROFILE.languages.map(l => `${l.name} (${l.level})`).join(' · ')}</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function SkillsOutput(): ReactElement {
-  return (
-    <div className="text-[#c8c8a8]">
-      <CSHeader title="WEAPON LOADOUT" />
-      <div className="space-y-2">
-        {SKILLS.map(({ category, items }) => (
-          <div key={category}>
-            <span className="cs-text-amber">{category}</span>
-            <div className="ml-2">
-              <span className="text-[#8a8a6a]">» </span>
-              {items.join(', ')}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function ExperienceOutput(): ReactElement {
-  return (
-    <div className="text-[#c8c8a8]">
-      <CSHeader title="MATCH HISTORY" />
-      {EXPERIENCE.map(job => (
-        <div key={job.company}>
-          <div className="cs-text-amber font-bold">{job.title}</div>
-          <div className="flex flex-wrap justify-between items-center mb-1 gap-2">
-            <a
-              href={job.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cs-text-green hover:underline"
-            >
-              @ {job.company}
-            </a>
-            <span className="text-[#8a8a6a] text-xs">{job.period}</span>
-          </div>
-          <p className="text-xs mb-2 leading-relaxed">{job.description}</p>
-          <div className="space-y-1 ml-1">
-            {job.highlights.map((h, i) => (
-              <div key={i} className="flex gap-2">
-                <span className="text-[#8a8a6a] shrink-0">»</span>
-                <span>{h}</span>
-              </div>
-            ))}
-          </div>
+    <div className="cs-output">
+      <div className="cs-line cs-line-highlight">Available commands:</div>
+      {commands.map(({ name, desc }) => (
+        <div key={name} className="cs-line">
+          <span className="cs-line-highlight">{name.padEnd(14)}</span>{desc}
         </div>
       ))}
     </div>
   );
 }
 
-function ProjectsOutput(): ReactElement {
+function AboutOutput(): ReactElement {
   return (
-    <div className="text-[#c8c8a8]">
-      <CSHeader title="CUSTOM MAPS" />
-      <div className="space-y-4">
-        {PROJECTS.map(project => (
-          <div key={project.name}>
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="cs-text-amber font-bold">▸ {project.name}</span>
-              {project.url ? (
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="cs-text-green text-xs hover:underline"
-                >
-                  {project.url.replace('https://', '')}
-                </a>
-              ) : null}
-            </div>
-            <div className="text-[#8a8a6a] text-xs ml-2 mb-1">
-              {project.tech.join(' · ')}
-            </div>
-            <div className="space-y-1 ml-2">
-              {project.highlights.map((h, i) => (
-                <div key={i} className="flex gap-2">
-                  <span className="text-[#8a8a6a] shrink-0">»</span>
-                  <span>{h}</span>
-                </div>
-              ))}
-            </div>
+    <div className="cs-output">
+      <CSSection title="PLAYER INFO">
+        <div className="cs-line">{PROFILE.summary}</div>
+        <div className="cs-line">&nbsp;</div>
+        <div className="cs-line">
+          <span className="cs-line-highlight">Location:   </span>{PROFILE.location}
+        </div>
+        <div className="cs-line">
+          <span className="cs-line-highlight">Languages:  </span>
+          {PROFILE.languages.map(l => `${l.name} (${l.level})`).join(' | ')}
+        </div>
+      </CSSection>
+    </div>
+  );
+}
+
+function SkillsOutput(): ReactElement {
+  return (
+    <div className="cs-output">
+      <CSSection title="WEAPON LOADOUT">
+        {SKILLS.map(({ category, items }) => (
+          <div key={category}>
+            <div className="cs-line cs-line-highlight">{category}</div>
+            <div className="cs-line">  {items.join(', ')}</div>
           </div>
         ))}
-      </div>
+      </CSSection>
+    </div>
+  );
+}
+
+function ExperienceOutput(): ReactElement {
+  return (
+    <div className="cs-output">
+      <CSSection title="MATCH HISTORY">
+        {EXPERIENCE.map(job => (
+          <div key={job.company}>
+            <div className="cs-line cs-line-highlight">{job.title}</div>
+            <div className="cs-line">
+              {'  @ '}
+              <a href={job.url} target="_blank" rel="noopener noreferrer" className="cs-link">
+                {job.company}
+              </a>
+              {'  |  '}{job.period}
+            </div>
+            <div className="cs-line">&nbsp;</div>
+            <div className="cs-line">  {job.description}</div>
+            {job.highlights.map((h, i) => (
+              <div key={i} className="cs-line">  - {h}</div>
+            ))}
+            <div className="cs-line">&nbsp;</div>
+          </div>
+        ))}
+      </CSSection>
+    </div>
+  );
+}
+
+function ProjectsOutput(): ReactElement {
+  return (
+    <div className="cs-output">
+      <CSSection title="CUSTOM MAPS">
+        {PROJECTS.map(project => (
+          <div key={project.name}>
+            <div className="cs-line">
+              <span className="cs-line-highlight">{'> '}{project.name}</span>
+              {project.url ? (
+                <>
+                  {'  '}
+                  <a href={project.url} target="_blank" rel="noopener noreferrer" className="cs-link">
+                    {project.url.replace('https://', '')}
+                  </a>
+                </>
+              ) : null}
+            </div>
+            <div className="cs-line cs-line-warning">  [{project.tech.join(' | ')}]</div>
+            {project.highlights.map((h, i) => (
+              <div key={i} className="cs-line">  - {h}</div>
+            ))}
+            <div className="cs-line">&nbsp;</div>
+          </div>
+        ))}
+      </CSSection>
     </div>
   );
 }
 
 function EducationOutput(): ReactElement {
   return (
-    <div className="text-[#c8c8a8]">
-      <CSHeader title="TRAINING CAMP" />
-      <div className="space-y-1">
+    <div className="cs-output">
+      <CSSection title="TRAINING CAMP">
         {EDUCATION.map(({ title, period }) => (
-          <div key={title} className="flex flex-wrap justify-between gap-2">
-            <span>{title}</span>
-            <span className="text-[#8a8a6a] text-xs shrink-0">{period}</span>
+          <div key={title} className="cs-line">
+            {title}  <span className="cs-line-warning">[{period}]</span>
           </div>
         ))}
-      </div>
+      </CSSection>
     </div>
   );
 }
 
 function ContactOutput(): ReactElement {
   return (
-    <div className="text-[#c8c8a8]">
-      <CSHeader title="ADD TO FRIENDS" />
-      <div className="space-y-1">
-        <div className="flex gap-2">
-          <span className="cs-text-amber w-16 shrink-0">Email</span>
-          <span className="text-[#8a8a6a]">»</span>
-          <a
-            href={`mailto:${CONTACT.email}`}
-            className="cs-text-green hover:underline"
-          >
-            {CONTACT.email}
-          </a>
+    <div className="cs-output">
+      <CSSection title="ADD TO FRIENDS">
+        <div className="cs-line">
+          <span className="cs-line-highlight">Email:    </span>
+          <a href={`mailto:${CONTACT.email}`} className="cs-link">{CONTACT.email}</a>
         </div>
-        <div className="flex gap-2">
-          <span className="cs-text-amber w-16 shrink-0">GitHub</span>
-          <span className="text-[#8a8a6a]">»</span>
-          <a
-            href={`https://${CONTACT.github}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cs-text-green hover:underline"
-          >
+        <div className="cs-line">
+          <span className="cs-line-highlight">GitHub:   </span>
+          <a href={`https://${CONTACT.github}`} target="_blank" rel="noopener noreferrer" className="cs-link">
             {CONTACT.github}
           </a>
         </div>
-        <div className="flex gap-2">
-          <span className="cs-text-amber w-16 shrink-0">LinkedIn</span>
-          <span className="text-[#8a8a6a]">»</span>
-          <a
-            href={`https://${CONTACT.linkedin}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cs-text-green hover:underline"
-          >
+        <div className="cs-line">
+          <span className="cs-line-highlight">LinkedIn: </span>
+          <a href={`https://${CONTACT.linkedin}`} target="_blank" rel="noopener noreferrer" className="cs-link">
             {CONTACT.linkedin}
           </a>
         </div>
-      </div>
+      </CSSection>
     </div>
   );
 }
@@ -228,32 +182,26 @@ export function CSCommandOutput({ command }: { readonly command: string }): Reac
       return <ContactOutput />;
     case 'whoami':
       return (
-        <div className="cs-text-amber">
+        <div className="cs-line cs-line-highlight">
           {PROFILE.name} — {PROFILE.title}
         </div>
       );
     case 'sudo':
-      return <div className="text-red-400">Access denied. VAC ban incoming.</div>;
+      return <div className="cs-line cs-line-error">Access denied. VAC ban incoming.</div>;
     case 'ls':
       return (
-        <div className="text-[#c8c8a8]">
-          <span className="cs-text-green">about/</span>{' '}
-          <span className="cs-text-green">skills/</span>{' '}
-          <span className="cs-text-green">experience/</span>{' '}
-          <span className="cs-text-green">projects/</span>{' '}
-          <span className="cs-text-green">education/</span>{' '}
-          <span className="cs-text-green">contact/</span>
+        <div className="cs-line">
+          about/  skills/  experience/  projects/  education/  contact/
         </div>
       );
     case 'pwd':
-      return <div className="text-[#c8c8a8]">/home/luis/de_portfolio</div>;
+      return <div className="cs-line">/home/luis/de_portfolio</div>;
     case 'date':
-      return <div className="text-[#c8c8a8]">{new Date().toString()}</div>;
+      return <div className="cs-line">{new Date().toString()}</div>;
     default:
       return (
-        <div className="text-red-400">
-          Unknown command: {command}. Type{' '}
-          <span className="cs-text-amber">'help'</span> for available commands.
+        <div className="cs-line cs-line-error">
+          Unknown command: '{command}'. Type 'help' for available commands.
         </div>
       );
   }
