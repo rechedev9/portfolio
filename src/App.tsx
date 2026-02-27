@@ -4,10 +4,12 @@ import { Terminal } from './components/Terminal';
 import { MatrixRain } from './components/MatrixRain';
 import { PillChoice } from './components/PillChoice';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
+import { useDocumentMeta } from './hooks/useDocumentMeta';
 
 const ENTER_TRANSITION_MS = 1200;
 
 export function App(): ReactElement {
+  useDocumentMeta('/');
   const [showPillChoice, setShowPillChoice] = useState(false);
   const [entering, setEntering] = useState(false);
 

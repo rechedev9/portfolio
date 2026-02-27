@@ -4,6 +4,7 @@ import { Player } from '@remotion/player';
 import { WarcraftMenu } from './components/WarcraftMenu';
 import { WarcraftBackground } from './remotion/WarcraftBackground';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
+import { useDocumentMeta } from './hooks/useDocumentMeta';
 
 const WC3_MUSIC_PATH = '/warcraft/wc3-theme.mp3';
 const MUSIC_VOLUME = 0.4;
@@ -14,6 +15,7 @@ const BG_WIDTH = 1920;
 const BG_HEIGHT = 1080;
 
 export function WarcraftApp(): ReactElement {
+  useDocumentMeta('/warcraft');
   const [musicPlaying, setMusicPlaying] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
 

@@ -6,6 +6,7 @@ import { PokemonBootScreen } from './components/PokemonBootScreen';
 import { PokemonTerminal } from './components/PokemonTerminal';
 import { PokemonBattle } from './remotion/PokemonBattle';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
+import { useDocumentMeta } from './hooks/useDocumentMeta';
 
 type Phase = 'off' | 'booting' | 'ready';
 
@@ -20,6 +21,7 @@ const BG_WIDTH = 1920;
 const BG_HEIGHT = 1080;
 
 export function PokemonApp(): ReactElement {
+  useDocumentMeta('/pokemon');
   const [phase, setPhase] = useState<Phase>('off');
   const [musicPlaying, setMusicPlaying] = useState(true);
   const palletRef = useRef<HTMLAudioElement>(null);

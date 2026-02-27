@@ -2,11 +2,13 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import type { ReactElement } from 'react';
 import { CSTerminal } from './components/CSTerminal';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
+import { useDocumentMeta } from './hooks/useDocumentMeta';
 
 const CS_MUSIC_PATH = '/cs-theme.mp3';
 const MUSIC_VOLUME = 0.5;
 
 export function CSApp(): ReactElement {
+  useDocumentMeta('/cs');
   const [musicPlaying, setMusicPlaying] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
 
