@@ -110,7 +110,7 @@ export function Terminal(): ReactElement {
                 {PROFILE.title}
               </div>
               <div className="text-terminal-dim text-xs mb-4">
-                TypeScript · React · Node.js · Bun
+                TypeScript Wizard
               </div>
 
               {/* Welcome message */}
