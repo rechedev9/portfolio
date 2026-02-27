@@ -1,10 +1,10 @@
 import { useCallback, useRef } from 'react';
 
 const SOUND_PATHS = {
-  select: '/pokemon/sfx-menu-select.mp3',
-  confirm: '/pokemon/sfx-press-ab.mp3',
-  save: '/pokemon/sfx-save.mp3',
-  boot: '/pokemon/sfx-boot-ping.mp3',
+  select: '/pokemon/sfx-menu-select.wav',
+  confirm: '/pokemon/sfx-press-ab.wav',
+  save: '/pokemon/sfx-save.wav',
+  boot: '/pokemon/sfx-boot-ping.wav',
 } as const;
 
 type SoundName = keyof typeof SOUND_PATHS;
