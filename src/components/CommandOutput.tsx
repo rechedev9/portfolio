@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import type { ReactElement } from 'react';
 import { PROFILE, SKILLS, EXPERIENCE, PROJECTS, EDUCATION, CONTACT } from '../data/portfolio';
 
@@ -210,6 +211,18 @@ function ContactOutput(): ReactElement {
   );
 }
 
+function MatrixEasterEgg(): ReactElement {
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent('matrix-easter-egg'));
+  }, []);
+
+  return (
+    <div className="text-terminal-green">
+      Wake up, Neo... The Matrix has you.
+    </div>
+  );
+}
+
 export function CommandOutput({ command }: { readonly command: string }): ReactElement {
   const normalized = command.trim().toLowerCase();
 
@@ -234,6 +247,8 @@ export function CommandOutput({ command }: { readonly command: string }): ReactE
           {PROFILE.name} — {PROFILE.title}
         </div>
       );
+    case 'matrix':
+      return <MatrixEasterEgg />;
     case 'sudo':
       return <div className="text-terminal-red">Nice try. No root access here.</div>;
     case 'ls':

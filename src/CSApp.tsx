@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import type { ReactElement } from 'react';
 import { CSTerminal } from './components/CSTerminal';
+import { ThemeSwitcher } from './components/ThemeSwitcher';
 
 const CS_MUSIC_PATH = '/cs-theme.mp3';
 const MUSIC_VOLUME = 0.5;
@@ -69,6 +70,8 @@ export function CSApp(): ReactElement {
 
       {/* Console window */}
       <CSTerminal />
+
+      <ThemeSwitcher currentTheme="cs" />
     </div>
   );
 }

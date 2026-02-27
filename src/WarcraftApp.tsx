@@ -3,6 +3,7 @@ import type { ReactElement } from 'react';
 import { Player } from '@remotion/player';
 import { WarcraftMenu } from './components/WarcraftMenu';
 import { WarcraftBackground } from './remotion/WarcraftBackground';
+import { ThemeSwitcher } from './components/ThemeSwitcher';
 
 const WC3_MUSIC_PATH = '/warcraft/wc3-theme.mp3';
 const MUSIC_VOLUME = 0.4;
@@ -85,6 +86,8 @@ export function WarcraftApp(): ReactElement {
       </button>
 
       <WarcraftMenu />
+
+      <ThemeSwitcher currentTheme="warcraft" />
     </div>
   );
 }

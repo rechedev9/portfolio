@@ -5,6 +5,7 @@ import { GameBoyFrame } from './components/GameBoyFrame';
 import { PokemonBootScreen } from './components/PokemonBootScreen';
 import { PokemonTerminal } from './components/PokemonTerminal';
 import { PokemonBattle } from './remotion/PokemonBattle';
+import { ThemeSwitcher } from './components/ThemeSwitcher';
 
 type Phase = 'off' | 'booting' | 'ready';
 
@@ -113,6 +114,8 @@ export function PokemonApp(): ReactElement {
           {musicPlaying ? '\u266B Music ON' : '\u266A Music OFF'}
         </button>
       )}
+
+      <ThemeSwitcher currentTheme="pokemon" />
 
       <GameBoyFrame powered={phase !== 'off'} onPowerPress={handlePowerOn}>
         {phase === 'booting' && (

@@ -203,7 +203,7 @@ body {
 .cs-music-toggle {
   position: absolute;
   top: 12px;
-  right: 12px;
+  right: 110px;
   z-index: 20;
   font-size: 13px !important;
   padding: 3px 10px !important;
@@ -417,7 +417,7 @@ body {
 .poke-music-toggle {
   position: absolute;
   top: 12px;
-  right: 12px;
+  right: 110px;
   z-index: 30;
   font-family: 'Press Start 2P', monospace;
   font-size: 8px;
@@ -1635,4 +1635,259 @@ body {
     font-size: 10px;
     letter-spacing: 3px;
   }
+}
+
+/* ═══════════════════════════════════════════
+   Theme Switcher — Floating cross-theme nav
+   ═══════════════════════════════════════════ */
+
+.theme-switcher {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 50;
+}
+
+/* --- Trigger button --- */
+.theme-switcher-btn {
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  backdrop-filter: blur(8px);
+}
+
+.theme-switcher-btn:hover {
+  transform: scale(1.05);
+}
+
+.theme-switcher-btn-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.theme-switcher-btn-label {
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+/* --- Panel --- */
+.theme-switcher-panel {
+  position: absolute;
+  top: 54px;
+  right: 0;
+  min-width: 180px;
+  border-radius: 8px;
+  padding: 10px 0;
+  animation: ts-panel-in 0.15s ease-out;
+  transform-origin: top right;
+}
+
+@keyframes ts-panel-in {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.theme-switcher-title {
+  padding: 0 14px 8px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+/* --- Option rows --- */
+.theme-switcher-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 14px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: left;
+  transition: background 0.1s;
+}
+
+.theme-switcher-option:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.theme-switcher-option:disabled {
+  cursor: default;
+}
+
+.theme-switcher-option-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.theme-switcher-option-label {
+  flex: 1;
+}
+
+/* ─── Matrix theme ─── */
+.theme-switcher--matrix .theme-switcher-btn {
+  background: rgba(0, 20, 0, 0.85);
+  border-color: #00ff41;
+  box-shadow: 0 0 12px rgba(0, 255, 65, 0.25);
+  color: #00ff41;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.theme-switcher--matrix .theme-switcher-btn:hover {
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+}
+
+.theme-switcher--matrix .theme-switcher-panel {
+  background: rgba(0, 20, 0, 0.95);
+  border: 1px solid rgba(0, 255, 65, 0.3);
+  box-shadow: 0 0 30px rgba(0, 255, 65, 0.15);
+}
+
+.theme-switcher--matrix .theme-switcher-title {
+  color: #008f11;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.theme-switcher--matrix .theme-switcher-option {
+  color: #00ff41;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.theme-switcher--matrix .theme-switcher-option:hover:not(:disabled) {
+  background: rgba(0, 255, 65, 0.08);
+}
+
+.theme-switcher--matrix .theme-switcher-option--active {
+  background: rgba(0, 255, 65, 0.12);
+  text-shadow: 0 0 8px rgba(0, 255, 65, 0.4);
+}
+
+/* ─── CS 1.6 theme ─── */
+.theme-switcher--cs .theme-switcher-btn {
+  background: rgba(45, 50, 35, 0.85);
+  border-color: #8b8b6a;
+  box-shadow: 0 0 10px rgba(139, 139, 106, 0.2);
+  color: #d4d4b8;
+  font-family: ArialPixel, 'Courier New', monospace;
+}
+
+.theme-switcher--cs .theme-switcher-btn:hover {
+  box-shadow: 0 0 16px rgba(139, 139, 106, 0.35);
+}
+
+.theme-switcher--cs .theme-switcher-panel {
+  background: rgba(45, 50, 35, 0.95);
+  border: 1px solid #6b6b4a;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.theme-switcher--cs .theme-switcher-title {
+  color: #8b8b6a;
+  font-family: ArialPixel, 'Courier New', monospace;
+}
+
+.theme-switcher--cs .theme-switcher-option {
+  color: #d4d4b8;
+  font-family: ArialPixel, 'Courier New', monospace;
+}
+
+.theme-switcher--cs .theme-switcher-option:hover:not(:disabled) {
+  background: rgba(212, 212, 184, 0.08);
+}
+
+.theme-switcher--cs .theme-switcher-option--active {
+  background: rgba(232, 200, 64, 0.1);
+  color: #e8c840;
+}
+
+/* ─── Pokemon theme ─── */
+.theme-switcher--pokemon .theme-switcher-btn {
+  background: rgba(16, 56, 16, 0.85);
+  border-color: #5bc85f;
+  box-shadow: 0 0 10px rgba(91, 200, 95, 0.25);
+  color: #9BBC0F;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+}
+
+.theme-switcher--pokemon .theme-switcher-btn:hover {
+  box-shadow: 0 0 16px rgba(91, 200, 95, 0.4);
+}
+
+.theme-switcher--pokemon .theme-switcher-panel {
+  background: rgba(16, 56, 16, 0.95);
+  border: 2px solid #306230;
+  box-shadow: 0 0 20px rgba(15, 56, 15, 0.4);
+}
+
+.theme-switcher--pokemon .theme-switcher-title {
+  color: #9BBC0F;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+}
+
+.theme-switcher--pokemon .theme-switcher-option {
+  color: #9BBC0F;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+}
+
+.theme-switcher--pokemon .theme-switcher-option:hover:not(:disabled) {
+  background: rgba(155, 188, 15, 0.1);
+}
+
+.theme-switcher--pokemon .theme-switcher-option--active {
+  background: rgba(155, 188, 15, 0.15);
+  color: #d4e880;
+}
+
+/* ─── Warcraft theme ─── */
+.theme-switcher--warcraft .theme-switcher-btn {
+  background: rgba(4, 8, 18, 0.85);
+  border-color: #d4a830;
+  box-shadow: 0 0 12px rgba(212, 168, 48, 0.25);
+  color: #c8daf0;
+  font-family: 'Cinzel', serif;
+}
+
+.theme-switcher--warcraft .theme-switcher-btn:hover {
+  box-shadow: 0 0 20px rgba(212, 168, 48, 0.4);
+}
+
+.theme-switcher--warcraft .theme-switcher-panel {
+  background: rgba(4, 8, 18, 0.95);
+  border: 2px solid #1a3050;
+  box-shadow:
+    inset 0 1px 0 rgba(70, 120, 180, 0.2),
+    0 0 40px rgba(0, 0, 0, 0.5);
+}
+
+.theme-switcher--warcraft .theme-switcher-title {
+  color: #b8a050;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 2px;
+}
+
+.theme-switcher--warcraft .theme-switcher-option {
+  color: #c8daf0;
+  font-family: 'Cinzel', serif;
+}
+
+.theme-switcher--warcraft .theme-switcher-option:hover:not(:disabled) {
+  background: rgba(200, 180, 80, 0.08);
+}
+
+.theme-switcher--warcraft .theme-switcher-option--active {
+  background: rgba(200, 180, 80, 0.12);
+  color: #f0e0a0;
+  text-shadow: 0 0 8px rgba(200, 180, 80, 0.3);
 }

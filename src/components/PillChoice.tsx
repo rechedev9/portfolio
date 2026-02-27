@@ -5,14 +5,18 @@ const BLUE_PILL_RESET_MS = 2500;
 
 type PillChoiceProps = {
   readonly onEnter: () => void;
+  readonly onDismiss?: () => void;
 };
 
-export function PillChoice({ onEnter }: PillChoiceProps): ReactElement {
+export function PillChoice({ onEnter, onDismiss }: PillChoiceProps): ReactElement {
   const [blueChosen, setBlueChosen] = useState(false);
 
   const handleBluePill = (): void => {
     setBlueChosen(true);
-    setTimeout(() => setBlueChosen(false), BLUE_PILL_RESET_MS);
+    setTimeout(() => {
+      setBlueChosen(false);
+      onDismiss?.();
+    }, BLUE_PILL_RESET_MS);
   };
 
   if (blueChosen) {

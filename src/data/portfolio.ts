@@ -153,4 +153,4 @@ export const ASCII_NAME = [
 
 export const COMMANDS = ['about', 'skills', 'experience', 'projects', 'education', 'contact'] as const;
 
-export const ALL_COMMANDS = [...COMMANDS, 'help', 'clear', 'whoami'] as const;
+export const ALL_COMMANDS = [...COMMANDS, 'help', 'clear', 'whoami', 'matrix'] as const;
