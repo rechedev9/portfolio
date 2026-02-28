@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import type { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-type ThemeId = 'matrix' | 'cs' | 'pokemon' | 'warcraft';
+type ThemeId = 'matrix' | 'cs' | 'pokemon';
 
 interface ThemeOption {
   readonly id: ThemeId;
@@ -19,7 +19,6 @@ const THEMES: readonly ThemeOption[] = [
   { id: 'matrix', label: 'Matrix', icon: '\u{1F7E2}', path: '/' },
   { id: 'cs', label: 'CS 1.6', icon: '\u{1F52B}', path: '/cs' },
   { id: 'pokemon', label: 'Pokemon', icon: '\u26A1', path: '/pokemon' },
-  { id: 'warcraft', label: 'Warcraft', icon: '\u2694\uFE0F', path: '/warcraft' },
 ] as const;
 
 export function ThemeSwitcher({ currentTheme }: ThemeSwitcherProps): ReactElement {

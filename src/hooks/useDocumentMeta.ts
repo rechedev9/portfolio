@@ -27,12 +27,6 @@ const ROUTE_META: Record<string, DocumentMeta> = {
       'Game Boy Pokémon themed developer portfolio. Luis Reche — Fullstack Developer. TypeScript, React, Node.js.',
     path: '/pokemon',
   },
-  '/warcraft': {
-    title: 'Luis Reche | Warcraft III Theme',
-    description:
-      'Warcraft III themed developer portfolio. Luis Reche — Fullstack Developer. TypeScript, React, Node.js.',
-    path: '/warcraft',
-  },
 };
 
 function setMetaTag(property: string, content: string): void {

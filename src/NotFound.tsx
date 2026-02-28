@@ -37,15 +37,6 @@ export function NotFound(): ReactElement {
             </Link>
             {' — Pokémon'}
           </li>
-          <li>
-            <Link
-              to="/warcraft"
-              className="underline hover:text-terminal-cyan"
-            >
-              /warcraft
-            </Link>
-            {' — Warcraft III'}
-          </li>
         </ul>
         <p className="animate-blink">█</p>
       </div>

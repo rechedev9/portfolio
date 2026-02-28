@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { App } from './App';
 import { CSApp } from './CSApp';
 import { PokemonApp } from './PokemonApp';
-import { WarcraftApp } from './WarcraftApp';
 import { NotFound } from './NotFound';
 import './index.css';
 
@@ -18,7 +17,6 @@ createRoot(root).render(
         <Route path="/" element={<App />} />
         <Route path="/cs" element={<CSApp />} />
         <Route path="/pokemon" element={<PokemonApp />} />
-        <Route path="/warcraft" element={<WarcraftApp />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
