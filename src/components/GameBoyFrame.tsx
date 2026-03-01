@@ -63,15 +63,6 @@ export function GameBoyFrame({ children, powered, onPowerPress }: GameBoyFramePr
         <div className="poke-btn-meta">START</div>
       </div>
 
-      {/* Speaker grille */}
-      <div className="poke-speaker">
-        <div className="poke-speaker-line" />
-        <div className="poke-speaker-line" />
-        <div className="poke-speaker-line" />
-        <div className="poke-speaker-line" />
-        <div className="poke-speaker-line" />
-        <div className="poke-speaker-line" />
-      </div>
     </div>
   );
 }
