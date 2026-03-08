@@ -1,5 +1,7 @@
 {
   "rewrites": [
+    { "source": "/workflow", "destination": "https://presentation-alpha-ecru.vercel.app/workflow" },
+    { "source": "/workflow/(.*)", "destination": "https://presentation-alpha-ecru.vercel.app/workflow/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
