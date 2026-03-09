@@ -109,11 +109,8 @@ export const PROJECTS: readonly Project[] = [
     github: 'https://github.com/rechedev9/gravity-room',
     tech: ['React 19', 'Vite', 'ElysiaJS', 'Drizzle ORM', 'PostgreSQL', 'Zod', 'TanStack Query', 'Bun'],
     highlights: [
-      'Built the entire stack from scratch — API, frontend, and shared packages, all on my own server',
-      'Secure login with automatic token rotation, theft detection, and Google sign-in',
-      'A smart progression engine that adapts to your strength training program',
-      'Real-time metrics and structured logging to keep everything observable',
-      'Automated pipeline: every commit is tested and deployed end-to-end',
+      'Fullstack fitness app used by real people',
+      'Self-hosted on my own server, built from scratch',
     ],
   },
   {

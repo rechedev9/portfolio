@@ -117,19 +117,24 @@ export function Portfolio(): ReactElement {
         </Section>
 
         {/* /highlights */}
-        {gravityRoom && (
-          <Section delay={140}>
-            <SectionHeading>highlights</SectionHeading>
-            {gravityRoom.highlights.map(h => (
-              <HighlightItem key={h}>
-                {h}.
-              </HighlightItem>
-            ))}
-            <HighlightItem>
-              {EDUCATION[1].title}.
-            </HighlightItem>
-          </Section>
-        )}
+        <Section delay={140}>
+          <SectionHeading>highlights</SectionHeading>
+          <HighlightItem>
+            Building a fullstack fitness app used by real people at <a href="https://gravityroom.app" target="_blank" rel="noopener noreferrer" className="p-link">gravityroom.app</a>.
+          </HighlightItem>
+          <HighlightItem>
+            Freelancing on a post-apocalyptic RPG heading to Steam at <a href="https://berrus.app" target="_blank" rel="noopener noreferrer" className="p-link">berrus.app</a>.
+          </HighlightItem>
+          <HighlightItem>
+            Going deep on AI tooling — built an <a href="https://github.com/rechedev9/honey-encryption-proxy" target="_blank" rel="noopener noreferrer" className="p-link">encryption proxy</a> and a <a href="https://github.com/rechedev9/sdd-workflow" target="_blank" rel="noopener noreferrer" className="p-link">dev workflow</a> for Claude Code.
+          </HighlightItem>
+          <HighlightItem>
+            Shipping quality-first: every project gets tests, CI/CD, and type safety from day one.
+          </HighlightItem>
+          <HighlightItem>
+            {EDUCATION[1].title} — always leveling up.
+          </HighlightItem>
+        </Section>
 
         {/* Gravity Room — featured */}
         {gravityRoom && (
