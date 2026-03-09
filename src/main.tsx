@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Portfolio } from './Portfolio';
 import { App } from './App';
 import { CSApp } from './CSApp';
 import { PokemonApp } from './PokemonApp';
@@ -14,7 +15,8 @@ createRoot(root).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />} />
+        <Route path="/" element={<Portfolio />} />
+        <Route path="/matrix" element={<App />} />
         <Route path="/cs" element={<CSApp />} />
         <Route path="/pokemon" element={<PokemonApp />} />
         <Route path="*" element={<NotFound />} />
