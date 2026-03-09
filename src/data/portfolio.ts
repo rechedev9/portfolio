@@ -137,7 +137,7 @@ export const PROJECTS: readonly Project[] = [
     github: 'https://github.com/rechedev9/sdd-workflow',
     tech: ['TypeScript', 'Claude Code'],
     highlights: [
-      'Spec-Driven Development for Claude Code — structured AI coding pipeline',
+      'An 11-phase AI coding pipeline with 37+ skills — structured development that doesn\'t forget, doesn\'t hallucinate, and doesn\'t skip steps',
     ],
   },
   {

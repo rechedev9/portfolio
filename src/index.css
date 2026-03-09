@@ -289,6 +289,19 @@
   box-shadow: 0 4px 16px rgba(232, 93, 69, 0.3);
 }
 
+.p-hero-card__accent--indigo {
+  background: linear-gradient(180deg, #6366f1, #4f46e5);
+}
+
+.p-hero-card__cta--indigo {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+}
+
+.p-hero-card__cta--indigo:hover {
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+}
+
 .p-hero-card__gh {
   font-size: 13px;
   color: #9ea1b6;
