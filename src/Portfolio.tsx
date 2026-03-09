@@ -1,6 +1,6 @@
 import type { ReactElement, ReactNode } from 'react';
 import { useEffect } from 'react';
-import { PROFILE, PROJECTS, EDUCATION, CONTACT } from './data/portfolio';
+import { PROFILE, PROJECTS, CONTACT } from './data/portfolio';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
 
 const SOCIAL_LINKS = [
@@ -123,16 +123,7 @@ export function Portfolio(): ReactElement {
             Building a fullstack fitness app used by real people at <a href="https://gravityroom.app" target="_blank" rel="noopener noreferrer" className="p-link">gravityroom.app</a>.
           </HighlightItem>
           <HighlightItem>
-            Freelancing on a post-apocalyptic RPG heading to Steam at <a href="https://berrus.app" target="_blank" rel="noopener noreferrer" className="p-link">berrus.app</a>.
-          </HighlightItem>
-          <HighlightItem>
             Going deep on AI tooling — built an <a href="https://github.com/rechedev9/honey-encryption-proxy" target="_blank" rel="noopener noreferrer" className="p-link">encryption proxy</a> and a <a href="https://github.com/rechedev9/sdd-workflow" target="_blank" rel="noopener noreferrer" className="p-link">dev workflow</a> for Claude Code.
-          </HighlightItem>
-          <HighlightItem>
-            Shipping quality-first: every project gets tests, CI/CD, and type safety from day one.
-          </HighlightItem>
-          <HighlightItem>
-            {EDUCATION[1].title} — always leveling up.
           </HighlightItem>
         </Section>
 
