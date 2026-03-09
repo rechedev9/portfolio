@@ -218,34 +218,59 @@
   color: #9ea1b6;
 }
 
-/* Projects — simple list */
-.p-featured-row {
-  margin-bottom: 16px;
-  font-size: 15px;
-  line-height: 1.7;
+/* Project cards */
+.p-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
 }
 
-.p-link--gh {
-  font-size: 13px;
-  color: #9ea1b6;
-  text-decoration: none;
-  margin-left: 4px;
+.p-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid #e2e4ec;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.p-link--gh:hover {
-  color: #4f5268;
-  text-decoration: underline;
+.p-card:hover {
+  border-color: #d0d2de;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
-.p-project-list {
+.p-card__top {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.p-card__name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #2a2c3e;
+}
+
+.p-card__links {
+  display: flex;
   gap: 8px;
 }
 
-.p-project-row {
-  font-size: 15px;
-  line-height: 1.7;
+.p-card__icon {
+  color: #9ea1b6;
+  transition: color 0.15s;
+  display: flex;
+}
+
+.p-card__icon:hover {
+  color: #4f5268;
+}
+
+.p-card__desc {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #6b6e85;
+  margin: 0;
 }
 
 /* Footer */
@@ -312,8 +337,7 @@
     margin-top: 40px;
   }
 
-  .p-grid,
-  .p-skills {
+  .p-cards {
     grid-template-columns: 1fr;
   }
 
