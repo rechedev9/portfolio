@@ -109,11 +109,11 @@ export const PROJECTS: readonly Project[] = [
     github: 'https://github.com/rechedev9/gravity-room',
     tech: ['React 19', 'Vite', 'ElysiaJS', 'Drizzle ORM', 'PostgreSQL', 'Zod', 'TanStack Query', 'Bun'],
     highlights: [
-      'Bun monorepo: shared package + ElysiaJS API + React 19 SPA on VPS',
-      'JWT auth with token rotation, theft detection, and Google OAuth',
-      'Generic progression engine with declarative rules for strength programs',
-      'Observability: Prometheus metrics + structured Pino logging',
-      'CI/CD: GitHub Actions, Playwright E2E, Lefthook git hooks',
+      'Built the entire stack from scratch — API, frontend, and shared packages, all on my own server',
+      'Secure login with automatic token rotation, theft detection, and Google sign-in',
+      'A smart progression engine that adapts to your strength training program',
+      'Real-time metrics and structured logging to keep everything observable',
+      'Automated pipeline: every commit is tested and deployed end-to-end',
     ],
   },
   {

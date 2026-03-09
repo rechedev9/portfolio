@@ -116,7 +116,7 @@ export function Portfolio(): ReactElement {
           </div>
         </Section>
 
-        {/* /highlights — Gravity Room achievements */}
+        {/* /highlights */}
         {gravityRoom && (
           <Section delay={140}>
             <SectionHeading>highlights</SectionHeading>
@@ -131,11 +131,37 @@ export function Portfolio(): ReactElement {
           </Section>
         )}
 
+        {/* Gravity Room — featured */}
+        {gravityRoom && (
+          <Section delay={220}>
+            <div className="p-hero-card">
+              <div className="p-hero-card__accent" aria-hidden="true" />
+              <div className="p-hero-card__body">
+                <h2 className="p-hero-card__title">Gravity Room</h2>
+                <p className="p-hero-card__tagline">
+                  Track your lifts, follow a real program, and watch yourself get stronger — built from the ground up.
+                </p>
+                <div className="p-hero-card__links">
+                  <a href={gravityRoom.url} target="_blank" rel="noopener noreferrer" className="p-hero-card__cta">
+                    Try it live
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                  </a>
+                  {gravityRoom.github && (
+                    <a href={gravityRoom.github} target="_blank" rel="noopener noreferrer" className="p-hero-card__gh">
+                      Source code
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          </Section>
+        )}
+
         {/* /projects */}
-        <Section delay={240}>
+        <Section delay={320}>
           <SectionHeading>projects</SectionHeading>
           <div className="p-cards">
-            {[...(gravityRoom ? [gravityRoom] : []), ...otherProjects].map(p => (
+            {otherProjects.map(p => (
               <div key={p.name} className="p-card">
                 <div className="p-card__top">
                   <span className="p-card__name">{p.name}</span>
