@@ -151,14 +151,6 @@ export const PROJECTS: readonly Project[] = [
       'Local proxy applying Format-Preserving and Honey Encryption to obfuscate source identifiers',
     ],
   },
-  {
-    name: 'VanillaGravity',
-    github: 'https://github.com/rechedev9/VanillaGravity',
-    tech: ['TypeScript', 'Bun', 'Raw SQL', 'Plain CSS'],
-    highlights: [
-      'GZCLP Tracker rebuilt from scratch — no frameworks, no abstractions',
-    ],
-  },
 ];
 
 export const EDUCATION: readonly Education[] = [

@@ -218,179 +218,34 @@
   color: #9ea1b6;
 }
 
-/* Featured card */
-.p-featured {
-  background: #fff;
-  border-radius: 12px;
-  padding: 28px;
-  border: 1px solid #e2e4ec;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
-  transition: box-shadow 0.25s, transform 0.25s;
+/* Projects — simple list */
+.p-featured-row {
+  margin-bottom: 16px;
+  font-size: 15px;
+  line-height: 1.7;
 }
 
-.p-featured:hover {
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-  transform: translateY(-2px);
-}
-
-.p-featured__title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #2a2c3e;
-  margin: 0 0 6px;
-}
-
-.p-featured__desc {
-  font-size: 14px;
-  color: #6b6e85;
-  margin: 0 0 16px;
-  line-height: 1.65;
-}
-
-.p-featured__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #d4585a;
+.p-link--gh {
+  font-size: 13px;
+  color: #9ea1b6;
   text-decoration: none;
-  transition: gap 0.2s;
+  margin-left: 4px;
 }
 
-.p-featured__cta:hover {
-  gap: 8px;
+.p-link--gh:hover {
+  color: #4f5268;
   text-decoration: underline;
 }
 
-/* Tech pills */
-.p-pills {
+.p-project-list {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 16px;
-}
-
-.p-pill {
-  font-size: 11.5px;
-  padding: 3px 10px;
-  border-radius: 999px;
-  background: #ecedf3;
-  color: #5c5f76;
-  white-space: nowrap;
-  font-weight: 500;
-}
-
-.p-pill--more {
-  background: transparent;
-  color: #9ea1b6;
-  padding: 3px 4px;
-}
-
-/* Experience */
-.p-experience {
-  margin-bottom: 20px;
-}
-
-.p-experience:last-child {
-  margin-bottom: 0;
-}
-
-.p-experience__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 8px;
-  margin-bottom: 6px;
+}
+
+.p-project-row {
   font-size: 15px;
-  color: #2a2c3e;
-}
-
-.p-experience__desc {
-  font-size: 14px;
-  line-height: 1.65;
-  color: #6b6e85;
-  margin: 0;
-}
-
-/* Project cards — 2-column grid */
-.p-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-}
-
-.p-card {
-  background: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  border: 1px solid #e2e4ec;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
-  transition: box-shadow 0.25s, transform 0.25s;
-}
-
-.p-card:hover {
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-  transform: translateY(-1px);
-}
-
-.p-card__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 6px;
-}
-
-.p-card__name {
-  font-size: 15px;
-  font-weight: 600;
-  color: #2a2c3e;
-}
-
-.p-card__gh {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #9ea1b6;
-  transition: color 0.15s;
-}
-
-.p-card__gh:hover {
-  color: #2a2c3e;
-}
-
-.p-card__desc {
-  font-size: 13px;
-  line-height: 1.55;
-  color: #6b6e85;
-  margin: 0 0 10px;
-}
-
-.p-pills--sm {
-  margin-bottom: 0;
-}
-
-/* Featured header with GitHub icon */
-.p-featured__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 6px;
-}
-
-/* Skills */
-.p-skills {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 22px;
-}
-
-.p-skills__category {
-  font-size: 13px;
-  font-weight: 600;
-  color: #4f5268;
-  margin: 0 0 8px;
+  line-height: 1.7;
 }
 
 /* Footer */

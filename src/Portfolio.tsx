@@ -1,13 +1,7 @@
 import type { ReactElement, ReactNode } from 'react';
 import { useEffect } from 'react';
-import { PROFILE, SKILLS, EXPERIENCE, PROJECTS, EDUCATION, CONTACT } from './data/portfolio';
+import { PROFILE, PROJECTS, EDUCATION, CONTACT } from './data/portfolio';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
-
-const GITHUB_ICON = (
-  <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" aria-hidden="true">
-    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-  </svg>
-);
 
 const SOCIAL_LINKS = [
   {
@@ -73,32 +67,6 @@ function HighlightItem({ children }: { readonly children: ReactNode }): ReactEle
   );
 }
 
-type Project = (typeof PROJECTS)[number];
-
-function ProjectCard({ project }: { readonly project: Project }): ReactElement {
-  return (
-    <div className="p-card">
-      <div className="p-card__header">
-        <span className="p-card__name">{project.name}</span>
-        {project.github && (
-          <a href={project.github} target="_blank" rel="noopener noreferrer" className="p-card__gh" aria-label={`${project.name} on GitHub`}>
-            {GITHUB_ICON}
-          </a>
-        )}
-      </div>
-      <p className="p-card__desc">{project.highlights[0]}</p>
-      <div className="p-pills p-pills--sm">
-        {project.tech.slice(0, 3).map(t => (
-          <span key={t} className="p-pill">{t}</span>
-        ))}
-        {project.tech.length > 3 && (
-          <span className="p-pill p-pill--more">+{project.tech.length - 3}</span>
-        )}
-      </div>
-    </div>
-  );
-}
-
 export function Portfolio(): ReactElement {
   useEffect(() => {
     document.title = 'Luis Reche | Fullstack Developer';
@@ -128,7 +96,7 @@ export function Portfolio(): ReactElement {
             <Bracket />
             <p className="p-intro__text">
               <strong>{PROFILE.title}</strong>
-              <span className="p-intro__dim">, focused on code quality, testing, and continuous delivery. Based in {PROFILE.location}.</span>
+              <span className="p-intro__dim">, focused on code quality, testing, and continuous delivery.</span>
             </p>
           </div>
           <div className="p-socials">
@@ -157,106 +125,50 @@ export function Portfolio(): ReactElement {
                 {h}.
               </HighlightItem>
             ))}
+            <HighlightItem>
+              {EDUCATION[1].title}.
+            </HighlightItem>
           </Section>
         )}
 
-        {/* /featured — Gravity Room */}
-        {gravityRoom && (
-          <Section delay={220}>
-            <SectionHeading>featured</SectionHeading>
-            <div className="p-featured">
-              <div className="p-featured__body">
-                <div className="p-featured__header">
-                  <h3 className="p-featured__title">Gravity Room</h3>
-                  {gravityRoom.github && (
-                    <a href={gravityRoom.github} target="_blank" rel="noopener noreferrer" className="p-card__gh" aria-label="Gravity Room on GitHub">
-                      {GITHUB_ICON}
-                    </a>
-                  )}
-                </div>
-                <p className="p-featured__desc">
-                  A fullstack fitness app for tracking workouts and strength progression.
-                </p>
-                <div className="p-pills">
-                  {gravityRoom.tech.slice(0, 5).map(t => (
-                    <span key={t} className="p-pill">{t}</span>
-                  ))}
-                  {gravityRoom.tech.length > 5 && (
-                    <span className="p-pill p-pill--more">+{gravityRoom.tech.length - 5}</span>
-                  )}
-                </div>
-              </div>
-              {gravityRoom.url && (
-                <a href={gravityRoom.url} target="_blank" rel="noopener noreferrer" className="p-featured__cta">
-                  Visit Gravity Room
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M7 17L17 7M17 7H7M17 7v10" />
-                  </svg>
+        {/* /projects — just names + GitHub links */}
+        <Section delay={240}>
+          <SectionHeading>projects</SectionHeading>
+
+          {/* Featured: Gravity Room */}
+          {gravityRoom && (
+            <div className="p-featured-row">
+              <a href={gravityRoom.url} target="_blank" rel="noopener noreferrer" className="p-link">
+                Gravity Room
+              </a>
+              {gravityRoom.github && (
+                <a href={gravityRoom.github} target="_blank" rel="noopener noreferrer" className="p-link--gh" aria-label="GitHub">
+                  (github)
                 </a>
               )}
+              <span className="p-intro__dim"> &mdash; Fullstack fitness tracker for strength progression.</span>
             </div>
-          </Section>
-        )}
+          )}
 
-        {/* /experience */}
-        <Section delay={280}>
-          <SectionHeading>experience</SectionHeading>
-          {EXPERIENCE.map(job => (
-            <div key={job.company} className="p-experience">
-              <div className="p-experience__header">
-                <div>
-                  <strong>{job.title}</strong>
-                  <span className="p-dim"> at </span>
-                  <a href={job.url} target="_blank" rel="noopener noreferrer" className="p-link">{job.company}</a>
-                </div>
-                <span className="p-dim">{job.period}</span>
-              </div>
-              <p className="p-experience__desc">{job.description}</p>
-            </div>
-          ))}
-        </Section>
-
-        {/* /projects */}
-        <Section delay={340}>
-          <SectionHeading>projects</SectionHeading>
-          <div className="p-grid">
+          {/* Other projects */}
+          <div className="p-project-list">
             {otherProjects.map(p => (
-              <ProjectCard key={p.name} project={p} />
-            ))}
-          </div>
-        </Section>
-
-        {/* /skills */}
-        <Section delay={400}>
-          <SectionHeading>skills</SectionHeading>
-          <div className="p-skills">
-            {SKILLS.map(group => (
-              <div key={group.category} className="p-skills__group">
-                <h3 className="p-skills__category">{group.category}</h3>
-                <div className="p-pills">
-                  {group.items.map(item => (
-                    <span key={item} className="p-pill">{item}</span>
-                  ))}
-                </div>
+              <div key={p.name} className="p-project-row">
+                {p.github ? (
+                  <a href={p.github} target="_blank" rel="noopener noreferrer" className="p-link">
+                    {p.name}
+                  </a>
+                ) : (
+                  <span>{p.name}</span>
+                )}
               </div>
             ))}
           </div>
-        </Section>
-
-        {/* /education */}
-        <Section delay={460}>
-          <SectionHeading>education</SectionHeading>
-          {EDUCATION.map(e => (
-            <HighlightItem key={e.title}>
-              <strong>{e.title}</strong>
-              <span className="p-dim"> &middot; {e.period}</span>
-            </HighlightItem>
-          ))}
         </Section>
       </main>
 
       {/* Footer */}
-      <footer className="p-footer" style={{ animationDelay: '520ms' }}>
+      <footer className="p-footer" style={{ animationDelay: '320ms' }}>
         luisreche.dev &middot; 2026
       </footer>
     </div>
