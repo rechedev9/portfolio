@@ -287,6 +287,33 @@
   padding: 3px 4px;
 }
 
+/* Experience */
+.p-experience {
+  margin-bottom: 20px;
+}
+
+.p-experience:last-child {
+  margin-bottom: 0;
+}
+
+.p-experience__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 15px;
+  color: #2a2c3e;
+}
+
+.p-experience__desc {
+  font-size: 14px;
+  line-height: 1.65;
+  color: #6b6e85;
+  margin: 0;
+}
+
 /* Project cards — 2-column grid */
 .p-grid {
   display: grid;
@@ -308,27 +335,48 @@
   transform: translateY(-1px);
 }
 
-.p-card__category {
-  font-size: 13px;
-  font-weight: 600;
-  color: #2a2c3e;
-  margin: 0 0 8px;
-}
-
-.p-card__link {
-  font-size: 14px;
-  color: #d4585a;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.p-card__link:hover {
-  text-decoration: underline;
+.p-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
 }
 
 .p-card__name {
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2a2c3e;
+}
+
+.p-card__gh {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ea1b6;
+  transition: color 0.15s;
+}
+
+.p-card__gh:hover {
+  color: #2a2c3e;
+}
+
+.p-card__desc {
+  font-size: 13px;
+  line-height: 1.55;
   color: #6b6e85;
+  margin: 0 0 10px;
+}
+
+.p-pills--sm {
+  margin-bottom: 0;
+}
+
+/* Featured header with GitHub icon */
+.p-featured__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
 }
 
 /* Skills */

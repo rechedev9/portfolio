@@ -3,6 +3,12 @@ import { useEffect } from 'react';
 import { PROFILE, SKILLS, EXPERIENCE, PROJECTS, EDUCATION, CONTACT } from './data/portfolio';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
 
+const GITHUB_ICON = (
+  <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" aria-hidden="true">
+    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+  </svg>
+);
+
 const SOCIAL_LINKS = [
   {
     label: 'GitHub',
@@ -69,17 +75,26 @@ function HighlightItem({ children }: { readonly children: ReactNode }): ReactEle
 
 type Project = (typeof PROJECTS)[number];
 
-function ProjectCard({ project, category }: { readonly project: Project; readonly category: string }): ReactElement {
+function ProjectCard({ project }: { readonly project: Project }): ReactElement {
   return (
     <div className="p-card">
-      <h3 className="p-card__category">{category}</h3>
-      {project.url ? (
-        <a href={project.url} target="_blank" rel="noopener noreferrer" className="p-card__link">
-          {project.name}
-        </a>
-      ) : (
+      <div className="p-card__header">
         <span className="p-card__name">{project.name}</span>
-      )}
+        {project.github && (
+          <a href={project.github} target="_blank" rel="noopener noreferrer" className="p-card__gh" aria-label={`${project.name} on GitHub`}>
+            {GITHUB_ICON}
+          </a>
+        )}
+      </div>
+      <p className="p-card__desc">{project.highlights[0]}</p>
+      <div className="p-pills p-pills--sm">
+        {project.tech.slice(0, 3).map(t => (
+          <span key={t} className="p-pill">{t}</span>
+        ))}
+        {project.tech.length > 3 && (
+          <span className="p-pill p-pill--more">+{project.tech.length - 3}</span>
+        )}
+      </div>
     </div>
   );
 }
@@ -93,8 +108,8 @@ export function Portfolio(): ReactElement {
     };
   }, []);
 
-  const gravityRoom = PROJECTS.find(p => p.name === 'Workout Tracker');
-  const otherProjects = PROJECTS.filter(p => p.name !== 'Workout Tracker');
+  const gravityRoom = PROJECTS.find(p => p.name === 'Gravity Room');
+  const otherProjects = PROJECTS.filter(p => p.name !== 'Gravity Room');
 
   return (
     <div className="p-page">
@@ -133,31 +148,32 @@ export function Portfolio(): ReactElement {
           </div>
         </Section>
 
-        {/* /highlights */}
-        <Section delay={140}>
-          <SectionHeading>highlights</SectionHeading>
-          {EXPERIENCE.map(job => (
-            <div key={job.company}>
-              {job.highlights.map(h => (
-                <HighlightItem key={h}>
-                  {h} at{' '}
-                  <a href={job.url} target="_blank" rel="noopener noreferrer" className="p-link">
-                    {job.company}
-                  </a>
-                  .
-                </HighlightItem>
-              ))}
-            </div>
-          ))}
-        </Section>
+        {/* /highlights — Gravity Room achievements */}
+        {gravityRoom && (
+          <Section delay={140}>
+            <SectionHeading>highlights</SectionHeading>
+            {gravityRoom.highlights.map(h => (
+              <HighlightItem key={h}>
+                {h}.
+              </HighlightItem>
+            ))}
+          </Section>
+        )}
 
-        {/* /featured */}
+        {/* /featured — Gravity Room */}
         {gravityRoom && (
           <Section delay={220}>
             <SectionHeading>featured</SectionHeading>
             <div className="p-featured">
               <div className="p-featured__body">
-                <h3 className="p-featured__title">Gravity Room</h3>
+                <div className="p-featured__header">
+                  <h3 className="p-featured__title">Gravity Room</h3>
+                  {gravityRoom.github && (
+                    <a href={gravityRoom.github} target="_blank" rel="noopener noreferrer" className="p-card__gh" aria-label="Gravity Room on GitHub">
+                      {GITHUB_ICON}
+                    </a>
+                  )}
+                </div>
                 <p className="p-featured__desc">
                   A fullstack fitness app for tracking workouts and strength progression.
                 </p>
@@ -182,22 +198,36 @@ export function Portfolio(): ReactElement {
           </Section>
         )}
 
+        {/* /experience */}
+        <Section delay={280}>
+          <SectionHeading>experience</SectionHeading>
+          {EXPERIENCE.map(job => (
+            <div key={job.company} className="p-experience">
+              <div className="p-experience__header">
+                <div>
+                  <strong>{job.title}</strong>
+                  <span className="p-dim"> at </span>
+                  <a href={job.url} target="_blank" rel="noopener noreferrer" className="p-link">{job.company}</a>
+                </div>
+                <span className="p-dim">{job.period}</span>
+              </div>
+              <p className="p-experience__desc">{job.description}</p>
+            </div>
+          ))}
+        </Section>
+
         {/* /projects */}
-        <Section delay={300}>
+        <Section delay={340}>
           <SectionHeading>projects</SectionHeading>
           <div className="p-grid">
             {otherProjects.map(p => (
-              <ProjectCard
-                key={p.name}
-                project={p}
-                category={p.tech.some(t => t.includes('Chrome')) ? 'Browser Extensions' : 'Tools'}
-              />
+              <ProjectCard key={p.name} project={p} />
             ))}
           </div>
         </Section>
 
         {/* /skills */}
-        <Section delay={380}>
+        <Section delay={400}>
           <SectionHeading>skills</SectionHeading>
           <div className="p-skills">
             {SKILLS.map(group => (

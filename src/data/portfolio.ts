@@ -28,6 +28,7 @@ export type Job = {
 export type Project = {
   readonly name: string;
   readonly url?: string;
+  readonly github?: string;
   readonly tech: readonly string[];
   readonly highlights: readonly string[];
 };
@@ -103,8 +104,9 @@ export const EXPERIENCE: readonly Job[] = [
 
 export const PROJECTS: readonly Project[] = [
   {
-    name: 'Workout Tracker',
+    name: 'Gravity Room',
     url: 'https://gravityroom.app',
+    github: 'https://github.com/rechedev9/gravity-room',
     tech: ['React 19', 'Vite', 'ElysiaJS', 'Drizzle ORM', 'PostgreSQL', 'Zod', 'TanStack Query', 'Bun'],
     highlights: [
       'Bun monorepo: shared package + ElysiaJS API + React 19 SPA on Railway',
@@ -116,6 +118,7 @@ export const PROJECTS: readonly Project[] = [
   },
   {
     name: 'Berrus Helper',
+    github: 'https://github.com/rechedev9/berrus-helper',
     tech: ['TypeScript', 'Bun', 'Chrome Extension (Manifest V3)', 'HappyDOM'],
     highlights: [
       'Chrome extension: idle timers, price tracking with sparklines, hiscores',
@@ -125,10 +128,35 @@ export const PROJECTS: readonly Project[] = [
   },
   {
     name: 'Tealium MCP Server',
+    github: 'https://github.com/rechedev9/tealium-mcp-server',
     tech: ['TypeScript', 'Model Context Protocol (MCP)'],
     highlights: [
       '5 tools (validation, debugging, docs, codegen, parsing) + 6 resources',
       'Zod schemas for e-commerce and hospitality sectors',
+    ],
+  },
+  {
+    name: 'SDD Workflow',
+    github: 'https://github.com/rechedev9/sdd-workflow',
+    tech: ['TypeScript', 'Claude Code'],
+    highlights: [
+      'Spec-Driven Development for Claude Code — structured AI coding pipeline',
+    ],
+  },
+  {
+    name: 'Honey Encryption Proxy',
+    github: 'https://github.com/rechedev9/honey-encryption-proxy',
+    tech: ['TypeScript', 'Bun'],
+    highlights: [
+      'Local proxy applying Format-Preserving and Honey Encryption to obfuscate source identifiers',
+    ],
+  },
+  {
+    name: 'VanillaGravity',
+    github: 'https://github.com/rechedev9/VanillaGravity',
+    tech: ['TypeScript', 'Bun', 'Raw SQL', 'Plain CSS'],
+    highlights: [
+      'GZCLP Tracker rebuilt from scratch — no frameworks, no abstractions',
     ],
   },
 ];
