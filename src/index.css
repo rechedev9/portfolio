@@ -67,6 +67,8 @@
   justify-content: space-between;
   padding: 44px 0 0;
   animation: p-reveal 0.5s ease both;
+  position: relative;
+  z-index: 10;
 }
 
 .p-avatar {
