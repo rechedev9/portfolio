@@ -79,7 +79,7 @@
 
 /* Override theme-switcher position inside portfolio */
 .p-page .theme-switcher {
-  position: static;
+  position: relative;
 }
 
 /* Sections — staggered reveal */
