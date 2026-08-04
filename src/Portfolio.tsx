@@ -34,7 +34,13 @@ function SectionHeading({
 
 function ArrowLine({ children }: { readonly children: ReactNode }): ReactElement {
   return (
-    <p className="relative mb-0 pl-7 text-xl leading-relaxed text-gray-500 before:absolute before:top-1/2 before:left-0 before:block before:-translate-y-1/2 before:text-neutral-300 before:content-['↳'] dark:text-gray-400 dark:before:text-neutral-600">
+    <p className="relative mb-0 pl-7 text-xl leading-relaxed text-gray-500 dark:text-gray-400">
+      <span
+        className="pointer-events-none absolute top-0 left-0 select-none font-mono text-neutral-300 dark:text-neutral-600"
+        aria-hidden="true"
+      >
+        ↳
+      </span>
       {children}
     </p>
   );

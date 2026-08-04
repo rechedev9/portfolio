@@ -155,8 +155,18 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps): ReactEle
     setQuery('');
     setActiveIndex(0);
     const t = window.setTimeout(() => inputRef.current?.focus(), 0);
-    return (): void => window.clearTimeout(t);
-  }, [open]);
+    const onKey = (e: KeyboardEvent): void => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return (): void => {
+      window.clearTimeout(t);
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [open, onClose]);
 
   useEffect(() => {
     setActiveIndex(0);
