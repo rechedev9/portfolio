@@ -1,214 +1,321 @@
+import { useCallback, useEffect, useState } from 'react';
 import type { ReactElement, ReactNode } from 'react';
-import { useEffect } from 'react';
-import { PROFILE, PROJECTS, CONTACT } from './data/portfolio';
+import { Link } from 'react-router-dom';
+import {
+  ALWAYS,
+  FOOTER_LINKS,
+  HIGHLIGHTS,
+  LIVE_PROJECTS,
+  PROFILE,
+  PROJECT_CATEGORIES,
+  SOCIAL_LINKS,
+} from './data/portfolio';
+import { CommandPalette } from './components/CommandPalette';
+import { CommandIcon, MoonIcon, SunIcon } from './components/icons';
+import { socialIconFor } from './components/SocialIcons';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
 
-const SOCIAL_LINKS = [
-  {
-    label: 'GitHub',
-    href: `https://${CONTACT.github}`,
-    color: '#24292f',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true">
-        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-      </svg>
-    ),
-  },
-  {
-    label: 'LinkedIn',
-    href: `https://${CONTACT.linkedin}`,
-    color: '#0a66c2',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true">
-        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Email',
-    href: `mailto:${CONTACT.email}`,
-    color: '#d4585a',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true">
-        <path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" />
-        <path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z" />
-      </svg>
-    ),
-  },
-] as const;
-
-function Section({ children, delay }: { readonly children: ReactNode; readonly delay: number }): ReactElement {
+function SectionHeading({
+  children,
+  id,
+}: {
+  readonly children: string;
+  readonly id?: string;
+}): ReactElement {
   return (
-    <section className="p-section" style={{ animationDelay: `${delay}ms` }}>
+    <h2
+      id={id ?? `heading-${children}`}
+      className="mt-16 mb-4 font-mono text-2xl text-neutral-500 opacity-75 dark:text-neutral-300"
+    >
+      /{children}
+    </h2>
+  );
+}
+
+function ArrowLine({ children }: { readonly children: ReactNode }): ReactElement {
+  return (
+    <p className="relative mb-0 pl-7 text-xl leading-relaxed text-gray-500 before:absolute before:top-1/2 before:left-0 before:block before:-translate-y-1/2 before:text-neutral-300 before:content-['↳'] dark:text-gray-400 dark:before:text-neutral-600">
       {children}
-    </section>
+    </p>
   );
 }
 
-function SectionHeading({ children }: { readonly children: string }): ReactElement {
+function NavIconButton({
+  title,
+  label,
+  onClick,
+  children,
+}: {
+  readonly title: string;
+  readonly label: string;
+  readonly onClick: () => void;
+  readonly children: ReactNode;
+}): ReactElement {
   return (
-    <div className="p-heading">
-      <span className="p-heading__label">/{children}</span>
-      <div className="p-heading__line" />
-    </div>
-  );
-}
-
-function Bracket(): ReactElement {
-  return <span className="p-bracket" aria-hidden="true" />;
-}
-
-function HighlightItem({ children }: { readonly children: ReactNode }): ReactElement {
-  return (
-    <div className="p-highlight">
-      <Bracket />
-      <p className="p-highlight__text">{children}</p>
-    </div>
+    <button
+      type="button"
+      title={title}
+      onClick={onClick}
+      className="cursor-pointer rounded-md border-2 border-transparent p-2 transition-all hover:border-primary focus-visible:border-primary focus-visible:outline-none"
+      aria-label={label}
+    >
+      {children}
+    </button>
   );
 }
 
 export function Portfolio(): ReactElement {
+  const [paletteOpen, setPaletteOpen] = useState(false);
+  const [dark, setDark] = useState(false);
+  const year = new Date().getFullYear();
+
   useEffect(() => {
-    document.title = 'Luis Reche | Fullstack Developer';
+    document.title = `${PROFILE.name} — ${PROFILE.title}`;
     document.body.classList.add('clean-body');
+
+    const syncDark = (): void => {
+      const isDark = document.documentElement.classList.contains('dark');
+      setDark(isDark);
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute('content', isDark ? '#0a0a0a' : '#ffffff');
+    };
+    syncDark();
+    window.addEventListener('theme-change', syncDark);
+
     return (): void => {
       document.body.classList.remove('clean-body');
+      window.removeEventListener('theme-change', syncDark);
     };
   }, []);
 
-  const gravityRoom = PROJECTS.find(p => p.name === 'Gravity Room');
-  const sddWorkflow = PROJECTS.find(p => p.name === 'SDD Workflow');
-  const otherProjects = PROJECTS.filter(p => p.name !== 'Gravity Room' && p.name !== 'SDD Workflow');
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent): void => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setPaletteOpen((v) => !v);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return (): void => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  useEffect(() => {
+    if (!paletteOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return (): void => {
+      document.body.style.overflow = prev;
+    };
+  }, [paletteOpen]);
+
+  const toggleDark = useCallback((): void => {
+    const next = !document.documentElement.classList.contains('dark');
+    document.documentElement.classList.toggle('dark', next);
+    localStorage.setItem('theme', next ? 'dark' : 'light');
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', next ? '#0a0a0a' : '#ffffff');
+    setDark(next);
+    window.dispatchEvent(new Event('theme-change'));
+  }, []);
 
   return (
-    <div className="p-page">
-      {/* Top bar */}
-      <div className="p-topbar" style={{ animationDelay: '0ms' }}>
-        <div className="p-avatar" />
-        <ThemeSwitcher currentTheme="clean" />
+    <main className="p-6 sm:p-12 md:p-16">
+      <div className="mx-auto md:max-w-[37.5rem]">
+        <header>
+          <nav className="flex items-center justify-between" aria-label="Primary">
+            <Link
+              to="/"
+              className="block h-8 w-8 border border-transparent bg-linear-to-r from-primary to-accent transition-all will-change-auto hover:w-16 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              aria-label={PROFILE.site}
+            >
+              <span className="sr-only">{PROFILE.site}</span>
+            </Link>
+
+            <div className="flex items-center gap-0.5">
+              <NavIconButton
+                title={dark ? 'Light mode' : 'Dark mode'}
+                label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+                onClick={toggleDark}
+              >
+                {dark ? <SunIcon /> : <MoonIcon />}
+              </NavIconButton>
+
+              <NavIconButton
+                title="⌘K"
+                label="Open command palette"
+                onClick={() => setPaletteOpen(true)}
+              >
+                <CommandIcon className="h-[25px] w-[25px]" />
+              </NavIconButton>
+
+              <ThemeSwitcher currentTheme="clean" compact />
+            </div>
+          </nav>
+        </header>
+
+        <div>
+          {/* /me */}
+          <section id="me" aria-labelledby="heading-me">
+            <h2
+              id="heading-me"
+              className="mt-16 mb-4 font-mono text-2xl text-neutral-500 opacity-75 dark:text-neutral-300"
+            >
+              /me
+            </h2>
+            <h1 className="text-3xl font-semibold tracking-tight text-accent">{PROFILE.name}</h1>
+            <div className="mt-2 mb-4">
+              <ArrowLine>
+                <span className="text-black dark:text-white">{PROFILE.title}</span>
+                {', '}
+                {PROFILE.tagline}
+              </ArrowLine>
+            </div>
+            <ul className="flex flex-wrap gap-2 text-black dark:text-white">
+              {SOCIAL_LINKS.map((link) => (
+                <li key={link.id} title={link.label}>
+                  <a
+                    href={link.href}
+                    target={link.download || link.id === 'email' ? undefined : '_blank'}
+                    rel={link.download || link.id === 'email' ? undefined : 'noreferrer'}
+                    download={link.download || undefined}
+                    aria-label={link.label}
+                    className="block rounded rounded-b-none border-2 border-b-0 border-dashed border-border/80 p-2 transition-colors hover:bg-neutral-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:hover:bg-neutral-900"
+                  >
+                    {socialIconFor(link.id)}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* /always */}
+          <section id="always" aria-labelledby="heading-always">
+            <SectionHeading>always</SectionHeading>
+            <div className="space-y-4">
+              <ArrowLine>{ALWAYS}</ArrowLine>
+            </div>
+          </section>
+
+          {/* /highlights */}
+          <section id="highlights" aria-labelledby="heading-highlights">
+            <SectionHeading>highlights</SectionHeading>
+            <div className="space-y-4">
+              {HIGHLIGHTS.map((h) => (
+                <ArrowLine key={h.text}>
+                  {h.text}
+                  {h.link && (
+                    <a
+                      href={h.link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="underline decoration-neutral-300 underline-offset-4 transition-colors hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:decoration-neutral-600 dark:hover:text-white"
+                    >
+                      {h.link.label}
+                    </a>
+                  )}
+                  {h.suffix}
+                </ArrowLine>
+              ))}
+            </div>
+          </section>
+
+          {/* /projects */}
+          <section id="projects" aria-labelledby="heading-projects">
+            <SectionHeading>projects</SectionHeading>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              {PROJECT_CATEGORIES.map((cat) => (
+                <div
+                  key={cat.title}
+                  className="border-2 border-dashed border-border/80 p-4 transition-colors hover:border-border"
+                >
+                  <h3 className="mb-3 flex items-center justify-between text-base text-foreground">
+                    <span>
+                      {cat.title}
+                      <span className="ml-1" aria-hidden="true">
+                        {cat.emoji}
+                      </span>
+                    </span>
+                  </h3>
+                  <ul className="space-y-2">
+                    {cat.items.map((item) => (
+                      <li key={item.name}>
+                        <a
+                          href={item.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-base transition-colors hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                        >
+                          {item.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+
+        <div className="mt-12 flex flex-col gap-12 pb-12">
+          {/* /live */}
+          <section id="live" className="flex flex-col font-mono" aria-labelledby="heading-live">
+            <h2
+              id="heading-live"
+              className="mb-4 font-mono text-2xl text-neutral-500 opacity-75 dark:text-neutral-300"
+            >
+              /live
+            </h2>
+            <div className="flex flex-col gap-2">
+              {LIVE_PROJECTS.map((p) => (
+                <a
+                  key={p.name}
+                  href={p.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-between gap-6 border border-dashed border-border px-4 py-4 transition-colors hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:hover:bg-gray-900"
+                >
+                  <div className="flex min-w-0 flex-col">
+                    <span className="truncate">{p.name}</span>
+                    <span className="text-sm text-gray-600 dark:text-gray-400">{p.description}</span>
+                  </div>
+                  <img
+                    src={p.icon}
+                    alt=""
+                    width={40}
+                    height={40}
+                    className="h-10 w-10 shrink-0 object-contain transition-transform group-hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </a>
+              ))}
+            </div>
+          </section>
+
+          <footer className="flex flex-col justify-between gap-4 border-t border-dashed border-border pt-6 font-mono text-sm sm:flex-row sm:items-center">
+            <Link to="/" className="hover:underline focus-visible:underline">
+              {PROFILE.site} ✨ {year}
+            </Link>
+            <div className="flex flex-wrap gap-x-6 gap-y-2">
+              {FOOTER_LINKS.map((link, i) => (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  className={
+                    i < FOOTER_LINKS.length - 1
+                      ? "relative hover:underline after:absolute after:top-0 after:right-[-16px] after:text-gray-500 after:content-['/'] focus-visible:underline"
+                      : 'relative hover:underline focus-visible:underline'
+                  }
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </footer>
+        </div>
       </div>
 
-      <main>
-        {/* /me */}
-        <Section delay={60}>
-          <SectionHeading>me</SectionHeading>
-          <h1 className="p-name">{PROFILE.name}</h1>
-          <div className="p-intro">
-            <Bracket />
-            <p className="p-intro__text">
-              <strong>{PROFILE.title}</strong>
-              <span className="p-intro__dim">, focused on code quality, testing, and continuous delivery.</span>
-            </p>
-          </div>
-          <div className="p-socials">
-            {SOCIAL_LINKS.map(link => (
-              <a
-                key={link.label}
-                href={link.href}
-                target={link.label !== 'Email' ? '_blank' : undefined}
-                rel={link.label !== 'Email' ? 'noopener noreferrer' : undefined}
-                className="p-socials__icon"
-                style={{ color: link.color }}
-                aria-label={link.label}
-              >
-                {link.icon}
-              </a>
-            ))}
-          </div>
-        </Section>
-
-        {/* /highlights */}
-        <Section delay={140}>
-          <SectionHeading>highlights</SectionHeading>
-          <HighlightItem>
-            Building a fullstack fitness app used by real people at <a href="https://gravityroom.app" target="_blank" rel="noopener noreferrer" className="p-link">gravityroom.app</a>.
-          </HighlightItem>
-          <HighlightItem>
-            Going deep on AI tooling — built an <a href="https://github.com/rechedev9/honey-encryption-proxy" target="_blank" rel="noopener noreferrer" className="p-link">encryption proxy</a> and a <a href="https://github.com/rechedev9/sdd-workflow" target="_blank" rel="noopener noreferrer" className="p-link">dev workflow</a> for Claude Code.
-          </HighlightItem>
-        </Section>
-
-        {/* Gravity Room — featured */}
-        {gravityRoom && (
-          <Section delay={220}>
-            <div className="p-hero-card">
-              <div className="p-hero-card__accent" aria-hidden="true" />
-              <div className="p-hero-card__body">
-                <h2 className="p-hero-card__title">Gravity Room</h2>
-                <p className="p-hero-card__tagline">
-                  Track your lifts, follow a real program, and watch yourself get stronger — built from the ground up.
-                </p>
-                <div className="p-hero-card__links">
-                  <a href={gravityRoom.url} target="_blank" rel="noopener noreferrer" className="p-hero-card__cta">
-                    Try it live
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-                  </a>
-                  {gravityRoom.github && (
-                    <a href={gravityRoom.github} target="_blank" rel="noopener noreferrer" className="p-hero-card__gh">
-                      Source code
-                    </a>
-                  )}
-                </div>
-              </div>
-            </div>
-          </Section>
-        )}
-
-        {/* SDD Workflow — featured */}
-        {sddWorkflow && (
-          <Section delay={280}>
-            <div className="p-hero-card">
-              <div className="p-hero-card__accent p-hero-card__accent--indigo" aria-hidden="true" />
-              <div className="p-hero-card__body">
-                <h2 className="p-hero-card__title">SDD Workflow</h2>
-                <p className="p-hero-card__tagline">
-                  An 11-phase AI coding pipeline for Claude Code — structured development that doesn't forget, doesn't hallucinate, and doesn't skip steps. 37+ skills, open source.
-                </p>
-                <div className="p-hero-card__links">
-                  {sddWorkflow.github && (
-                    <a href={sddWorkflow.github} target="_blank" rel="noopener noreferrer" className="p-hero-card__cta p-hero-card__cta--indigo">
-                      View on GitHub
-                      <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-                    </a>
-                  )}
-                </div>
-              </div>
-            </div>
-          </Section>
-        )}
-
-        {/* /projects */}
-        <Section delay={380}>
-          <SectionHeading>projects</SectionHeading>
-          <div className="p-cards">
-            {otherProjects.map(p => (
-              <div key={p.name} className="p-card">
-                <div className="p-card__top">
-                  <span className="p-card__name">{p.name}</span>
-                  <div className="p-card__links">
-                    {p.github && (
-                      <a href={p.github} target="_blank" rel="noopener noreferrer" className="p-card__icon" aria-label={`${p.name} on GitHub`}>
-                        <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-                      </a>
-                    )}
-                    {p.url && (
-                      <a href={p.url} target="_blank" rel="noopener noreferrer" className="p-card__icon" aria-label={`Visit ${p.name}`}>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="15" height="15"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-                      </a>
-                    )}
-                  </div>
-                </div>
-                <p className="p-card__desc">{p.highlights[0]}</p>
-              </div>
-            ))}
-          </div>
-        </Section>
-      </main>
-
-      {/* Footer */}
-      <footer className="p-footer" style={{ animationDelay: '320ms' }}>
-        luisreche.dev &middot; 2026
-      </footer>
-    </div>
+      <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
+    </main>
   );
 }

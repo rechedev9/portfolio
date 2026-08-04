@@ -2,39 +2,48 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (dark) document.documentElement.classList.add('dark');
+        } catch (e) {}
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Primary Meta Tags -->
-    <title>Luis Reche | Fullstack Developer</title>
-    <meta name="title" content="Luis Reche | Fullstack Developer" />
-    <meta name="description" content="Fullstack Software Developer from Spain. TypeScript, React, Node.js, Bun, PostgreSQL." />
+    <title>Luis Reche — Applied AI Backend Engineer</title>
+    <meta name="title" content="Luis Reche — Applied AI Backend Engineer" />
+    <meta name="description" content="Applied AI backend engineer building reliable LLM workflows and cloud systems in Go. Agent tooling, GCP, multi-agent delivery." />
     <meta name="author" content="Luis Lucas Reche" />
-    <meta name="keywords" content="Luis Reche, Fullstack Developer, TypeScript, React, Node.js, Bun, portfolio, software developer, Spain" />
+    <meta name="keywords" content="Luis Reche, Applied AI, Backend Engineer, Go, Agent Systems, GCP, TypeScript, portfolio, Spain" />
     <link rel="canonical" href="https://luisreche.dev/" />
 
     <!-- Open Graph / Facebook / LinkedIn / WhatsApp -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://luisreche.dev/" />
-    <meta property="og:title" content="Luis Reche | Fullstack Developer" />
-    <meta property="og:description" content="Fullstack Software Developer from Spain. TypeScript, React, Node.js, Bun. Interactive terminal portfolio." />
+    <meta property="og:title" content="Luis Reche — Applied AI Backend Engineer" />
+    <meta property="og:description" content="Applied AI backend engineer building reliable LLM workflows and cloud systems in Go. Agent tooling, GCP, multi-agent delivery." />
     <meta property="og:image" content="https://luisreche.dev/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:site_name" content="Luis Reche Portfolio" />
+    <meta property="og:site_name" content="Luis Reche" />
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://luisreche.dev/" />
-    <meta name="twitter:title" content="Luis Reche | Fullstack Developer" />
-    <meta name="twitter:description" content="Fullstack Software Developer from Spain. TypeScript, React, Node.js, Bun. Interactive terminal portfolio." />
+    <meta name="twitter:title" content="Luis Reche — Applied AI Backend Engineer" />
+    <meta name="twitter:description" content="Applied AI backend engineer building reliable LLM workflows and cloud systems in Go. Agent tooling, GCP, multi-agent delivery." />
     <meta name="twitter:image" content="https://luisreche.dev/og-image.png" />
 
     <!-- Theme -->
-    <meta name="theme-color" content="#0a0a0a" />
+    <meta name="theme-color" content="#ffffff" />
 
     <!-- Fonts (single request for all families) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -48,46 +57,46 @@
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Luis Lucas Reche",
-        "jobTitle": "Fullstack Software Developer",
-        "description": "Fullstack Developer with experience in TypeScript, React, and Node.js. Focused on code quality, testing, and continuous delivery.",
+        "jobTitle": "Applied AI Backend Engineer",
+        "description": "Applied AI backend engineer building reliable LLM workflows and cloud systems in Go. Agent tooling, GCP, multi-agent delivery.",
         "url": "https://luisreche.dev",
         "email": "rechedev@hotmail.com",
+        "image": "https://luisreche.dev/og-image.png",
         "address": {
           "@type": "PostalAddress",
           "addressCountry": "ES"
         },
         "knowsLanguage": ["Spanish", "Catalan", "English"],
         "knowsAbout": [
-          "TypeScript", "JavaScript", "React", "Node.js", "Bun",
-          "PostgreSQL", "Docker", "ElysiaJS", "Drizzle ORM",
-          "TanStack Query", "Tailwind CSS", "Playwright", "Git"
+          "Go", "TypeScript", "Applied AI", "Agent Systems", "MCP",
+          "GCP", "Cloud Run", "Terraform", "PostgreSQL", "Cloud Spanner",
+          "Connect RPC", "gRPC", "Docker", "GitHub Actions"
         ],
         "sameAs": [
           "https://github.com/rechedev9",
           "https://linkedin.com/in/luisrecheamado"
         ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Agentero",
+          "url": "https://agentero.com"
+        },
         "alumniOf": [
           {
             "@type": "EducationalOrganization",
             "name": "Harvard CS50"
           }
-        ],
-        "makesOffer": {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Fullstack Web Development",
-            "description": "TypeScript, React, Node.js, PostgreSQL, Docker"
-          }
-        }
+        ]
       }
     </script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "Luis Reche Portfolio",
-        "url": "https://luisreche.dev"
+        "name": "Luis Reche",
+        "url": "https://luisreche.dev",
+        "description": "Applied AI Backend Engineer — Go, agent systems, GCP.",
+        "inLanguage": "en"
       }
     </script>
   </head>
@@ -99,82 +108,46 @@
     <noscript>
       <header>
         <h1>Luis Lucas Reche</h1>
-        <p><strong>Fullstack Software Developer</strong></p>
+        <p><strong>Applied AI Backend Engineer | Go &amp; Agent Systems</strong></p>
         <p>Spain</p>
       </header>
 
       <main>
         <section>
           <h2>About</h2>
-          <p>Fullstack Developer with experience in TypeScript, React, and Node.js. Focused on code quality, testing, and continuous delivery. Trained in Agile methodology.</p>
-          <p>Languages: Spanish (Native), Catalan (Native), English (B2 — Upper Intermediate)</p>
-        </section>
-
-        <section>
-          <h2>Skills</h2>
-          <h3>Languages &amp; Frameworks</h3>
-          <p>HTML, CSS, TypeScript, JavaScript, React, TanStack Query, Node.js, Bun, Express</p>
-          <h3>Backend &amp; APIs</h3>
-          <p>REST, ElysiaJS, Drizzle ORM, Zod, Discord Webhooks, MCP</p>
-          <h3>Databases</h3>
-          <p>PostgreSQL, MariaDB, MongoDB</p>
-          <h3>DevOps</h3>
-          <p>Docker, Git, GitHub Actions (CI/CD), Nginx, Playwright, ESLint, Prettier</p>
-          <h3>Testing</h3>
-          <p>Bun Test, HappyDOM, Playwright (E2E), Jest</p>
-          <h3>Other</h3>
-          <p>Chrome Extensions (Manifest V3), Tailwind CSS, Vite, Agile</p>
+          <p>Applied AI backend engineer building reliable LLM workflows and cloud systems in Go. Production experience spans AI-assisted document processing, cloud data services, correctness-sensitive operations, and internal agent tooling on GCP.</p>
+          <p>Languages: Spanish (Native), Catalan (Native), English (Advanced)</p>
         </section>
 
         <section>
           <h2>Experience</h2>
-          <h3>Fullstack Developer Freelance — berrus.app</h3>
+          <h3>Go Backend Engineer — Agentero</h3>
+          <p>Apr 2026 — Present</p>
+          <p>US insurance marketplace. Go backend services, AI-assisted workflows, RPC APIs, document processing, GCP data services with Terraform.</p>
+          <h3>Full-Stack Developer (Freelance) — berrus.app</h3>
           <p>Sep 2025 — Present</p>
-          <p>Integration of the game marketplace with Discord for a post-apocalyptic RPG in beta (Steam Q1:2027). Collaboration through PRs and code review.</p>
-          <ul>
-            <li>Webhook notification system with 99.2% delivery rate and &lt;80ms latency</li>
-            <li>Optimized SQL queries: 53% faster response time (145ms to 68ms)</li>
-            <li>Event pipeline handling 500+ marketplace notifications/hour</li>
-            <li>Chrome extension for improved game UX</li>
-            <li>35% database load reduction via connection pooling</li>
-          </ul>
+          <p>Discord webhooks, SQL optimization, Electron desktop client.</p>
         </section>
 
         <section>
           <h2>Projects</h2>
-
-          <h3>Workout Tracker</h3>
+          <h3>TickCut</h3>
+          <p><a href="https://tickcut.gravityroom.app/">tickcut.gravityroom.app</a> · <a href="https://github.com/rechedev9/tickcut">GitHub</a></p>
+          <p>Local-first CS2 demo → highlight reels pipeline (Go, HLAE, FFmpeg, Electron/Next Studio).</p>
+          <h3>Gravity Room</h3>
           <p><a href="https://gravityroom.app">gravityroom.app</a></p>
-          <p>Tech: React 19, Vite, ElysiaJS, Drizzle ORM, PostgreSQL, Zod, TanStack Query, Bun</p>
-          <ul>
-            <li>Bun monorepo: shared package + ElysiaJS API + React 19 SPA on Railway</li>
-            <li>JWT auth with token rotation, theft detection, and Google OAuth</li>
-            <li>Generic progression engine with declarative rules for strength programs</li>
-            <li>Observability: Prometheus metrics + structured Pino logging</li>
-            <li>CI/CD: GitHub Actions, Playwright E2E, Lefthook git hooks</li>
-          </ul>
-
-          <h3>Berrus Helper</h3>
-          <p>Tech: TypeScript, Bun, Chrome Extension (Manifest V3), HappyDOM</p>
-          <ul>
-            <li>Chrome extension: idle timers, price tracking with sparklines, hiscores</li>
-            <li>133 tests (integration + unit) with Bun Test and HappyDOM</li>
-            <li>Service worker for message routing, alarms, and session management</li>
-          </ul>
-
-          <h3>Tealium MCP Server</h3>
-          <p>Tech: TypeScript, Model Context Protocol (MCP)</p>
-          <ul>
-            <li>5 tools (validation, debugging, docs, codegen, parsing) + 6 resources</li>
-            <li>Zod schemas for e-commerce and hospitality sectors</li>
-          </ul>
+          <p>GZCLP strength tracker — TypeScript monorepo, Elysia/Postgres, React + Expo.</p>
+          <h3>Shenron</h3>
+          <p><a href="https://github.com/rechedev9/shenron">github.com/rechedev9/shenron</a></p>
+          <p>High-assurance multi-agent delivery with dual adversarial review.</p>
         </section>
 
         <section>
           <h2>Education</h2>
           <ul>
-            <li>Advanced Diploma in Web App Development (DAW) — 2024–2026</li>
-            <li>Harvard CS50 — Intro to Computer Science — 2024</li>
+            <li>Higher Technical Diploma in Web Application Development (DAW) — completed 2025</li>
+            <li>Harvard CS50 — Introduction to Computer Science — 2024</li>
+            <li>University of Helsinki Java Programming MOOC — 2024</li>
             <li>Claude Code in Action — Anthropic — 2026</li>
           </ul>
         </section>
@@ -184,6 +157,7 @@
           <p>Email: <a href="mailto:rechedev@hotmail.com">rechedev@hotmail.com</a></p>
           <p>GitHub: <a href="https://github.com/rechedev9">github.com/rechedev9</a></p>
           <p>LinkedIn: <a href="https://linkedin.com/in/luisrecheamado">linkedin.com/in/luisrecheamado</a></p>
+          <p>CV: <a href="/luis-reche-cv.pdf">Download CV (PDF)</a></p>
         </section>
       </main>
     </noscript>

@@ -1,10 +1,11 @@
 {
-  "name": "Luis Reche | Fullstack Developer",
+  "name": "Luis Reche — Applied AI Backend Engineer",
   "short_name": "Luis Reche",
+  "description": "Applied AI backend engineer. Go, agent systems, GCP.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0a0a0a",
-  "theme_color": "#0a0a0a",
+  "background_color": "#ffffff",
+  "theme_color": "#ff7a95",
   "icons": [
     {
       "src": "/favicon.svg",

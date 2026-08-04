@@ -13,6 +13,7 @@ interface ThemeOption {
 
 interface ThemeSwitcherProps {
   readonly currentTheme: ThemeId;
+  readonly compact?: boolean;
 }
 
 const THEMES: readonly ThemeOption[] = [
@@ -22,7 +23,10 @@ const THEMES: readonly ThemeOption[] = [
   { id: 'pokemon', label: 'Pokemon', icon: '\u26A1', path: '/pokemon' },
 ] as const;
 
-export function ThemeSwitcher({ currentTheme }: ThemeSwitcherProps): ReactElement {
+export function ThemeSwitcher({
+  currentTheme,
+  compact = false,
+}: ThemeSwitcherProps): ReactElement {
   const [open, setOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -40,11 +44,15 @@ export function ThemeSwitcher({ currentTheme }: ThemeSwitcherProps): ReactElemen
   }, []);
 
   useEffect(() => {
-    if (open) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
+    if (!open) return;
+    document.addEventListener('mousedown', handleClickOutside);
+    const onKey = (e: KeyboardEvent): void => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
     return (): void => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', onKey);
     };
   }, [open, handleClickOutside]);
 
@@ -58,31 +66,38 @@ export function ThemeSwitcher({ currentTheme }: ThemeSwitcherProps): ReactElemen
   );
 
   return (
-    <div className={`theme-switcher theme-switcher--${currentTheme}`}>
+    <div className={`theme-switcher theme-switcher--${currentTheme}${compact ? ' theme-switcher--compact' : ''}`}>
       <button
         ref={buttonRef}
         type="button"
         className="theme-switcher-btn"
-        onClick={() => setOpen(prev => !prev)}
+        onClick={() => setOpen((prev) => !prev)}
         aria-expanded={open}
+        aria-haspopup="listbox"
         aria-label="Theme switcher"
       >
-        <span className="theme-switcher-btn-icon">{'\u{1F3A8}'}</span>
-        <span className="theme-switcher-btn-label">Themes</span>
+        <span className="theme-switcher-btn-icon" aria-hidden="true">
+          {'\u{1F3A8}'}
+        </span>
+        {!compact && <span className="theme-switcher-btn-label">Themes</span>}
       </button>
 
       {open && (
-        <div ref={panelRef} className="theme-switcher-panel">
+        <div ref={panelRef} className="theme-switcher-panel" role="listbox" aria-label="Themes">
           <div className="theme-switcher-title">Choose Theme</div>
-          {THEMES.map(theme => (
+          {THEMES.map((theme) => (
             <button
               key={theme.id}
               type="button"
+              role="option"
+              aria-selected={theme.id === currentTheme}
               className={`theme-switcher-option${theme.id === currentTheme ? ' theme-switcher-option--active' : ''}`}
               onClick={() => handleSelect(theme)}
               disabled={theme.id === currentTheme}
             >
-              <span className="theme-switcher-option-icon">{theme.icon}</span>
+              <span className="theme-switcher-option-icon" aria-hidden="true">
+                {theme.icon}
+              </span>
               <span className="theme-switcher-option-label">{theme.label}</span>
             </button>
           ))}
