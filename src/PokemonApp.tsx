@@ -83,9 +83,11 @@ export function PokemonApp(): ReactElement {
 
   // Cleanup on unmount
   useEffect(() => {
+    const opening = openingRef.current;
+    const pallet = palletRef.current;
     return (): void => {
-      openingRef.current?.pause();
-      palletRef.current?.pause();
+      opening?.pause();
+      pallet?.pause();
     };
   }, []);
 

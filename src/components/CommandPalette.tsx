@@ -21,6 +21,13 @@ function scrollToId(id: string): void {
 }
 
 export function CommandPalette({ open, onClose }: CommandPaletteProps): ReactElement | null {
+  // Mounting the dialog only while open gives it fresh query/activeIndex state
+  // on every open, so no reset-in-effect is needed.
+  if (!open) return null;
+  return <CommandPaletteDialog onClose={onClose} />;
+}
+
+function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): ReactElement {
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
@@ -151,9 +158,6 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps): ReactEle
   }, [items, query]);
 
   useEffect(() => {
-    if (!open) return;
-    setQuery('');
-    setActiveIndex(0);
     const t = window.setTimeout(() => inputRef.current?.focus(), 0);
     const onKey = (e: KeyboardEvent): void => {
       if (e.key === 'Escape') {
@@ -166,11 +170,7 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps): ReactEle
       window.clearTimeout(t);
       window.removeEventListener('keydown', onKey);
     };
-  }, [open, onClose]);
-
-  useEffect(() => {
-    setActiveIndex(0);
-  }, [query]);
+  }, [onClose]);
 
   useEffect(() => {
     const el = listRef.current?.querySelector<HTMLElement>(`[data-index="${activeIndex}"]`);
@@ -211,8 +211,6 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps): ReactEle
     [activeIndex, filtered, onClose, runItem],
   );
 
-  if (!open) return null;
-
   return (
     <div
       className="fixed inset-0 z-50 flex items-start justify-center bg-black/40 px-4 pt-[12vh] backdrop-blur-sm"
@@ -228,7 +226,10 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps): ReactEle
           <input
             ref={inputRef}
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setActiveIndex(0);
+            }}
             onKeyDown={onKeyDown}
             placeholder={`Search ${PROFILE.name.toLowerCase()}…`}
             className="w-full bg-transparent py-2.5 text-base text-foreground outline-none placeholder:text-neutral-400"
