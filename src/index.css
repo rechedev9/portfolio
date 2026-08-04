@@ -47,6 +47,11 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Staggered section reveal — delay set inline per section */
+.reveal {
+  animation: p-reveal 0.55s ease both;
+}
+
 .clean-body {
   background: var(--color-background);
   color: var(--color-foreground);

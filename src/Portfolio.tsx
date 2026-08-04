@@ -127,7 +127,7 @@ export function Portfolio(): ReactElement {
   return (
     <main className="p-6 sm:p-12 md:p-16">
       <div className="mx-auto md:max-w-[37.5rem]">
-        <header>
+        <header className="reveal">
           <nav className="flex items-center justify-between" aria-label="Primary">
             <Link
               to="/"
@@ -161,7 +161,12 @@ export function Portfolio(): ReactElement {
 
         <div>
           {/* /me */}
-          <section id="me" aria-labelledby="heading-me">
+          <section
+            id="me"
+            aria-labelledby="heading-me"
+            className="reveal scroll-mt-8"
+            style={{ animationDelay: '60ms' }}
+          >
             <h2
               id="heading-me"
               className="mt-16 mb-4 font-mono text-2xl text-neutral-500 opacity-75 dark:text-neutral-300"
@@ -195,7 +200,12 @@ export function Portfolio(): ReactElement {
           </section>
 
           {/* /always */}
-          <section id="always" aria-labelledby="heading-always">
+          <section
+            id="always"
+            aria-labelledby="heading-always"
+            className="reveal scroll-mt-8"
+            style={{ animationDelay: '120ms' }}
+          >
             <SectionHeading>always</SectionHeading>
             <div className="space-y-4">
               <ArrowLine>{ALWAYS}</ArrowLine>
@@ -203,7 +213,12 @@ export function Portfolio(): ReactElement {
           </section>
 
           {/* /highlights */}
-          <section id="highlights" aria-labelledby="heading-highlights">
+          <section
+            id="highlights"
+            aria-labelledby="heading-highlights"
+            className="reveal scroll-mt-8"
+            style={{ animationDelay: '180ms' }}
+          >
             <SectionHeading>highlights</SectionHeading>
             <div className="space-y-4">
               {HIGHLIGHTS.map((h) => (
@@ -214,7 +229,7 @@ export function Portfolio(): ReactElement {
                       href={h.link.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="underline decoration-neutral-300 underline-offset-4 transition-colors hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:decoration-neutral-600 dark:hover:text-white"
+                      className="text-accent underline decoration-accent/40 underline-offset-4 transition-colors hover:decoration-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                     >
                       {h.link.label}
                     </a>
@@ -226,7 +241,12 @@ export function Portfolio(): ReactElement {
           </section>
 
           {/* /projects */}
-          <section id="projects" aria-labelledby="heading-projects">
+          <section
+            id="projects"
+            aria-labelledby="heading-projects"
+            className="reveal scroll-mt-8"
+            style={{ animationDelay: '240ms' }}
+          >
             <SectionHeading>projects</SectionHeading>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {PROJECT_CATEGORIES.map((cat) => (
@@ -235,12 +255,8 @@ export function Portfolio(): ReactElement {
                   className="border-2 border-dashed border-border/80 p-4 transition-colors hover:border-border"
                 >
                   <h3 className="mb-3 flex items-center justify-between text-base text-foreground">
-                    <span>
-                      {cat.title}
-                      <span className="ml-1" aria-hidden="true">
-                        {cat.emoji}
-                      </span>
-                    </span>
+                    <span>{cat.title}</span>
+                    <span aria-hidden="true">{cat.emoji}</span>
                   </h3>
                   <ul className="space-y-2">
                     {cat.items.map((item) => (
@@ -249,7 +265,7 @@ export function Portfolio(): ReactElement {
                           href={item.href}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-base transition-colors hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                          className="text-base text-accent underline decoration-accent/40 underline-offset-4 transition-colors hover:decoration-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                         >
                           {item.name}
                         </a>
@@ -264,7 +280,12 @@ export function Portfolio(): ReactElement {
 
         <div className="mt-12 flex flex-col gap-12 pb-12">
           {/* /live */}
-          <section id="live" className="flex flex-col font-mono" aria-labelledby="heading-live">
+          <section
+            id="live"
+            className="reveal flex scroll-mt-8 flex-col font-mono"
+            aria-labelledby="heading-live"
+            style={{ animationDelay: '300ms' }}
+          >
             <h2
               id="heading-live"
               className="mb-4 font-mono text-2xl text-neutral-500 opacity-75 dark:text-neutral-300"
@@ -281,7 +302,7 @@ export function Portfolio(): ReactElement {
                   className="group flex items-center justify-between gap-6 border border-dashed border-border px-4 py-4 transition-colors hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:hover:bg-gray-900"
                 >
                   <div className="flex min-w-0 flex-col">
-                    <span className="truncate">{p.name}</span>
+                    <span className="truncate text-accent">{p.name}</span>
                     <span className="text-sm text-gray-600 dark:text-gray-400">{p.description}</span>
                   </div>
                   <img
@@ -298,7 +319,10 @@ export function Portfolio(): ReactElement {
             </div>
           </section>
 
-          <footer className="flex flex-col justify-between gap-4 border-t border-dashed border-border pt-6 font-mono text-sm sm:flex-row sm:items-center">
+          <footer
+            className="reveal flex flex-col justify-between gap-4 border-t border-dashed border-border pt-6 font-mono text-sm sm:flex-row sm:items-center"
+            style={{ animationDelay: '360ms' }}
+          >
             <Link to="/" className="hover:underline focus-visible:underline">
               {PROFILE.site} ✨ {year}
             </Link>
