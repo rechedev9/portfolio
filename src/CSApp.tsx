@@ -6,11 +6,24 @@ import { useDocumentMeta } from './hooks/useDocumentMeta';
 
 const CS_MUSIC_PATH = '/cs-theme.mp3';
 const MUSIC_VOLUME = 0.5;
+// cs16.css ships an unlayered `*{margin:0;padding:0}` reset that overrides
+// Tailwind's layered utilities, so it must only exist while this theme is mounted.
+const CS16_CSS_URL = 'https://cdn.jsdelivr.net/gh/ekmas/cs16.css@main/css/cs16.min.css';
 
 export function CSApp(): ReactElement {
   useDocumentMeta('/cs');
   const [musicPlaying, setMusicPlaying] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = CS16_CSS_URL;
+    document.head.appendChild(link);
+    return (): void => {
+      link.remove();
+    };
+  }, []);
 
   useEffect(() => {
     const audio = audioRef.current;

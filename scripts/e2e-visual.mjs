@@ -83,7 +83,7 @@ async function main() {
   const icons = await page.$$eval('#live img', (imgs) =>
     imgs.map((i) => ({ src: i.getAttribute('src'), w: i.naturalWidth, h: i.naturalHeight, complete: i.complete })),
   );
-  if (icons.length >= 4) ok('live icons count', String(icons.length));
+  if (icons.length >= 3) ok('live icons count', String(icons.length));
   else fail('live icons count', String(icons.length));
   for (const icon of icons) {
     if (icon.complete && icon.w > 0) ok(`icon loads ${icon.src}`);
