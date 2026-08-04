@@ -142,7 +142,6 @@ export const PROJECT_CATEGORIES: readonly ProjectCategory[] = [
     emoji: '🤖',
     items: [
       { name: 'Shenron', href: 'https://github.com/rechedev9/shenron' },
-      { name: 'recon-cli', href: 'https://github.com/rechedev9/recon-cli' },
       { name: 'Tealium MCP Server', href: 'https://github.com/rechedev9/tealium-mcp-server' },
     ],
   },
@@ -191,13 +190,6 @@ export const LIVE_PROJECTS: readonly LiveProject[] = [
     href: 'https://github.com/rechedev9/shenron',
     initial: 'S',
     icon: '/images/live/shenron.svg',
-  },
-  {
-    name: 'recon-cli',
-    description: 'One CLI call replaces 10 recon tools for agents.',
-    href: 'https://github.com/rechedev9/recon-cli',
-    initial: 'R',
-    icon: '/images/live/recon.svg',
   },
 ];
 
@@ -324,14 +316,6 @@ export const PROJECTS: readonly Project[] = [
     highlights: [
       'High-assurance multi-agent delivery: isolated worktrees, dual adversarial review, durable implementation memory',
       '12-agent QA skill pack with bounded correction loops',
-    ],
-  },
-  {
-    name: 'recon-cli',
-    github: 'https://github.com/rechedev9/recon-cli',
-    tech: ['Go'],
-    highlights: [
-      'Project reconnaissance CLI — one structured call replaces ~10 tool invocations for AI coding assistants',
     ],
   },
   {

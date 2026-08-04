@@ -61,7 +61,6 @@ async function main() {
     'TickCut',
     'Gravity Room',
     'Shenron',
-    'recon-cli',
   ]) {
     if (await textExists(page, t)) ok(`home text: ${t}`);
     else fail(`home text: ${t}`);
@@ -207,7 +206,6 @@ async function main() {
     'https://tickcut.gravityroom.app/',
     'https://gravityroom.app/',
     'https://github.com/rechedev9/shenron',
-    'https://github.com/rechedev9/recon-cli',
   ]) {
     if (hrefs.some((h) => h.startsWith(need) || h === need || h.includes(need.replace(/\/$/, '')))) {
       ok(`link present ${need}`);
