@@ -1,17 +1,45 @@
-export type Language = {
-  readonly name: string;
-  readonly level: string;
+export type Link = {
+  readonly label: string;
+  readonly href: string;
 };
 
 export type Profile = {
   readonly name: string;
   readonly fullName: string;
   readonly title: string;
-  readonly tagline: string;
-  readonly summary: string;
+  readonly headline: string;
+  readonly subhead: string;
   readonly location: string;
   readonly site: string;
-  readonly languages: readonly Language[];
+  readonly languages: readonly string[];
+};
+
+export type Flagship = {
+  readonly name: string;
+  readonly client: string;
+  readonly clientUrl: string;
+  readonly metric: string;
+  readonly pitch: string;
+  readonly points: readonly string[];
+  readonly tech: readonly string[];
+  readonly links: readonly Link[];
+};
+
+export type Project = {
+  readonly name: string;
+  readonly kind: string;
+  readonly pitch: string;
+  readonly tech: readonly string[];
+  readonly links: readonly Link[];
+};
+
+export type Job = {
+  readonly title: string;
+  readonly company: string;
+  readonly url?: string;
+  readonly period: string;
+  readonly description: string;
+  readonly highlights: readonly string[];
 };
 
 export type SkillGroup = {
@@ -19,393 +47,183 @@ export type SkillGroup = {
   readonly items: readonly string[];
 };
 
-export type Job = {
-  readonly title: string;
-  readonly company: string;
-  readonly url: string;
-  readonly period: string;
-  readonly description: string;
-  readonly highlights: readonly string[];
-};
-
-export type Project = {
-  readonly name: string;
-  readonly url?: string;
-  readonly github?: string;
-  readonly tech: readonly string[];
-  readonly highlights: readonly string[];
-};
-
-export type ProjectCategory = {
-  readonly title: string;
-  readonly emoji: string;
-  readonly items: readonly {
-    readonly name: string;
-    readonly href: string;
-  }[];
-};
-
-export type Highlight = {
-  readonly text: string;
-  readonly link?: { readonly label: string; readonly href: string };
-  readonly suffix?: string;
-};
-
-export type LiveProject = {
-  readonly name: string;
-  readonly description: string;
-  readonly href: string;
-  readonly initial: string;
-  readonly icon: string;
-};
-
 export type Education = {
   readonly title: string;
   readonly period: string;
 };
 
-export type Contact = {
-  readonly email: string;
-  readonly github: string;
-  readonly linkedin: string;
-  readonly cv: string;
-};
-
 export type SocialLink = {
-  readonly id: string;
+  readonly id: 'github' | 'linkedin' | 'email' | 'cv';
   readonly label: string;
   readonly href: string;
-  readonly download?: boolean;
+  readonly download?: string;
 };
 
 export const PROFILE: Profile = {
   name: 'Luis Reche',
   fullName: 'Luis Lucas Reche',
-  title: 'Applied AI Backend Engineer',
-  tagline: 'building reliable LLM workflows and cloud systems in Go.',
-  summary:
-    'Applied AI backend engineer building reliable LLM workflows and cloud systems in Go. Production experience spans AI-assisted document processing, cloud data services, correctness-sensitive operations, and internal agent tooling on GCP. Designs bounded multi-agent delivery systems with explicit verification gates and persistent implementation memory.',
-  location: 'Spain',
+  title: 'Applied AI Engineer',
+  headline: 'I turn LLMs and coding agents into software people use.',
+  subhead:
+    'Go and TypeScript, from the service to the interface. I ship the product, and the guardrails that keep the agents honest.',
+  location: 'Palma, Spain',
   site: 'luisreche.dev',
-  languages: [
-    { name: 'Spanish', level: 'Native' },
-    { name: 'Catalan', level: 'Native' },
-    { name: 'English', level: 'Advanced' },
+  languages: ['Spanish (native)', 'Catalan (native)', 'English (advanced)'],
+};
+
+export const CONTACT = {
+  email: 'rechedev@hotmail.com',
+  github: 'https://github.com/rechedev9',
+  linkedin: 'https://www.linkedin.com/in/luisrecheamado',
+  cv: '/Luis-Reche-Applied-AI-Engineer-CV.pdf',
+  cvFileName: 'Luis-Reche-Applied-AI-Engineer-CV.pdf',
+} as const;
+
+export const PROOF_POINTS: readonly string[] = [
+  'Products with users',
+  'Agent guardrails',
+  'Go · TypeScript',
+  'Interface included',
+];
+
+export const PIPELINE: readonly { readonly label: string; readonly text: string }[] = [
+  { label: 'In', text: 'A CS2 demo' },
+  { label: 'Plan', text: 'Pick the plays worth keeping' },
+  { label: 'Make', text: 'Capture, edit, package' },
+  { label: 'Out', text: 'An edited video. 100+ users.' },
+];
+
+export const FLAGSHIP: Flagship = {
+  name: 'ClipHub',
+  client: 'SocialPro',
+  clientUrl: 'https://socialpro.es',
+  metric: '100+ users',
+  pitch:
+    'Send a CS2 demo, get an edited video of the best plays. A Windows desktop app I built for SocialPro, a gaming agency.',
+  points: [
+    'Go services for the pipeline, a Next.js studio, and an Electron shell that ships the Windows app.',
+    '130 versioned releases. The latest public release is ClipHub Studio 5.4.4.',
+    'The repo is written so a coding agent can build it, check the change in the app, and cut a release.',
+  ],
+  tech: ['Go', 'TypeScript', 'Next.js', 'Electron', 'FFmpeg'],
+  links: [
+    { label: 'Live site', href: 'https://cliphub.gravityroom.app/' },
+    { label: 'Source', href: 'https://github.com/rechedev9/cliphub' },
   ],
 };
 
-export const ALWAYS = 'Shipping Go backends, agent systems, and local-first tooling 🚀';
-
-export const HIGHLIGHTS: readonly Highlight[] = [
+export const PROJECTS: readonly Project[] = [
   {
-    text: 'Building Go backend services and AI-assisted workflows at ',
-    link: { label: 'Agentero', href: 'https://agentero.com' },
-    suffix: ' — insurance marketplace, RPC APIs, document processing 🛡️',
+    name: 'Shenron',
+    kind: 'Multi-agent delivery',
+    pitch:
+      'After a person approves the plan, two independent reviewers have to accept the same commit before it ships. A bounded correction loop, plus a 12-agent QA skill.',
+    tech: ['Claude Code', 'Codex', 'Git worktrees'],
+    links: [{ label: 'Source', href: 'https://github.com/rechedev9/shenron' }],
   },
   {
-    text: 'Running scheduled cloud data services on GCP with Terraform, streaming, and parallel execution under production load ☁️',
+    name: 'agent-git-toolkit',
+    kind: 'Agent guardrails',
+    pitch:
+      'A git shim, a commit checker and a comment linter so a coding agent cannot stage, commit or push unless the checks pass. Scope rules started from Agentero’s monorepo.',
+    tech: ['TypeScript', 'Bun'],
+    links: [{ label: 'Source', href: 'https://github.com/luis-reche-ag/agent-git-toolkit' }],
   },
   {
-    text: 'Shipping ',
-    link: { label: 'TickCut', href: 'https://tickcut.gravityroom.app/' },
-    suffix: ' — local-first CS2 demo → highlight reels pipeline in Go 🎮',
-  },
-  {
-    text: 'Designing high-assurance multi-agent delivery with ',
-    link: { label: 'Shenron', href: 'https://github.com/rechedev9/shenron' },
-    suffix: ' — dual adversarial review + durable memory 🐉',
-  },
-  {
-    text: 'Running a fullstack strength product at ',
-    link: { label: 'gravityroom.app', href: 'https://gravityroom.app' },
-    suffix: ' (web + Expo) 💪',
-  },
-];
-
-export const PROJECT_CATEGORIES: readonly ProjectCategory[] = [
-  {
-    title: 'Desktop / Creator',
-    emoji: '🖥️',
-    items: [
-      { name: 'TickCut', href: 'https://tickcut.gravityroom.app/' },
-    ],
-  },
-  {
-    title: 'Apps',
-    emoji: '📱',
-    items: [
-      { name: 'Gravity Room', href: 'https://gravityroom.app' },
-    ],
-  },
-  {
-    title: 'AI / Agents',
-    emoji: '🤖',
-    items: [
-      { name: 'Shenron', href: 'https://github.com/rechedev9/shenron' },
-      { name: 'Tealium MCP Server', href: 'https://github.com/rechedev9/tealium-mcp-server' },
-    ],
-  },
-  {
-    title: 'Infra / Go',
-    emoji: '☁️',
-    items: [
-      { name: 'riskforge', href: 'https://github.com/rechedev9/riskforge' },
-      { name: 'Honey Encryption Proxy', href: 'https://github.com/rechedev9/honey-encryption-proxy' },
-    ],
-  },
-  {
-    title: 'Templates',
-    emoji: '📐',
-    items: [
-      { name: 'nextrespawn', href: 'https://github.com/rechedev9/nextrespawn' },
-    ],
-  },
-  {
-    title: 'Extensions',
-    emoji: '🧩',
-    items: [
-      { name: 'Berrus Helper', href: 'https://github.com/rechedev9/berrus-helper' },
-    ],
-  },
-];
-
-export const LIVE_PROJECTS: readonly LiveProject[] = [
-  {
-    name: 'TickCut',
-    description: 'Local-first CS2 demos → vertical highlight reels.',
-    href: 'https://tickcut.gravityroom.app/',
-    initial: 'T',
-    icon: '/images/live/tickcut.svg',
+    name: 'Honey Encryption Proxy',
+    kind: 'LLM privacy',
+    pitch:
+      'A local proxy in front of Claude Code. It swaps proprietary names for format-preserving stand-ins before the request leaves the machine, then restores them in the stream.',
+    tech: ['TypeScript', 'Bun'],
+    links: [{ label: 'Source', href: 'https://github.com/rechedev9/honey-encryption-proxy' }],
   },
   {
     name: 'Gravity Room',
-    description: 'GZCLP strength tracker — web + mobile.',
-    href: 'https://gravityroom.app',
-    initial: 'G',
-    icon: '/images/live/gravity.svg',
-  },
-  {
-    name: 'Shenron',
-    description: 'Multi-agent delivery with dual adversarial review.',
-    href: 'https://github.com/rechedev9/shenron',
-    initial: 'S',
-    icon: '/images/live/shenron.svg',
-  },
-];
-
-export const SKILLS: readonly SkillGroup[] = [
-  {
-    category: 'Languages',
-    items: ['Go', 'TypeScript', 'JavaScript', 'SQL'],
-  },
-  {
-    category: 'Backend & data',
-    items: [
-      'Connect RPC',
-      'gRPC',
-      'Protobuf',
-      'REST',
-      'Cloud Spanner',
-      'PostgreSQL',
-      'BigQuery',
-      'ElysiaJS',
-      'Drizzle ORM',
+    kind: 'Product · web and mobile',
+    pitch:
+      'A live strength tracker with automatic progression. React and TanStack on the web, Expo on mobile, Elysia and Postgres behind them.',
+    tech: ['React', 'TanStack', 'Expo', 'Elysia', 'PostgreSQL'],
+    links: [
+      { label: 'Live site', href: 'https://gravityroom.app' },
+      { label: 'Source', href: 'https://github.com/rechedev9/gravity-room' },
     ],
   },
   {
-    category: 'Applied AI',
-    items: [
-      'LLM document extraction',
-      'Agent orchestration',
-      'MCP',
-      'Tool design',
-      'Structured outputs',
-      'Human-in-the-loop safety',
-    ],
+    name: 'riskforge',
+    kind: 'Portfolio · insurance systems',
+    pitch:
+      'A quote gateway I built to study the domain: parallel carrier calls in Go, and Terraform for Cloud Run, Spanner and Pub/Sub. A portfolio project, not a production system.',
+    tech: ['Go', 'Terraform', 'GCP'],
+    links: [{ label: 'Source', href: 'https://github.com/rechedev9/riskforge' }],
   },
   {
-    category: 'Cloud & infrastructure',
-    items: [
-      'GCP',
-      'Cloud Run',
-      'Pub/Sub',
-      'GCS',
-      'Terraform',
-      'Docker',
-      'GitHub Actions',
+    name: 'Piroboom',
+    kind: 'Client product',
+    pitch:
+      'A Next.js storefront for a fireworks shop in Elche: catalogue, product and event enquiries, built to work on a phone.',
+    tech: ['Next.js', 'TypeScript', 'Playwright'],
+    links: [
+      { label: 'Live site', href: 'https://pirotecniaelche.es' },
+      { label: 'Source', href: 'https://github.com/rechedev9/piroelche' },
     ],
-  },
-  {
-    category: 'Quality',
-    items: [
-      'Golden-master testing',
-      'Playwright',
-      'Adversarial review',
-      'Agent-based QA',
-      'Bun Test',
-    ],
-  },
-  {
-    category: 'Frontend & product',
-    items: ['React', 'Expo', 'Next.js', 'Electron', 'TanStack', 'Tailwind CSS', 'Vite'],
   },
 ];
 
 export const EXPERIENCE: readonly Job[] = [
   {
-    title: 'Go Backend Engineer',
+    title: 'Full Stack Engineer',
     company: 'Agentero',
-    url: 'https://agentero.com',
+    url: 'https://www.agentero.com',
     period: 'Apr 2026 — Present',
     description:
-      'US insurance marketplace connecting independent agents with carriers. Build and operate Go backend services and AI-assisted workflows spanning RPC APIs, document processing, and data operations.',
+      'US network that gives independent insurance agents carrier access and the software to run an agency. I work from Spain.',
     highlights: [
-      'Deliver scheduled cloud data services on GCP with streaming and parallel execution under production workloads; infrastructure managed with Terraform',
-      'Modernize correctness-sensitive operations with self-service tooling and golden-master tests that preserve output parity',
-      'Build internal AI tooling with safeguards for data freshness, naming variation, and schema changes',
+      'Published guardrails for coding agents, with commit scopes taken from Agentero’s monorepo.',
     ],
   },
   {
-    title: 'Full-Stack Developer (Freelance)',
-    company: 'berrus.app',
-    url: 'https://berrus.app',
-    period: 'Sep 2025 — Present',
-    description:
-      'Marketplace integrations for a post-apocalyptic RPG. Discord webhooks, SQL optimization, and a Windows desktop client with Electron.',
+    title: 'Freelance product engineer',
+    company: 'Independent',
+    url: 'https://rechedev.cloud',
+    period: '2025 — Present',
+    description: 'I design and build the product, from the first meeting to production.',
     highlights: [
-      'Built a Discord webhook notification service and contributed through pull-request review',
-      'Optimized SQL query paths and connection pooling',
-      'Building a Windows desktop client with Electron',
+      'ClipHub for SocialPro: a CS2 demo-to-video app with 100+ users.',
+      'Berrus: Discord notifications, faster SQL, and an Electron desktop client.',
+      'Piroboom: a Next.js storefront for a shop in Elche.',
     ],
   },
 ];
 
-export const PROJECTS: readonly Project[] = [
+export const SKILLS: readonly SkillGroup[] = [
   {
-    name: 'TickCut',
-    url: 'https://tickcut.gravityroom.app/',
-    github: 'https://github.com/rechedev9/tickcut',
-    tech: ['Go', 'Electron', 'Next.js', 'FFmpeg', 'HLAE', 'Lua'],
-    highlights: [
-      'Local-first Go pipeline: CS2 demos → deterministic kill plans → HLAE/CS2 capture → FFmpeg/Lua vertical reels',
-      'CLI + Electron/Next.js Studio with recovery-aware capture, human approval/QA gates, versioned Windows installers + SHA-256',
-    ],
+    category: 'Applied AI',
+    items: ['Claude Code', 'Codex', 'MCP', 'Tool and skill design', 'Human approval gates'],
   },
   {
-    name: 'Gravity Room',
-    url: 'https://gravityroom.app',
-    github: 'https://github.com/rechedev9/gravity-room',
-    tech: [
-      'TypeScript',
-      'Bun',
-      'ElysiaJS',
-      'PostgreSQL',
-      'React',
-      'Expo',
-      'TanStack',
-    ],
-    highlights: [
-      'GZCLP linear-progression tracker: monorepo with API, React web, Expo mobile, shared packages',
-      'Free, self-hosted product used by real people',
-    ],
+    category: 'Backend and cloud',
+    items: ['Go', 'PostgreSQL', 'gRPC / Connect', 'GCP', 'Terraform', 'Docker'],
   },
   {
-    name: 'Shenron',
-    github: 'https://github.com/rechedev9/shenron',
-    tech: ['Python', 'Claude Code', 'Codex', 'Multi-agent'],
-    highlights: [
-      'High-assurance multi-agent delivery: isolated worktrees, dual adversarial review, durable implementation memory',
-      '12-agent QA skill pack with bounded correction loops',
-    ],
+    category: 'Product interface',
+    items: ['TypeScript', 'React', 'Next.js', 'TanStack', 'Expo', 'Electron', 'Tailwind CSS'],
   },
   {
-    name: 'riskforge',
-    github: 'https://github.com/rechedev9/riskforge',
-    tech: ['Go', 'Terraform', 'GCP', 'Cloud Run', 'Spanner', 'Pub/Sub'],
-    highlights: [
-      'Multi-carrier insurance quote gateway with appetite pre-filter, parallel fan-out, and OWASP-hardened security',
-    ],
-  },
-  {
-    name: 'Tealium MCP Server',
-    github: 'https://github.com/rechedev9/tealium-mcp-server',
-    tech: ['TypeScript', 'MCP'],
-    highlights: [
-      '5 tools (validation, debugging, docs, codegen, parsing) + 6 resources with Zod schemas',
-    ],
-  },
-  {
-    name: 'Honey Encryption Proxy',
-    github: 'https://github.com/rechedev9/honey-encryption-proxy',
-    tech: ['TypeScript', 'Bun'],
-    highlights: [
-      'Local proxy applying Format-Preserving and Honey Encryption before identifiers reach LLM APIs',
-    ],
-  },
-  {
-    name: 'Berrus Helper',
-    github: 'https://github.com/rechedev9/berrus-helper',
-    tech: ['TypeScript', 'Bun', 'Chrome Extension (Manifest V3)'],
-    highlights: [
-      'Chrome extension: idle timers, price tracking, hiscores — 133 tests with Bun Test + HappyDOM',
-    ],
-  },
-  {
-    name: 'nextrespawn',
-    github: 'https://github.com/rechedev9/nextrespawn',
-    tech: ['Next.js 16', 'TypeScript', 'Prisma', 'Stripe', 'Auth.js'],
-    highlights: [
-      'Clone-ready SaaS boilerplate: auth, payments, email, blog',
-    ],
+    category: 'Quality',
+    items: ['Adversarial review', 'Playwright', 'Vitest', 'GitHub Actions'],
   },
 ];
 
 export const EDUCATION: readonly Education[] = [
-  {
-    title: 'Higher Technical Diploma in Web Application Development (DAW)',
-    period: 'Completed 2025',
-  },
-  {
-    title: 'Harvard CS50 — Introduction to Computer Science',
-    period: '2024',
-  },
-  {
-    title: 'University of Helsinki — Java Programming MOOC',
-    period: '2024',
-  },
-  {
-    title: 'Claude Code in Action — Anthropic',
-    period: '2026',
-  },
+  { title: 'Higher technical diploma in web application development (DAW)', period: '2024 — 2026' },
+  { title: 'Harvard CS50 — Introduction to Computer Science', period: '2024' },
+  { title: 'University of Helsinki — Java Programming MOOC', period: '2024' },
+  { title: 'Anthropic — Claude Code in Action', period: '2026' },
 ];
 
-export const CONTACT: Contact = {
-  email: 'rechedev@hotmail.com',
-  github: 'github.com/rechedev9',
-  linkedin: 'linkedin.com/in/luisrecheamado',
-  cv: '/luis-reche-cv.pdf',
-};
-
 export const SOCIAL_LINKS: readonly SocialLink[] = [
-  {
-    id: 'github',
-    label: 'GitHub',
-    href: `https://${CONTACT.github}`,
-  },
-  {
-    id: 'linkedin',
-    label: 'LinkedIn',
-    href: `https://${CONTACT.linkedin}`,
-  },
-  {
-    id: 'email',
-    label: CONTACT.email,
-    href: `mailto:${CONTACT.email}`,
-  },
-  {
-    id: 'cv',
-    label: 'Download CV',
-    href: CONTACT.cv,
-    download: true,
-  },
+  { id: 'email', label: CONTACT.email, href: `mailto:${CONTACT.email}` },
+  { id: 'linkedin', label: 'LinkedIn', href: CONTACT.linkedin },
+  { id: 'github', label: 'GitHub', href: CONTACT.github },
+  { id: 'cv', label: 'Download CV', href: CONTACT.cv, download: CONTACT.cvFileName },
 ];

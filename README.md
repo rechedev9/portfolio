@@ -1,8 +1,8 @@
 # luisreche.dev
 
-Portfolio for **Luis Reche** — Applied AI Backend Engineer | Go & Agent Systems.
+Portfolio for **Luis Reche** — Applied AI Engineer.
 
-Layout inspired by [josepvidal.dev](https://josepvidal.dev/): `/me`, `/always`, `/highlights`, `/projects`, `/live`.
+One page: a motion hero, ClipHub as the flagship, selected work, experience and contact. Content lives in `src/data/portfolio.ts`.
 
 ## Stack
 
@@ -13,16 +13,14 @@ Layout inspired by [josepvidal.dev](https://josepvidal.dev/): `/me`, `/always`, 
 ## Commands
 
 ```bash
-bun install
-bun run dev
-bun run build
-bun run typecheck
+npm install
+npm run dev
+npm run build
+npm run typecheck
+npm run lint
 ```
 
 ## Content
 
-Single source of truth: `src/data/portfolio.ts`
-
-- CV: `public/luis-reche-cv.pdf` (from Applied AI EN export)
-- Live icons: `public/images/live/`
+- CV: `public/Luis-Reche-Applied-AI-Engineer-CV.pdf` (same file also at `public/luis-reche-cv.pdf` so older links keep working)
 - Command palette: `⌘K` / `Ctrl+K`

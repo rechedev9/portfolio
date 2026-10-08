@@ -6,12 +6,15 @@
   /* josepvidal.dev-inspired tokens */
   --color-primary: #ffb696;
   --color-accent: #ff7a95;
+  /* Text on the page. The coral accent above is decorative only: it fails contrast as text. */
+  --color-accent-ink: #9f1239;
+  --color-neutral-ink: #525252;
   --color-background: #ffffff;
   --color-foreground: #0a0a0a;
   --color-border: #e5e5e5;
   --color-ring: #a1a1a1;
 
-  --font-family-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
 }
 
 .dark {
@@ -19,6 +22,8 @@
   --color-foreground: #fafafa;
   --color-border: rgb(255 255 255 / 0.1);
   --color-ring: #737373;
+  --color-accent-ink: #fecdd3;
+  --color-neutral-ink: #a3a3a3;
 }
 
 
@@ -34,6 +39,16 @@
 /* Staggered section reveal — delay set inline per section */
 .reveal {
   animation: p-reveal 0.55s ease both;
+}
+
+.reveal-on-scroll {
+  animation: none;
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.reveal-on-scroll.is-visible {
+  animation: p-reveal 0.6s ease both;
 }
 
 .clean-body {
@@ -60,6 +75,11 @@ html {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .reveal-on-scroll {
+    opacity: 1;
+    transform: none;
   }
 }
 

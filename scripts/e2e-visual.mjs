@@ -4,7 +4,7 @@ import path from 'node:path';
 
 const BASE = process.env.BASE_URL ?? 'http://127.0.0.1:5173';
 const OUT = process.env.OUT_DIR ?? '/tmp/portfolio-e2e';
-const CHROME = process.env.CHROME_PATH ?? '/usr/bin/google-chrome';
+const CHROME = process.env.CHROME_PATH ?? '/usr/local/bin/google-chrome';
 
 const results = [];
 
@@ -46,19 +46,16 @@ async function main() {
   await page.waitForSelector('h1');
 
   const title = await page.title();
-  if (title.includes('Applied AI Backend Engineer')) ok('document title', title);
+  if (title.includes('Applied AI Engineer') && !title.includes('Backend')) ok('document title', title);
   else fail('document title', title);
 
   for (const t of [
     'Luis Reche',
-    'Applied AI Backend Engineer',
-    '/me',
-    '/always',
-    '/highlights',
-    '/projects',
-    '/live',
+    'Applied AI Engineer',
+    'ClipHub',
+    'SocialPro',
+    '100+ users',
     'Agentero',
-    'TickCut',
     'Gravity Room',
     'Shenron',
   ]) {
@@ -66,29 +63,21 @@ async function main() {
     else fail(`home text: ${t}`);
   }
 
-  // Social + CV link
-  const cvHref = await page.$eval('a[aria-label="Download CV"]', (a) => a.getAttribute('href'));
-  if (cvHref === '/luis-reche-cv.pdf') ok('CV link href');
+  const banned = await page.evaluate(() => document.body.innerText);
+  if (!/Backend Engineer|TickCut/i.test(banned)) ok('no stale titles');
+  else fail('no stale titles', 'found Backend Engineer or TickCut');
+
+  const cvHref = await page.$eval('a[download]', (a) => a.getAttribute('href'));
+  if (cvHref === '/Luis-Reche-Applied-AI-Engineer-CV.pdf') ok('CV link href');
   else fail('CV link href', cvHref);
 
-  const cvRes = await page.goto(BASE + '/luis-reche-cv.pdf', { waitUntil: 'domcontentloaded' });
+  const cvRes = await page.goto(BASE + '/Luis-Reche-Applied-AI-Engineer-CV.pdf', { waitUntil: 'domcontentloaded' });
   if (cvRes && cvRes.ok() && (cvRes.headers()['content-type'] || '').includes('pdf')) {
     ok('CV PDF served', String(cvRes.status()));
   } else {
     fail('CV PDF served', cvRes ? `${cvRes.status()} ${cvRes.headers()['content-type']}` : 'no response');
   }
   await page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
-
-  // Live icons load
-  const icons = await page.$$eval('#live img', (imgs) =>
-    imgs.map((i) => ({ src: i.getAttribute('src'), w: i.naturalWidth, h: i.naturalHeight, complete: i.complete })),
-  );
-  if (icons.length >= 3) ok('live icons count', String(icons.length));
-  else fail('live icons count', String(icons.length));
-  for (const icon of icons) {
-    if (icon.complete && icon.w > 0) ok(`icon loads ${icon.src}`);
-    else fail(`icon loads ${icon.src}`, JSON.stringify(icon));
-  }
 
   await shot(page, '01-home-light');
 
@@ -107,11 +96,11 @@ async function main() {
   await shot(page, '03-command-palette');
 
   // Filter without leaving the page
-  await page.type('input[aria-label="Search commands"]', 'TickCut');
+  await page.type('input[aria-label="Search commands"]', 'ClipHub');
   const filtered = await page.$$eval('[role="option"]', (opts) =>
     opts.map((o) => (o.textContent || '').trim()),
   );
-  if (filtered.some((t) => t.toLowerCase().includes('tickcut'))) {
+  if (filtered.some((t) => t.toLowerCase().includes('cliphub'))) {
     ok('command palette filter', filtered.slice(0, 3).join(' | '));
   } else {
     fail('command palette filter', filtered.join(' | ') || '(empty)');
@@ -151,8 +140,8 @@ async function main() {
   await page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
   const hrefs = await page.$$eval('a[href]', (as) => as.map((a) => a.href));
   for (const need of [
-    'https://agentero.com/',
-    'https://tickcut.gravityroom.app/',
+    'https://www.agentero.com/',
+    'https://cliphub.gravityroom.app/',
     'https://gravityroom.app/',
     'https://github.com/rechedev9/shenron',
   ]) {
