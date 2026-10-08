@@ -15,8 +15,12 @@ export type Job = {
   readonly points: readonly string[];
 };
 
+/** Pixel-art sprite drawn in the margin next to each piece of work. */
+export type WorkArt = 'clapper' | 'lifter' | 'firework';
+
 export type Work = {
   readonly name: string;
+  readonly art: WorkArt;
   readonly description: string;
   readonly href: string;
   readonly domain: string;
@@ -78,18 +82,21 @@ export const EXPERIENCE: readonly Job[] = [
 export const SELECTED_WORK: readonly Work[] = [
   {
     name: 'ClipHub',
+    art: 'clapper',
     description: 'A Windows app that turns a CS2 demo into an edited video of the best plays.',
     href: 'https://cliphub.gravityroom.app/',
     domain: 'cliphub.gravityroom.app',
   },
   {
     name: 'Gravity Room',
+    art: 'lifter',
     description: 'A strength tracker with automatic progression, on the web and on mobile.',
     href: 'https://gravityroom.app',
     domain: 'gravityroom.app',
   },
   {
     name: 'Piroboom',
+    art: 'firework',
     description: 'A storefront for a fireworks shop in Elche: catalogue, product and event enquiries.',
     href: 'https://pirotecniaelche.es',
     domain: 'pirotecniaelche.es',

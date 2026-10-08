@@ -73,6 +73,20 @@ async function main() {
     else fail(`section #${id}`);
   }
 
+  // Pixel art: the Palma plate and the margin sprites paint something.
+  const painted = await page.$$eval('canvas', (canvases) =>
+    canvases.map((c) => {
+      const data = c.getContext('2d')?.getImageData(0, 0, c.width, c.height).data ?? [];
+      let n = 0;
+      for (let i = 3; i < data.length; i += 4) if (data[i]) n++;
+      return n;
+    }),
+  );
+  if (painted.length >= 6 && painted.every((n) => n > 0)) ok('pixel art drawn', `${painted.length} canvases`);
+  else fail('pixel art drawn', JSON.stringify(painted));
+  if (await textExists(page, 'Fig. 1. Palma de Mallorca')) ok('figure caption');
+  else fail('figure caption');
+
   await page.evaluate(() => document.fonts.ready);
   if (await page.evaluate(() => document.fonts.check('16px Newsreader'))) ok('serif font loaded');
   else fail('serif font loaded', 'Newsreader not available');
