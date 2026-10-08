@@ -54,11 +54,6 @@ export const HIGHLIGHTS: readonly Highlight[] = [
     suffix: ' for SocialPro as their software consultant — CS2 demo → edited video, 100+ users 🎮',
   },
   {
-    text: 'Shipping ',
-    link: { label: 'agent-git-toolkit', href: 'https://github.com/luis-reche-ag/agent-git-toolkit' },
-    suffix: ' — a coding agent cannot commit or push until the checks pass 🤖',
-  },
-  {
     text: 'Freelancing for ',
     link: { label: 'Berrus', href: 'https://berrus.app' },
     suffix: ' (2025 — present) — Discord notifications, faster SQL, and an Electron desktop client ⚔️',

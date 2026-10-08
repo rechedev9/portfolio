@@ -70,8 +70,8 @@ async function main() {
   }
 
   const banned = await page.evaluate(() => document.body.innerText);
-  if (!/Backend Engineer|Full Stack Engineer|TickCut|Shenron|\/workflow/i.test(banned)) ok('no stale titles or removed items');
-  else fail('no stale titles or removed items', 'found a retired title, TickCut, Shenron, or /workflow');
+  if (!/Backend Engineer|Full Stack Engineer|TickCut|Shenron|agent-git-toolkit|\/workflow/i.test(banned)) ok('no stale titles or removed items');
+  else fail('no stale titles or removed items', 'found a retired title, TickCut, Shenron, agent-git-toolkit, or /workflow');
 
   const cvHref = await page.$eval('a[aria-label="Download CV"]', (a) => a.getAttribute('href'));
   if (cvHref === '/Luis-Reche-Applied-AI-Engineer-CV.pdf') ok('CV link href');
@@ -157,14 +157,14 @@ async function main() {
   await page.setViewport({ width: 1280, height: 900 });
   await page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
   const hrefs = await page.$$eval('a[href]', (as) => as.map((a) => a.href));
-  const removedHrefs = hrefs.filter((h) => /shenron|\/workflow/i.test(h));
+  const removedHrefs = hrefs.filter((h) => /shenron|agent-git-toolkit|\/workflow/i.test(h));
   if (removedHrefs.length === 0) ok('no links to removed pages');
   else fail('no links to removed pages', removedHrefs.join(', '));
   for (const need of [
     'https://www.agentero.com/',
     'https://cliphub.gravityroom.app/',
     'https://gravityroom.app/',
-    'https://github.com/luis-reche-ag/agent-git-toolkit',
+    'https://pirotecniaelche.es/',
   ]) {
     if (hrefs.some((h) => h.startsWith(need) || h === need || h.includes(need.replace(/\/$/, '')))) {
       ok(`link present ${need}`);
