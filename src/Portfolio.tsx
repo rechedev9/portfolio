@@ -4,10 +4,6 @@ import { Link } from 'react-router-dom';
 import { CONTACT_LINKS, EDUCATION, EXPERIENCE, PROFILE, SELECTED_WORK } from './data/portfolio';
 import { CommandPalette } from './components/CommandPalette';
 import { CommandIcon, MoonIcon, SunIcon } from './components/icons';
-import { PixelCanvas } from './components/PixelCanvas';
-import type { Painter } from './pixel/core';
-import { LAPTOP_STILL, MARGINALIA_SIZE, WORK_ART, laptop, mortarboard } from './pixel/marginalia';
-import { PALMA_HEIGHT, PALMA_WIDTH, paintPalma } from './pixel/palma';
 import { isDarkTheme, syncThemeColor, toggleTheme } from './theme';
 
 const FOCUS =
@@ -15,21 +11,15 @@ const FOCUS =
 
 const LINK = `text-accent underline decoration-accent/30 underline-offset-4 transition-colors hover:decoration-accent ${FOCUS}`;
 
-function Marginalia({ paint, still }: { readonly paint: Painter; readonly still?: number }): ReactElement {
-  return <PixelCanvas width={MARGINALIA_SIZE} height={MARGINALIA_SIZE} scale={3} fps={4} paint={paint} still={still} />;
-}
-
 function Section({
   id,
   title,
   delay,
-  art,
   children,
 }: {
   readonly id: string;
   readonly title: string;
   readonly delay: number;
-  readonly art?: { readonly paint: Painter; readonly still?: number };
   readonly children: ReactNode;
 }): ReactElement {
   return (
@@ -39,16 +29,9 @@ function Section({
       className="reveal mt-16 grid scroll-mt-10 gap-y-6 border-t border-border pt-8 md:grid-cols-[9.5rem_1fr] md:gap-x-8"
       style={{ animationDelay: `${delay}ms` }}
     >
-      <div>
-        <h2 id={`heading-${id}`} className="label-caps md:pt-[0.4rem]">
-          {title}
-        </h2>
-        {art && (
-          <div className="mt-5 hidden md:block">
-            <Marginalia paint={art.paint} still={art.still} />
-          </div>
-        )}
-      </div>
+      <h2 id={`heading-${id}`} className="label-caps md:pt-[0.4rem]">
+        {title}
+      </h2>
       <div>{children}</div>
     </section>
   );
@@ -176,22 +159,9 @@ export function Portfolio(): ReactElement {
               );
             })}
           </ul>
-
-          <figure className="mt-14">
-            <PixelCanvas
-              width={PALMA_WIDTH}
-              height={PALMA_HEIGHT}
-              fps={8}
-              paint={paintPalma}
-              label="Pixel-art drawing of Palma de Mallorca from the sea: the cathedral on the old sea wall, palm trees, a sailboat and gulls."
-            />
-            <figcaption className="mt-3 text-[0.95rem] text-muted italic">
-              Fig. 1. Palma de Mallorca, seen from the sea. Drawn by hand, pixel by pixel.
-            </figcaption>
-          </figure>
         </header>
 
-        <Section id="experience" title="Experience" delay={120} art={{ paint: laptop, still: LAPTOP_STILL }}>
+        <Section id="experience" title="Experience" delay={120}>
           <div className="space-y-10">
             {EXPERIENCE.map((job) => (
               <article key={job.org}>
@@ -224,13 +194,10 @@ export function Portfolio(): ReactElement {
           </div>
         </Section>
 
-        <Section id="work" title="Projects" delay={180}>
+        <Section id="work" title="Selected work" delay={180}>
           <ul className="space-y-8">
             {SELECTED_WORK.map((work) => (
-              <li key={work.name} className="relative">
-                <div aria-hidden="true" className="absolute top-0 -left-[3.25rem] hidden md:block">
-                  <Marginalia paint={WORK_ART[work.art].paint} still={WORK_ART[work.art].still} />
-                </div>
+              <li key={work.name}>
                 <a href={work.href} target="_blank" rel="noopener noreferrer" className={`group block ${FOCUS}`}>
                   <EntryHeader
                     title={<span className="transition-colors group-hover:text-accent">{work.name}</span>}
@@ -247,7 +214,7 @@ export function Portfolio(): ReactElement {
           </ul>
         </Section>
 
-        <Section id="education" title="Education" delay={240} art={{ paint: mortarboard }}>
+        <Section id="education" title="Education" delay={240}>
           <ul className="space-y-3">
             {EDUCATION.map((item) => (
               <li
