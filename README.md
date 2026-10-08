@@ -10,15 +10,6 @@ Layout inspired by [josepvidal.dev](https://josepvidal.dev/): `/me`, `/always`, 
 - Tailwind CSS v4
 - React Router
 
-## Themes
-
-| Path | Theme |
-|------|--------|
-| `/` | Clean home (default) |
-| `/matrix` | Terminal / Matrix |
-| `/cs` | CS 1.6 console |
-| `/pokemon` | Game Boy Color |
-
 ## Commands
 
 ```bash

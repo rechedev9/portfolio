@@ -3,7 +3,6 @@ import type { ReactElement, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ALWAYS,
-  FOOTER_LINKS,
   HIGHLIGHTS,
   LIVE_PROJECTS,
   PROFILE,
@@ -13,7 +12,6 @@ import {
 import { CommandPalette } from './components/CommandPalette';
 import { CommandIcon, MoonIcon, SunIcon } from './components/icons';
 import { socialIconFor } from './components/SocialIcons';
-import { ThemeSwitcher } from './components/ThemeSwitcher';
 
 function SectionHeading({
   children,
@@ -153,8 +151,6 @@ export function Portfolio(): ReactElement {
               >
                 <CommandIcon className="h-[25px] w-[25px]" />
               </NavIconButton>
-
-              <ThemeSwitcher currentTheme="clean" compact />
             </div>
           </nav>
         </header>
@@ -326,21 +322,6 @@ export function Portfolio(): ReactElement {
             <Link to="/" className="hover:underline focus-visible:underline">
               {PROFILE.site} ✨ {year}
             </Link>
-            <div className="flex flex-wrap gap-x-6 gap-y-2">
-              {FOOTER_LINKS.map((link, i) => (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  className={
-                    i < FOOTER_LINKS.length - 1
-                      ? "relative hover:underline after:absolute after:top-0 after:right-[-16px] after:text-gray-500 after:content-['/'] focus-visible:underline"
-                      : 'relative hover:underline focus-visible:underline'
-                  }
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
           </footer>
         </div>
       </div>

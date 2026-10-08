@@ -134,57 +134,6 @@ async function main() {
   });
   ok('command palette Ctrl+K close');
 
-  // Theme switcher panel
-  await page.click('button[aria-label="Theme switcher"]');
-  await page.waitForSelector('.theme-switcher-panel');
-  ok('theme switcher panel');
-  await shot(page, '04-theme-switcher');
-
-  // Footer / Matrix theme — wait for boot sequence
-  await page.goto(BASE + '/matrix', { waitUntil: 'domcontentloaded' });
-  try {
-    await page.waitForFunction(
-      () => document.body.innerText.includes('Applied AI') || document.body.innerText.includes('Type a command'),
-      { timeout: 12000 },
-    );
-    ok('matrix theme boots');
-  } catch {
-    fail('matrix theme boots', 'boot content not found');
-  }
-  await shot(page, '05-matrix');
-
-  await page.goto(BASE + '/cs', { waitUntil: 'domcontentloaded' });
-  try {
-    await page.waitForFunction(
-      () =>
-        document.body.innerText.includes('Applied AI') ||
-        document.body.innerText.includes('about') ||
-        document.querySelector('.cs-console-output'),
-      { timeout: 12000 },
-    );
-    ok('cs theme boots');
-  } catch {
-    fail('cs theme boots', 'boot content not found');
-  }
-  if (await page.$('.cs-page, .cs-console-window, main')) ok('cs theme shell');
-  else fail('cs theme shell');
-  await shot(page, '06-cs');
-
-  await page.goto(BASE + '/pokemon', { waitUntil: 'domcontentloaded' });
-  await new Promise((r) => setTimeout(r, 500));
-  if (await page.$('.poke-page, .poke-gbc, main')) ok('pokemon theme loads');
-  else fail('pokemon theme loads');
-  // Power on for fuller visual
-  const power = await page.$('.poke-power-led, button[aria-label*="Power"], .poke-power-off');
-  if (power) {
-    await power.click();
-    await new Promise((r) => setTimeout(r, 1500));
-    ok('pokemon power toggle');
-  } else {
-    ok('pokemon power toggle', 'no power button (skipped)');
-  }
-  await shot(page, '07-pokemon');
-
   // Mobile viewport home
   await page.setViewport({ width: 390, height: 844, isMobile: true, deviceScaleFactor: 2 });
   await page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });

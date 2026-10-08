@@ -409,19 +409,3 @@ export const SOCIAL_LINKS: readonly SocialLink[] = [
     download: true,
   },
 ];
-
-export const FOOTER_LINKS = [
-  { label: 'Matrix', href: '/matrix' },
-  { label: 'CS 1.6', href: '/cs' },
-  { label: 'Pokemon', href: '/pokemon' },
-] as const;
-
-export const ASCII_NAME = [
-  '╦  ╦ ╦╦╔═╗  ╦═╗╔═╗╔═╗╦ ╦╔═╗',
-  '║  ║ ║║╚═╗  ╠╦╝║╣ ║  ╠═╣║╣ ',
-  '╩═╝╚═╝╩╚═╝  ╩╚═╚═╝╚═╝╩ ╩╚═╝',
-].join('\n');
-
-export const COMMANDS = ['about', 'skills', 'experience', 'projects', 'education', 'contact'] as const;
-
-export const ALL_COMMANDS = [...COMMANDS, 'help', 'clear', 'whoami', 'matrix'] as const;

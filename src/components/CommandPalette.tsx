@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ReactElement, KeyboardEvent as ReactKeyboardEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { CONTACT, LIVE_PROJECTS, PROFILE } from '../data/portfolio';
 
 type PaletteItem = {
@@ -28,7 +27,6 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps): ReactEle
 }
 
 function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): ReactElement {
-  const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const [query, setQuery] = useState('');
@@ -79,25 +77,6 @@ function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): Re
         action: () => window.open(p.href, '_blank', 'noopener,noreferrer'),
       })),
       {
-        id: 'matrix',
-        label: 'Open Matrix theme',
-        hint: 'theme',
-        action: () => navigate('/matrix'),
-      },
-      {
-        id: 'cs',
-        label: 'Open CS 1.6 theme',
-        hint: 'theme',
-        keywords: 'counter strike',
-        action: () => navigate('/cs'),
-      },
-      {
-        id: 'pokemon',
-        label: 'Open Pokemon theme',
-        hint: 'theme',
-        action: () => navigate('/pokemon'),
-      },
-      {
         id: 'github',
         label: 'Open GitHub',
         hint: 'link',
@@ -145,7 +124,7 @@ function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): Re
         },
       },
     ],
-    [navigate],
+    [],
   );
 
   const filtered = useMemo(() => {
