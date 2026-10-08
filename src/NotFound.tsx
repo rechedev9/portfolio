@@ -19,7 +19,7 @@ export function NotFound(): ReactElement {
         <h1 className="font-mono text-2xl text-neutral-500 opacity-75 dark:text-neutral-300">
           /404
         </h1>
-        <p className="mt-4 text-3xl font-semibold tracking-tight text-accent-ink">Page not found</p>
+        <p className="mt-4 text-3xl font-semibold tracking-tight text-accent">Page not found</p>
         <p className="mt-3 text-xl leading-relaxed text-gray-500 dark:text-gray-400">
           Nothing lives at{' '}
           <code className="font-mono text-base text-black dark:text-white">{pathname}</code>.

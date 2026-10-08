@@ -52,13 +52,17 @@ async function main() {
   for (const t of [
     'Luis Reche',
     'Applied AI Engineer',
+    '/me',
+    '/always',
+    '/highlights',
+    '/projects',
+    '/live',
     'ClipHub',
     'SocialPro',
     '100+ users',
     'Agentero',
     'Gravity Room',
     'software consultant',
-    'Palma, Spain',
     'Google Cloud',
     'Berrus (2025 — present)',
   ]) {
@@ -70,7 +74,7 @@ async function main() {
   if (!/Backend Engineer|Full Stack Engineer|TickCut|Shenron|\/workflow/i.test(banned)) ok('no stale titles or removed items');
   else fail('no stale titles or removed items', 'found a retired title, TickCut, Shenron, or /workflow');
 
-  const cvHref = await page.$eval('a[download]', (a) => a.getAttribute('href'));
+  const cvHref = await page.$eval('a[aria-label="Download CV"]', (a) => a.getAttribute('href'));
   if (cvHref === '/Luis-Reche-Applied-AI-Engineer-CV.pdf') ok('CV link href');
   else fail('CV link href', cvHref);
 
@@ -81,6 +85,18 @@ async function main() {
     fail('CV PDF served', cvRes ? `${cvRes.status()} ${cvRes.headers()['content-type']}` : 'no response');
   }
   await page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
+
+  // Live icons load
+  await page.waitForFunction(() => [...document.querySelectorAll('#live img')].every((i) => i.complete));
+  const icons = await page.$$eval('#live img', (imgs) =>
+    imgs.map((i) => ({ src: i.getAttribute('src'), w: i.naturalWidth, h: i.naturalHeight, complete: i.complete })),
+  );
+  if (icons.length >= 3) ok('live icons count', String(icons.length));
+  else fail('live icons count', String(icons.length));
+  for (const icon of icons) {
+    if (icon.complete && icon.w > 0) ok(`icon loads ${icon.src}`);
+    else fail(`icon loads ${icon.src}`, JSON.stringify(icon));
+  }
 
   await shot(page, '01-home-light');
 

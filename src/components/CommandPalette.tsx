@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ReactElement, KeyboardEvent as ReactKeyboardEvent } from 'react';
-import { CONTACT, FLAGSHIP, PROFILE, PROJECTS } from '../data/portfolio';
+import { CONTACT, LIVE_PROJECTS, PROFILE } from '../data/portfolio';
 
 type PaletteItem = {
   readonly id: string;
@@ -35,56 +35,47 @@ function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): Re
   const items = useMemo<readonly PaletteItem[]>(
     () => [
       {
-        id: 'flagship',
-        label: 'Go to ClipHub',
+        id: 'me',
+        label: 'Go to /me',
         hint: 'section',
-        keywords: 'flagship socialpro',
-        action: () => scrollToId('flagship'),
+        keywords: 'about profile',
+        action: () => scrollToId('me'),
+      },
+      {
+        id: 'always',
+        label: 'Go to /always',
+        hint: 'section',
+        keywords: 'status now',
+        action: () => scrollToId('always'),
+      },
+      {
+        id: 'highlights',
+        label: 'Go to /highlights',
+        hint: 'section',
+        keywords: 'career',
+        action: () => scrollToId('highlights'),
       },
       {
         id: 'projects',
-        label: 'Go to work',
+        label: 'Go to /projects',
         hint: 'section',
-        keywords: 'projects',
+        keywords: 'work',
         action: () => scrollToId('projects'),
       },
       {
-        id: 'experience',
-        label: 'Go to experience',
+        id: 'live',
+        label: 'Go to /live',
         hint: 'section',
-        keywords: 'agentero work',
-        action: () => scrollToId('experience'),
+        keywords: 'products',
+        action: () => scrollToId('live'),
       },
-      {
-        id: 'stack',
-        label: 'Go to stack',
-        hint: 'section',
-        keywords: 'skills education',
-        action: () => scrollToId('stack'),
-      },
-      {
-        id: 'contact',
-        label: 'Go to contact',
-        hint: 'section',
-        keywords: 'email',
-        action: () => scrollToId('contact'),
-      },
-      {
-        id: 'open-flagship',
-        label: `Open ${FLAGSHIP.name}`,
+      ...LIVE_PROJECTS.map((p) => ({
+        id: `live-${p.name}`,
+        label: `Open ${p.name}`,
         hint: 'live',
-        keywords: 'cliphub socialpro',
-        action: () => window.open(FLAGSHIP.links[0]?.href, '_blank', 'noopener,noreferrer'),
-      },
-      ...PROJECTS.flatMap((project) =>
-        project.links.map((link) => ({
-          id: `${project.name}-${link.label}`,
-          label: `${project.name}: ${link.label}`,
-          hint: 'project',
-          keywords: `${project.kind} ${project.pitch}`,
-          action: () => window.open(link.href, '_blank', 'noopener,noreferrer'),
-        })),
-      ),
+        keywords: p.description,
+        action: () => window.open(p.href, '_blank', 'noopener,noreferrer'),
+      })),
       {
         id: 'github',
         label: 'Open GitHub',

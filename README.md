@@ -2,7 +2,7 @@
 
 Portfolio for **Luis Reche** — Applied AI Engineer.
 
-One page: a motion hero, ClipHub as the flagship, selected work, experience and contact. Content lives in `src/data/portfolio.ts`.
+One minimal page in the josepvidal.dev style: `/me`, `/always`, `/highlights`, `/projects` and `/live`, with light and dark mode. Content lives in `src/data/portfolio.ts`.
 
 ## Stack
 
