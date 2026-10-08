@@ -103,7 +103,7 @@ export const FLAGSHIP: Flagship = {
   points: [
     'Go services for the pipeline, a Next.js studio, and an Electron shell that ships the Windows app.',
     '130 versioned releases. The latest public release is ClipHub Studio 5.4.4.',
-    'The repo is written so a coding agent can build it, check the change in the app, and cut a release.',
+    'Built for SocialPro. 100+ people use it.',
   ],
   tech: ['Go', 'TypeScript', 'Next.js', 'Electron', 'FFmpeg'],
   links: [
@@ -178,12 +178,12 @@ export const EXPERIENCE: readonly Job[] = [
     description:
       'US network that gives independent insurance agents carrier access and the software to run an agency. I work from Spain.',
     highlights: [
-      'Published guardrails for coding agents, with commit scopes taken from Agentero’s monorepo.',
+      'Published guardrails so a coding agent cannot commit or push until the checks pass. The rules started from Agentero’s codebase.',
     ],
   },
   {
     title: 'Freelance product engineer',
-    company: 'Independent',
+    company: 'RecheDev',
     url: 'https://rechedev.cloud',
     period: '2025 — Present',
     description: 'I design and build the product, from the first meeting to production.',
@@ -202,7 +202,7 @@ export const SKILLS: readonly SkillGroup[] = [
   },
   {
     category: 'Backend and cloud',
-    items: ['Go', 'PostgreSQL', 'gRPC / Connect', 'GCP', 'Terraform', 'Docker'],
+    items: ['Go', 'PostgreSQL', 'GCP', 'Terraform', 'Docker'],
   },
   {
     category: 'Product interface',
@@ -210,7 +210,7 @@ export const SKILLS: readonly SkillGroup[] = [
   },
   {
     category: 'Quality',
-    items: ['Adversarial review', 'Playwright', 'Vitest', 'GitHub Actions'],
+    items: ['Adversarial review', 'Playwright', 'GitHub Actions'],
   },
 ];
 

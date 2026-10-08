@@ -403,7 +403,7 @@ export function Portfolio(): ReactElement {
             © {year} {PROFILE.fullName} · {PROFILE.site}
           </span>
           <span>
-            Press <kbd className="rounded border border-border px-1">⌘K</kbd> to navigate
+            <kbd className="rounded border border-border px-1">Ctrl</kbd>+<kbd className="rounded border border-border px-1">K</kbd> to navigate
           </span>
         </div>
       </footer>

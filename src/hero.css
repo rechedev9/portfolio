@@ -408,11 +408,32 @@
   }
 }
 
-@media (max-width: 720px) {
-  .hero-inner {
-    padding-top: 2.75rem;
+@media (max-width: 959px) {
+  .hero {
+    display: flex;
+    flex-direction: column;
   }
 
+  .hero-inner {
+    display: contents;
+  }
+
+  .hero-copy {
+    order: 1;
+    padding: 2.75rem 1.25rem 0.5rem;
+  }
+
+  .hero-flagship {
+    order: 2;
+  }
+
+  .hero-panel-wrap {
+    order: 3;
+    padding: 0 1.25rem 2rem;
+  }
+}
+
+@media (max-width: 720px) {
   .hero-flagship {
     grid-template-columns: auto 1fr auto;
     grid-template-areas:
