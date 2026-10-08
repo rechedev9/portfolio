@@ -2,7 +2,7 @@
 
 Portfolio for **Luis Reche** — Applied AI Engineer.
 
-One minimal page in the josepvidal.dev style: `/me`, `/always`, `/highlights` and `/live`, with light and dark mode. Content lives in `src/data/portfolio.ts`.
+One minimal page with an academic, editorial look: Newsreader serif on ivory paper with a cardinal accent. Sections: intro, experience, selected work and education, with light and dark mode. Content lives in `src/data/portfolio.ts`.
 
 ## Stack
 

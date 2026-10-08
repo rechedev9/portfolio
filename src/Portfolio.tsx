@@ -1,56 +1,56 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { ReactElement, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  ALWAYS,
-  FOOTER_LINKS,
-  HIGHLIGHTS,
-  LIVE_PROJECTS,
-  PROFILE,
-  SOCIAL_LINKS,
-} from './data/portfolio';
+import { CONTACT_LINKS, EDUCATION, EXPERIENCE, PROFILE, SELECTED_WORK } from './data/portfolio';
 import { CommandPalette } from './components/CommandPalette';
 import { CommandIcon, MoonIcon, SunIcon } from './components/icons';
-import { socialIconFor } from './components/SocialIcons';
+import { isDarkTheme, syncThemeColor, toggleTheme } from './theme';
 
-function SectionHeading({
-  children,
+const FOCUS =
+  'focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-accent';
+
+const LINK = `text-accent underline decoration-accent/30 underline-offset-4 transition-colors hover:decoration-accent ${FOCUS}`;
+
+function Section({
   id,
+  title,
+  delay,
+  children,
 }: {
-  readonly children: string;
-  readonly id?: string;
+  readonly id: string;
+  readonly title: string;
+  readonly delay: number;
+  readonly children: ReactNode;
 }): ReactElement {
   return (
-    <h2
-      id={id ?? `heading-${children}`}
-      className="mt-16 mb-4 font-mono text-2xl text-neutral-500 opacity-75 dark:text-neutral-300"
+    <section
+      id={id}
+      aria-labelledby={`heading-${id}`}
+      className="reveal mt-16 grid scroll-mt-10 gap-y-6 border-t border-border pt-8 md:grid-cols-[9.5rem_1fr] md:gap-x-8"
+      style={{ animationDelay: `${delay}ms` }}
     >
-      /{children}
-    </h2>
+      <h2 id={`heading-${id}`} className="label-caps md:pt-[0.4rem]">
+        {title}
+      </h2>
+      <div>{children}</div>
+    </section>
   );
 }
 
-function ArrowLine({ children }: { readonly children: ReactNode }): ReactElement {
+function EntryHeader({ title, aside }: { readonly title: ReactNode; readonly aside: ReactNode }): ReactElement {
   return (
-    <p className="relative mb-0 pl-7 text-xl leading-relaxed text-gray-500 dark:text-gray-400">
-      <span
-        className="pointer-events-none absolute top-0 left-0 select-none font-mono text-neutral-300 dark:text-neutral-600"
-        aria-hidden="true"
-      >
-        ↳
-      </span>
-      {children}
-    </p>
+    <div className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+      <h3 className="text-[1.2rem] leading-snug">{title}</h3>
+      <p className="shrink-0 text-[0.95rem] text-muted tabular-nums">{aside}</p>
+    </div>
   );
 }
 
 function NavIconButton({
-  title,
   label,
   onClick,
   children,
 }: {
-  readonly title: string;
   readonly label: string;
   readonly onClick: () => void;
   readonly children: ReactNode;
@@ -58,10 +58,10 @@ function NavIconButton({
   return (
     <button
       type="button"
-      title={title}
+      title={label}
       onClick={onClick}
-      className="cursor-pointer rounded-md border-2 border-transparent p-2 transition-all hover:border-primary focus-visible:border-primary focus-visible:outline-none"
       aria-label={label}
+      className={`grid size-10 cursor-pointer place-items-center rounded-full text-muted transition-colors hover:text-foreground ${FOCUS}`}
     >
       {children}
     </button>
@@ -78,10 +78,8 @@ export function Portfolio(): ReactElement {
     document.body.classList.add('clean-body');
 
     const syncDark = (): void => {
-      const isDark = document.documentElement.classList.contains('dark');
-      setDark(isDark);
-      const meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.setAttribute('content', isDark ? '#0a0a0a' : '#ffffff');
+      setDark(isDarkTheme());
+      syncThemeColor();
     };
     syncDark();
     window.addEventListener('theme-change', syncDark);
@@ -112,198 +110,135 @@ export function Portfolio(): ReactElement {
     };
   }, [paletteOpen]);
 
-  const toggleDark = useCallback((): void => {
-    const next = !document.documentElement.classList.contains('dark');
-    document.documentElement.classList.toggle('dark', next);
-    localStorage.setItem('theme', next ? 'dark' : 'light');
-    const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', next ? '#0a0a0a' : '#ffffff');
-    setDark(next);
-    window.dispatchEvent(new Event('theme-change'));
-  }, []);
-
   return (
-    <main className="p-6 sm:p-12 md:p-16">
-      <div className="mx-auto md:max-w-[37.5rem]">
-        <header className="reveal">
-          <nav className="flex items-center justify-between" aria-label="Primary">
-            <Link
-              to="/"
-              className="block h-8 w-8 border border-transparent bg-linear-to-r from-primary to-accent transition-all will-change-auto hover:w-16 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-              aria-label={PROFILE.site}
-            >
-              <span className="sr-only">{PROFILE.site}</span>
-            </Link>
+    <main className="px-6 pt-8 pb-12 sm:px-10 sm:pt-12">
+      <div className="mx-auto max-w-[44rem]">
+        <nav className="reveal flex items-center justify-between" aria-label="Primary">
+          <Link to="/" aria-label={PROFILE.site} className={`rounded-full ${FOCUS}`}>
+            <span className="relative grid size-11 place-items-center rounded-full border border-accent/80">
+              <span aria-hidden="true" className="absolute inset-[3px] rounded-full border border-accent/30" />
+              <span aria-hidden="true" className="text-[0.8rem] font-medium tracking-[0.08em] text-accent">
+                LR
+              </span>
+            </span>
+          </Link>
 
-            <div className="flex items-center gap-0.5">
-              <NavIconButton
-                title={dark ? 'Light mode' : 'Dark mode'}
-                label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
-                onClick={toggleDark}
-              >
-                {dark ? <SunIcon /> : <MoonIcon />}
-              </NavIconButton>
+          <div className="flex items-center gap-1">
+            <NavIconButton label={dark ? 'Switch to light mode' : 'Switch to dark mode'} onClick={toggleTheme}>
+              {dark ? <SunIcon className="size-[18px]" /> : <MoonIcon className="size-[18px]" />}
+            </NavIconButton>
+            <NavIconButton label="Open command palette" onClick={() => setPaletteOpen(true)}>
+              <CommandIcon className="size-4" />
+            </NavIconButton>
+          </div>
+        </nav>
 
-              <NavIconButton
-                title="⌘K"
-                label="Open command palette"
-                onClick={() => setPaletteOpen(true)}
-              >
-                <CommandIcon className="h-[25px] w-[25px]" />
-              </NavIconButton>
-            </div>
-          </nav>
-        </header>
-
-        <div>
-          {/* /me */}
-          <section
-            id="me"
-            aria-labelledby="heading-me"
-            className="reveal scroll-mt-8"
-            style={{ animationDelay: '60ms' }}
-          >
-            <h2
-              id="heading-me"
-              className="mt-16 mb-4 font-mono text-2xl text-neutral-500 opacity-75 dark:text-neutral-300"
-            >
-              /me
-            </h2>
-            <h1 className="text-3xl font-semibold tracking-tight text-accent">{PROFILE.name}</h1>
-            <div className="mt-2 mb-4">
-              <ArrowLine>
-                <span className="text-black dark:text-white">{PROFILE.title}</span>
-                {', '}
-                {PROFILE.tagline}
-              </ArrowLine>
-            </div>
-            <ul className="flex flex-wrap gap-2 text-black dark:text-white">
-              {SOCIAL_LINKS.map((link) => (
-                <li key={link.id} title={link.label}>
+        <header id="me" className="reveal mt-20 scroll-mt-10 sm:mt-24" style={{ animationDelay: '60ms' }}>
+          <h1 className="text-5xl font-normal tracking-[-0.02em] sm:text-6xl">{PROFILE.name}</h1>
+          <p className="mt-3 text-xl text-muted italic">
+            {PROFILE.title} · {PROFILE.location}
+          </p>
+          <div aria-hidden="true" className="mt-8 h-px w-12 bg-accent" />
+          <p className="mt-8 max-w-[36rem] text-[1.3rem] leading-[1.55] text-pretty">{PROFILE.intro}</p>
+          <ul className="mt-8 flex flex-wrap gap-x-7 gap-y-3">
+            {CONTACT_LINKS.map((link) => {
+              const external = link.id === 'github' || link.id === 'linkedin';
+              return (
+                <li key={link.id}>
                   <a
                     href={link.href}
-                    target={link.download || link.id === 'email' ? undefined : '_blank'}
-                    rel={link.download || link.id === 'email' ? undefined : 'noreferrer'}
+                    target={external ? '_blank' : undefined}
+                    rel={external ? 'noreferrer' : undefined}
                     download={link.download}
-                    aria-label={link.label}
-                    className="block rounded rounded-b-none border-2 border-b-0 border-dashed border-border/80 p-2 transition-colors hover:bg-neutral-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:hover:bg-neutral-900"
+                    aria-label={link.id === 'cv' ? 'Download CV' : undefined}
+                    className={`text-[0.78rem] tracking-[0.16em] uppercase ${LINK}`}
                   >
-                    {socialIconFor(link.id)}
+                    {link.label}
                   </a>
                 </li>
-              ))}
-            </ul>
-          </section>
+              );
+            })}
+          </ul>
+        </header>
 
-          {/* /always */}
-          <section
-            id="always"
-            aria-labelledby="heading-always"
-            className="reveal scroll-mt-8"
-            style={{ animationDelay: '120ms' }}
-          >
-            <SectionHeading>always</SectionHeading>
-            <div className="space-y-4">
-              <ArrowLine>{ALWAYS}</ArrowLine>
-            </div>
-          </section>
-
-          {/* /highlights */}
-          <section
-            id="highlights"
-            aria-labelledby="heading-highlights"
-            className="reveal scroll-mt-8"
-            style={{ animationDelay: '180ms' }}
-          >
-            <SectionHeading>highlights</SectionHeading>
-            <div className="space-y-4">
-              {HIGHLIGHTS.map((h) => (
-                <ArrowLine key={h.text}>
-                  {h.text}
-                  {h.link && (
-                    <a
-                      href={h.link.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-accent underline decoration-accent/40 underline-offset-4 transition-colors hover:decoration-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-                    >
-                      {h.link.label}
-                    </a>
-                  )}
-                  {h.suffix}
-                </ArrowLine>
-              ))}
-            </div>
-          </section>
-        </div>
-
-        <div className="mt-16 flex flex-col gap-12 pb-12">
-          {/* /live */}
-          <section
-            id="live"
-            className="reveal flex scroll-mt-8 flex-col font-mono"
-            aria-labelledby="heading-live"
-            style={{ animationDelay: '240ms' }}
-          >
-            <h2
-              id="heading-live"
-              className="mb-4 font-mono text-2xl text-neutral-500 opacity-75 dark:text-neutral-300"
-            >
-              /live
-            </h2>
-            <div className="flex flex-col gap-2">
-              {LIVE_PROJECTS.map((p) => (
-                <a
-                  key={p.name}
-                  href={p.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-between gap-6 border border-dashed border-border px-4 py-4 transition-colors hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:hover:bg-gray-900"
-                >
-                  <div className="flex min-w-0 flex-col">
-                    <span className="truncate text-accent">{p.name}</span>
-                    <span className="text-sm text-gray-600 dark:text-gray-400">{p.description}</span>
-                  </div>
-                  <img
-                    src={p.icon}
-                    alt=""
-                    width={40}
-                    height={40}
-                    className="h-10 w-10 shrink-0 object-contain transition-transform group-hover:scale-105"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </a>
-              ))}
-            </div>
-          </section>
-
-          <footer
-            className="reveal flex flex-col justify-between gap-4 border-t border-dashed border-border pt-6 font-mono text-sm sm:flex-row sm:items-center"
-            style={{ animationDelay: '300ms' }}
-          >
-            <Link to="/" className="hover:underline focus-visible:underline">
-              {PROFILE.site} ✨ {year}
-            </Link>
-            <div className="flex flex-wrap gap-x-6 gap-y-2">
-              {FOOTER_LINKS.map((link, i) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={
-                    i < FOOTER_LINKS.length - 1
-                      ? "relative hover:underline after:absolute after:top-0 after:right-[-16px] after:text-gray-500 after:content-['/'] focus-visible:underline"
-                      : 'relative hover:underline focus-visible:underline'
+        <Section id="experience" title="Experience" delay={120}>
+          <div className="space-y-10">
+            {EXPERIENCE.map((job) => (
+              <article key={job.org}>
+                <EntryHeader
+                  title={
+                    <>
+                      {job.role}
+                      <span className="text-muted">, </span>
+                      {job.href ? (
+                        <a href={job.href} target="_blank" rel="noreferrer" className={LINK}>
+                          {job.org}
+                        </a>
+                      ) : (
+                        job.org
+                      )}
+                    </>
                   }
-                >
-                  {link.label}
+                  aside={job.period}
+                />
+                <ul className="mt-3 space-y-1.5 text-[1.05rem] leading-relaxed text-muted">
+                  {job.points.map((point) => (
+                    <li key={point} className="relative pl-5">
+                      <span aria-hidden="true" className="absolute top-[0.8em] left-0 h-px w-2.5 bg-muted/50" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </Section>
+
+        <Section id="work" title="Selected work" delay={180}>
+          <ul className="space-y-8">
+            {SELECTED_WORK.map((work) => (
+              <li key={work.name}>
+                <a href={work.href} target="_blank" rel="noopener noreferrer" className={`group block ${FOCUS}`}>
+                  <EntryHeader
+                    title={<span className="transition-colors group-hover:text-accent">{work.name}</span>}
+                    aside={
+                      <>
+                        {work.domain} <span aria-hidden="true">↗</span>
+                      </>
+                    }
+                  />
+                  <p className="mt-1.5 text-[1.05rem] leading-relaxed text-muted">{work.description}</p>
                 </a>
-              ))}
-            </div>
-          </footer>
-        </div>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        <Section id="education" title="Education" delay={240}>
+          <ul className="space-y-3">
+            {EDUCATION.map((item) => (
+              <li
+                key={item.title}
+                className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
+              >
+                <span className="text-[1.05rem] leading-snug">{item.title}</span>
+                <span className="shrink-0 text-[0.95rem] text-muted tabular-nums">{item.period}</span>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        <footer
+          className="reveal mt-20 flex flex-col gap-2 border-t border-border pt-6 text-[0.95rem] text-muted sm:flex-row sm:items-center sm:justify-between"
+          style={{ animationDelay: '300ms' }}
+        >
+          <p>
+            © {year} {PROFILE.fullName}
+          </p>
+          <p className="hidden sm:block">
+            <kbd className="rounded border border-border px-1.5 py-0.5 font-sans text-[0.75rem]">⌘K</kbd> to navigate
+          </p>
+        </footer>
       </div>
 
       <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />

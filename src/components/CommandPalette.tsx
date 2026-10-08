@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ReactElement, KeyboardEvent as ReactKeyboardEvent } from 'react';
-import { CONTACT, LIVE_PROJECTS, PROFILE } from '../data/portfolio';
+import { CONTACT, PROFILE, SELECTED_WORK } from '../data/portfolio';
+import { toggleTheme } from '../theme';
 
 type PaletteItem = {
   readonly id: string;
@@ -36,38 +37,38 @@ function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): Re
     () => [
       {
         id: 'me',
-        label: 'Go to /me',
+        label: 'Go to top',
         hint: 'section',
-        keywords: 'about profile',
+        keywords: 'about profile intro',
         action: () => scrollToId('me'),
       },
       {
-        id: 'always',
-        label: 'Go to /always',
+        id: 'experience',
+        label: 'Go to Experience',
         hint: 'section',
-        keywords: 'status now',
-        action: () => scrollToId('always'),
+        keywords: 'agentero career work',
+        action: () => scrollToId('experience'),
       },
       {
-        id: 'highlights',
-        label: 'Go to /highlights',
+        id: 'work',
+        label: 'Go to Selected work',
         hint: 'section',
-        keywords: 'career',
-        action: () => scrollToId('highlights'),
+        keywords: 'projects products',
+        action: () => scrollToId('work'),
       },
       {
-        id: 'live',
-        label: 'Go to /live',
+        id: 'education',
+        label: 'Go to Education',
         hint: 'section',
-        keywords: 'products',
-        action: () => scrollToId('live'),
+        keywords: 'courses diploma',
+        action: () => scrollToId('education'),
       },
-      ...LIVE_PROJECTS.map((p) => ({
-        id: `live-${p.name}`,
-        label: `Open ${p.name}`,
-        hint: 'live',
-        keywords: p.description,
-        action: () => window.open(p.href, '_blank', 'noopener,noreferrer'),
+      ...SELECTED_WORK.map((work) => ({
+        id: `work-${work.name}`,
+        label: `Open ${work.name}`,
+        hint: 'site',
+        keywords: `${work.description} ${work.domain}`,
+        action: () => window.open(work.href, '_blank', 'noopener,noreferrer'),
       })),
       {
         id: 'github',
@@ -107,14 +108,7 @@ function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): Re
         label: 'Toggle light / dark',
         hint: 'action',
         keywords: 'mode appearance',
-        action: () => {
-          const next = !document.documentElement.classList.contains('dark');
-          document.documentElement.classList.toggle('dark', next);
-          localStorage.setItem('theme', next ? 'dark' : 'light');
-          const meta = document.querySelector('meta[name="theme-color"]');
-          if (meta) meta.setAttribute('content', next ? '#0a0a0a' : '#ffffff');
-          window.dispatchEvent(new Event('theme-change'));
-        },
+        action: toggleTheme,
       },
     ],
     [],
@@ -185,7 +179,7 @@ function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): Re
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-start justify-center bg-black/40 px-4 pt-[12vh] backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-start justify-center bg-black/30 px-4 pt-[12vh] backdrop-blur-[2px]"
       role="dialog"
       aria-modal="true"
       aria-label="Command palette"
@@ -193,7 +187,7 @@ function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): Re
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="w-full max-w-lg overflow-hidden rounded-xl border border-border bg-background shadow-2xl">
+      <div className="w-full max-w-lg overflow-hidden rounded-lg border border-border bg-background shadow-xl">
         <div className="border-b border-border px-3 py-2">
           <input
             ref={inputRef}
@@ -204,7 +198,7 @@ function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): Re
             }}
             onKeyDown={onKeyDown}
             placeholder={`Search ${PROFILE.name.toLowerCase()}…`}
-            className="w-full bg-transparent py-2.5 text-base text-foreground outline-none placeholder:text-neutral-400"
+            className="w-full bg-transparent py-2.5 text-[1.05rem] text-foreground outline-none placeholder:text-muted/70"
             aria-label="Search commands"
             aria-controls="command-palette-list"
             aria-autocomplete="list"
@@ -219,28 +213,26 @@ function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): Re
           role="listbox"
         >
           {filtered.length === 0 && (
-            <li className="px-4 py-3 text-sm text-neutral-500">No matches</li>
+            <li className="px-4 py-3 text-muted">No matches</li>
           )}
           {filtered.map((item, index) => (
             <li key={item.id} role="option" aria-selected={index === activeIndex}>
               <button
                 type="button"
                 data-index={index}
-                className={`flex w-full items-center justify-between gap-3 px-4 py-2.5 text-left text-sm transition-colors ${
-                  index === activeIndex
-                    ? 'bg-neutral-100 dark:bg-neutral-800'
-                    : 'hover:bg-neutral-50 dark:hover:bg-neutral-900'
+                className={`flex w-full items-center justify-between gap-3 px-4 py-2.5 text-left transition-colors ${
+                  index === activeIndex ? 'bg-foreground/[0.06]' : 'hover:bg-foreground/[0.03]'
                 }`}
                 onMouseEnter={() => setActiveIndex(index)}
                 onClick={() => runItem(item)}
               >
                 <span className="truncate text-foreground">{item.label}</span>
-                <span className="shrink-0 font-mono text-xs text-neutral-400">{item.hint}</span>
+                <span className="shrink-0 text-[0.65rem] tracking-[0.16em] text-muted uppercase">{item.hint}</span>
               </button>
             </li>
           ))}
         </ul>
-        <div className="flex flex-wrap gap-x-3 gap-y-1 border-t border-border px-4 py-2 font-mono text-xs text-neutral-400">
+        <div className="flex flex-wrap gap-x-4 gap-y-1 border-t border-border px-4 py-2 text-[0.8rem] text-muted">
           <span>↑↓ move</span>
           <span>↵ open</span>
           <span>esc close</span>

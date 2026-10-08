@@ -1,24 +1,33 @@
 export type Profile = {
   readonly name: string;
+  readonly fullName: string;
   readonly title: string;
-  readonly tagline: string;
+  readonly location: string;
+  readonly intro: string;
   readonly site: string;
 };
 
-export type Highlight = {
-  readonly text: string;
-  readonly link?: { readonly label: string; readonly href: string };
-  readonly suffix?: string;
+export type Job = {
+  readonly role: string;
+  readonly org: string;
+  readonly href?: string;
+  readonly period: string;
+  readonly points: readonly string[];
 };
 
-export type LiveProject = {
+export type Work = {
   readonly name: string;
   readonly description: string;
   readonly href: string;
-  readonly icon: string;
+  readonly domain: string;
 };
 
-export type SocialLink = {
+export type Education = {
+  readonly title: string;
+  readonly period: string;
+};
+
+export type ContactLink = {
   readonly id: 'github' | 'linkedin' | 'email' | 'cv';
   readonly label: string;
   readonly href: string;
@@ -27,8 +36,11 @@ export type SocialLink = {
 
 export const PROFILE: Profile = {
   name: 'Luis Reche',
+  fullName: 'Luis Lucas Reche',
   title: 'Applied AI Engineer',
-  tagline: 'turning LLMs and coding agents into software people use.',
+  location: 'Palma, Spain',
+  intro:
+    'I turn LLMs and coding agents into software people use, and build the guardrails that keep them honest. Go and TypeScript, from the service to the interface.',
   site: 'luisreche.dev',
 };
 
@@ -40,61 +52,60 @@ export const CONTACT = {
   cvFileName: 'Luis-Reche-Applied-AI-Engineer-CV.pdf',
 } as const;
 
-export const ALWAYS = 'Shipping products with LLMs and coding agents, and the guardrails that keep them honest 🚀';
-
-export const HIGHLIGHTS: readonly Highlight[] = [
+export const EXPERIENCE: readonly Job[] = [
   {
-    text: 'Applied AI Engineer at ',
-    link: { label: 'Agentero', href: 'https://www.agentero.com' },
-    suffix: ' — Google Cloud infrastructure, Go backend services, and the Next.js marketplace 🛡️',
+    role: 'Applied AI Engineer',
+    org: 'Agentero',
+    href: 'https://www.agentero.com',
+    period: 'Apr 2026 – Present',
+    points: [
+      'Google Cloud infrastructure, Go backend services, and the Next.js marketplace.',
+      'End-to-end ownership of marketplace features and critical internal tooling.',
+    ],
   },
   {
-    text: 'Built ',
-    link: { label: 'ClipHub', href: 'https://cliphub.gravityroom.app/' },
-    suffix: ' for SocialPro as their software consultant — CS2 demo → edited video, 100+ users 🎮',
-  },
-  {
-    text: 'Freelancing for ',
-    link: { label: 'Berrus', href: 'https://berrus.app' },
-    suffix: ' (2025 — present) — Discord notifications, faster SQL, and an Electron desktop client ⚔️',
-  },
-  {
-    text: 'Running a fullstack strength product at ',
-    link: { label: 'gravityroom.app', href: 'https://gravityroom.app' },
-    suffix: ' (web + Expo) 💪',
+    role: 'Freelance product engineer',
+    org: 'RecheDev',
+    period: '2025 – Present',
+    points: [
+      'ClipHub for SocialPro, as their software consultant. 100+ users.',
+      'Berrus (2025 – present): Discord notifications, faster SQL, and an Electron desktop client.',
+      'Piroboom: a Next.js storefront for a fireworks shop in Elche.',
+    ],
   },
 ];
 
-export const LIVE_PROJECTS: readonly LiveProject[] = [
+export const SELECTED_WORK: readonly Work[] = [
   {
     name: 'ClipHub',
-    description: 'CS2 demo → edited video. 100+ users.',
+    description: 'A Windows app that turns a CS2 demo into an edited video of the best plays.',
     href: 'https://cliphub.gravityroom.app/',
-    icon: '/images/live/cliphub.svg',
+    domain: 'cliphub.gravityroom.app',
   },
   {
     name: 'Gravity Room',
-    description: 'Strength tracker with automatic progression — web + mobile.',
+    description: 'A strength tracker with automatic progression, on the web and on mobile.',
     href: 'https://gravityroom.app',
-    icon: '/images/live/gravity.svg',
+    domain: 'gravityroom.app',
   },
   {
     name: 'Piroboom',
-    description: 'Next.js storefront for a fireworks shop in Elche.',
+    description: 'A storefront for a fireworks shop in Elche: catalogue, product and event enquiries.',
     href: 'https://pirotecniaelche.es',
-    icon: '/images/live/piroboom.svg',
+    domain: 'pirotecniaelche.es',
   },
 ];
 
-export const SOCIAL_LINKS: readonly SocialLink[] = [
-  { id: 'github', label: 'GitHub', href: CONTACT.github },
-  { id: 'linkedin', label: 'LinkedIn', href: CONTACT.linkedin },
-  { id: 'email', label: CONTACT.email, href: `mailto:${CONTACT.email}` },
-  { id: 'cv', label: 'Download CV', href: CONTACT.cv, download: CONTACT.cvFileName },
+export const EDUCATION: readonly Education[] = [
+  { title: 'Higher technical diploma in web application development (DAW)', period: '2024 – 2026' },
+  { title: 'Harvard CS50, Introduction to Computer Science', period: '2024' },
+  { title: 'University of Helsinki, Java Programming MOOC', period: '2024' },
+  { title: 'Anthropic, Claude Code in Action', period: '2026' },
 ];
 
-export const FOOTER_LINKS: readonly { readonly label: string; readonly href: string }[] = [
-  { label: 'GitHub', href: CONTACT.github },
-  { label: 'LinkedIn', href: CONTACT.linkedin },
-  { label: 'CV', href: CONTACT.cv },
+export const CONTACT_LINKS: readonly ContactLink[] = [
+  { id: 'email', label: 'Email', href: `mailto:${CONTACT.email}` },
+  { id: 'linkedin', label: 'LinkedIn', href: CONTACT.linkedin },
+  { id: 'github', label: 'GitHub', href: CONTACT.github },
+  { id: 'cv', label: 'Curriculum vitae', href: CONTACT.cv, download: CONTACT.cvFileName },
 ];

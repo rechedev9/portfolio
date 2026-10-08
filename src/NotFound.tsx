@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import type { ReactElement } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { syncThemeColor } from './theme';
 
 export function NotFound(): ReactElement {
   const { pathname } = useLocation();
@@ -8,25 +9,24 @@ export function NotFound(): ReactElement {
   useEffect(() => {
     document.title = '404 | Luis Reche';
     document.body.classList.add('clean-body');
+    syncThemeColor();
     return (): void => {
       document.body.classList.remove('clean-body');
     };
   }, []);
 
   return (
-    <main className="flex min-h-screen items-center p-6 sm:p-12 md:p-16">
-      <div className="reveal mx-auto w-full md:max-w-[37.5rem]">
-        <h1 className="font-mono text-2xl text-neutral-500 opacity-75 dark:text-neutral-300">
-          /404
-        </h1>
-        <p className="mt-4 text-3xl font-semibold tracking-tight text-accent">Page not found</p>
-        <p className="mt-3 text-xl leading-relaxed text-gray-500 dark:text-gray-400">
-          Nothing lives at{' '}
-          <code className="font-mono text-base text-black dark:text-white">{pathname}</code>.
+    <main className="flex min-h-screen items-center px-6 sm:px-10">
+      <div className="reveal mx-auto w-full max-w-[44rem]">
+        <p className="label-caps">Error 404</p>
+        <h1 className="mt-4 text-4xl font-normal tracking-[-0.02em] sm:text-5xl">Page not found</h1>
+        <div aria-hidden="true" className="mt-6 h-px w-12 bg-accent" />
+        <p className="mt-6 text-[1.2rem] leading-relaxed text-muted">
+          Nothing lives at <code className="font-mono text-[0.95rem] text-foreground">{pathname}</code>.
         </p>
         <Link
           to="/"
-          className="mt-8 inline-block rounded border-2 border-dashed border-border px-3 py-2 font-mono text-sm text-black transition-colors hover:bg-neutral-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:text-white dark:hover:bg-neutral-900"
+          className="mt-8 inline-block text-[0.78rem] tracking-[0.16em] text-accent uppercase underline decoration-accent/30 underline-offset-4 transition-colors hover:decoration-accent focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-accent"
         >
           ← Back to luisreche.dev
         </Link>

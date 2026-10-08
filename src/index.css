@@ -3,25 +3,27 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* josepvidal.dev-inspired tokens */
-  --color-primary: #ffb696;
-  --color-accent: #ff7a95;
-  --color-background: #ffffff;
-  --color-foreground: #0a0a0a;
-  --color-border: #e5e5e5;
-  --color-ring: #a1a1a1;
+  /* Academic editorial: ivory paper, ink, one cardinal accent */
+  --color-background: #fbfaf6;
+  --color-foreground: #1a1917;
+  --color-muted: #5f5b53;
+  --color-border: #e3ded3;
+  --color-accent: #8c1d1d;
+
+  --font-serif: 'Newsreader', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
 }
 
 .dark {
-  --color-background: #0a0a0a;
-  --color-foreground: #fafafa;
-  --color-border: rgb(255 255 255 / 0.1);
-  --color-ring: #737373;
+  --color-background: #131211;
+  --color-foreground: #ece8df;
+  --color-muted: #a8a293;
+  --color-border: #2b2926;
+  --color-accent: #e28a86;
 }
 
 
 /* ═══════════════════════════════════════════
-   Portfolio — josepvidal.dev structure
+   Portfolio
    ═══════════════════════════════════════════ */
 
 @keyframes p-reveal {
@@ -38,9 +40,18 @@
   background: var(--color-background);
   color: var(--color-foreground);
   overflow: auto;
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-serif);
+  font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Section labels and small metadata: tracked capitals, like a letterhead */
+.label-caps {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-muted);
 }
 
 html {
@@ -63,16 +74,16 @@ html {
 
 .clean-body::selection,
 .clean-body *::selection {
-  background: color-mix(in oklab, var(--color-accent) 25%, transparent);
+  background: color-mix(in oklab, var(--color-accent) 18%, transparent);
   color: var(--color-foreground);
 }
 
 .clean-body::-webkit-scrollbar { width: 7px; }
 .clean-body::-webkit-scrollbar-track { background: var(--color-background); }
-.clean-body::-webkit-scrollbar-thumb { background: #c3c6d2; border-radius: 4px; }
-.clean-body::-webkit-scrollbar-thumb:hover { background: #a8abb8; }
-.dark .clean-body::-webkit-scrollbar-thumb { background: #404040; }
-.dark .clean-body::-webkit-scrollbar-thumb:hover { background: #525252; }
+.clean-body::-webkit-scrollbar-thumb { background: #d6d0c4; border-radius: 4px; }
+.clean-body::-webkit-scrollbar-thumb:hover { background: #bdb6a8; }
+.dark .clean-body::-webkit-scrollbar-thumb { background: #3a3733; }
+.dark .clean-body::-webkit-scrollbar-thumb:hover { background: #4a4641; }
 
 body {
   margin: 0;
