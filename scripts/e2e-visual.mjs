@@ -55,7 +55,6 @@ async function main() {
     '/me',
     '/always',
     '/highlights',
-    '/projects',
     '/live',
     'ClipHub',
     'SocialPro',

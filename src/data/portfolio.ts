@@ -5,15 +5,6 @@ export type Profile = {
   readonly site: string;
 };
 
-export type ProjectCategory = {
-  readonly title: string;
-  readonly emoji: string;
-  readonly items: readonly {
-    readonly name: string;
-    readonly href: string;
-  }[];
-};
-
 export type Highlight = {
   readonly text: string;
   readonly link?: { readonly label: string; readonly href: string };
@@ -76,35 +67,6 @@ export const HIGHLIGHTS: readonly Highlight[] = [
     text: 'Running a fullstack strength product at ',
     link: { label: 'gravityroom.app', href: 'https://gravityroom.app' },
     suffix: ' (web + Expo) 💪',
-  },
-];
-
-export const PROJECT_CATEGORIES: readonly ProjectCategory[] = [
-  {
-    title: 'Desktop / Creator',
-    emoji: '🖥️',
-    items: [{ name: 'ClipHub', href: 'https://cliphub.gravityroom.app/' }],
-  },
-  {
-    title: 'Apps',
-    emoji: '📱',
-    items: [
-      { name: 'Gravity Room', href: 'https://gravityroom.app' },
-      { name: 'Piroboom', href: 'https://pirotecniaelche.es' },
-    ],
-  },
-  {
-    title: 'AI / Agents',
-    emoji: '🤖',
-    items: [
-      { name: 'agent-git-toolkit', href: 'https://github.com/luis-reche-ag/agent-git-toolkit' },
-      { name: 'Honey Encryption Proxy', href: 'https://github.com/rechedev9/honey-encryption-proxy' },
-    ],
-  },
-  {
-    title: 'Infra / Go',
-    emoji: '☁️',
-    items: [{ name: 'riskforge', href: 'https://github.com/rechedev9/riskforge' }],
   },
 ];
 

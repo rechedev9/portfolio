@@ -7,7 +7,6 @@ import {
   HIGHLIGHTS,
   LIVE_PROJECTS,
   PROFILE,
-  PROJECT_CATEGORIES,
   SOCIAL_LINKS,
 } from './data/portfolio';
 import { CommandPalette } from './components/CommandPalette';
@@ -236,52 +235,15 @@ export function Portfolio(): ReactElement {
               ))}
             </div>
           </section>
-
-          {/* /projects */}
-          <section
-            id="projects"
-            aria-labelledby="heading-projects"
-            className="reveal scroll-mt-8"
-            style={{ animationDelay: '240ms' }}
-          >
-            <SectionHeading>projects</SectionHeading>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              {PROJECT_CATEGORIES.map((cat) => (
-                <div
-                  key={cat.title}
-                  className="border-2 border-dashed border-border/80 p-4 transition-colors hover:border-border"
-                >
-                  <h3 className="mb-3 flex items-center justify-between text-base text-foreground">
-                    <span>{cat.title}</span>
-                    <span aria-hidden="true">{cat.emoji}</span>
-                  </h3>
-                  <ul className="space-y-2">
-                    {cat.items.map((item) => (
-                      <li key={item.name}>
-                        <a
-                          href={item.href}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="text-base text-accent underline decoration-accent/40 underline-offset-4 transition-colors hover:decoration-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-                        >
-                          {item.name}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </section>
         </div>
 
-        <div className="mt-12 flex flex-col gap-12 pb-12">
+        <div className="mt-16 flex flex-col gap-12 pb-12">
           {/* /live */}
           <section
             id="live"
             className="reveal flex scroll-mt-8 flex-col font-mono"
             aria-labelledby="heading-live"
-            style={{ animationDelay: '300ms' }}
+            style={{ animationDelay: '240ms' }}
           >
             <h2
               id="heading-live"
@@ -318,7 +280,7 @@ export function Portfolio(): ReactElement {
 
           <footer
             className="reveal flex flex-col justify-between gap-4 border-t border-dashed border-border pt-6 font-mono text-sm sm:flex-row sm:items-center"
-            style={{ animationDelay: '360ms' }}
+            style={{ animationDelay: '300ms' }}
           >
             <Link to="/" className="hover:underline focus-visible:underline">
               {PROFILE.site} ✨ {year}

@@ -56,13 +56,6 @@ function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): Re
         action: () => scrollToId('highlights'),
       },
       {
-        id: 'projects',
-        label: 'Go to /projects',
-        hint: 'section',
-        keywords: 'work',
-        action: () => scrollToId('projects'),
-      },
-      {
         id: 'live',
         label: 'Go to /live',
         hint: 'section',
