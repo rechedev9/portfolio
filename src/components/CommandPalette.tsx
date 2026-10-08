@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ReactElement, KeyboardEvent as ReactKeyboardEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { CONTACT, LIVE_PROJECTS, PROFILE } from '../data/portfolio';
+import { CONTACT, FLAGSHIP, PROFILE, PROJECTS } from '../data/portfolio';
 
 type PaletteItem = {
   readonly id: string;
@@ -28,7 +27,6 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps): ReactEle
 }
 
 function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): ReactElement {
-  const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const [query, setQuery] = useState('');
@@ -37,77 +35,67 @@ function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): Re
   const items = useMemo<readonly PaletteItem[]>(
     () => [
       {
-        id: 'me',
-        label: 'Go to /me',
+        id: 'flagship',
+        label: 'Go to ClipHub',
         hint: 'section',
-        keywords: 'about profile',
-        action: () => scrollToId('me'),
-      },
-      {
-        id: 'always',
-        label: 'Go to /always',
-        hint: 'section',
-        keywords: 'status now',
-        action: () => scrollToId('always'),
-      },
-      {
-        id: 'highlights',
-        label: 'Go to /highlights',
-        hint: 'section',
-        keywords: 'career',
-        action: () => scrollToId('highlights'),
+        keywords: 'flagship socialpro',
+        action: () => scrollToId('flagship'),
       },
       {
         id: 'projects',
-        label: 'Go to /projects',
+        label: 'Go to work',
         hint: 'section',
-        keywords: 'work',
+        keywords: 'projects',
         action: () => scrollToId('projects'),
       },
       {
-        id: 'live',
-        label: 'Go to /live',
+        id: 'experience',
+        label: 'Go to experience',
         hint: 'section',
-        keywords: 'products',
-        action: () => scrollToId('live'),
+        keywords: 'agentero work',
+        action: () => scrollToId('experience'),
       },
-      ...LIVE_PROJECTS.map((p) => ({
-        id: `live-${p.name}`,
-        label: `Open ${p.name}`,
+      {
+        id: 'stack',
+        label: 'Go to stack',
+        hint: 'section',
+        keywords: 'skills education',
+        action: () => scrollToId('stack'),
+      },
+      {
+        id: 'contact',
+        label: 'Go to contact',
+        hint: 'section',
+        keywords: 'email',
+        action: () => scrollToId('contact'),
+      },
+      {
+        id: 'open-flagship',
+        label: `Open ${FLAGSHIP.name}`,
         hint: 'live',
-        keywords: p.description,
-        action: () => window.open(p.href, '_blank', 'noopener,noreferrer'),
-      })),
-      {
-        id: 'matrix',
-        label: 'Open Matrix theme',
-        hint: 'theme',
-        action: () => navigate('/matrix'),
+        keywords: 'cliphub socialpro',
+        action: () => window.open(FLAGSHIP.links[0]?.href, '_blank', 'noopener,noreferrer'),
       },
-      {
-        id: 'cs',
-        label: 'Open CS 1.6 theme',
-        hint: 'theme',
-        keywords: 'counter strike',
-        action: () => navigate('/cs'),
-      },
-      {
-        id: 'pokemon',
-        label: 'Open Pokemon theme',
-        hint: 'theme',
-        action: () => navigate('/pokemon'),
-      },
+      ...PROJECTS.flatMap((project) =>
+        project.links.map((link) => ({
+          id: `${project.name}-${link.label}`,
+          label: `${project.name}: ${link.label}`,
+          hint: 'project',
+          keywords: `${project.kind} ${project.pitch}`,
+          action: () => window.open(link.href, '_blank', 'noopener,noreferrer'),
+        })),
+      ),
       {
         id: 'github',
         label: 'Open GitHub',
         hint: 'link',
-        action: () => window.open(`https://${CONTACT.github}`, '_blank', 'noopener,noreferrer'),
+        action: () => window.open(CONTACT.github, '_blank', 'noopener,noreferrer'),
       },
       {
         id: 'linkedin',
         label: 'Open LinkedIn',
         hint: 'link',
-        action: () => window.open(`https://${CONTACT.linkedin}`, '_blank', 'noopener,noreferrer'),
+        action: () => window.open(CONTACT.linkedin, '_blank', 'noopener,noreferrer'),
       },
       {
         id: 'email',
@@ -126,7 +114,7 @@ function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): Re
         action: () => {
           const a = document.createElement('a');
           a.href = CONTACT.cv;
-          a.download = 'LuisReche_CV_AppliedAI_EN.pdf';
+          a.download = CONTACT.cvFileName;
           a.click();
         },
       },
@@ -145,7 +133,7 @@ function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): Re
         },
       },
     ],
-    [navigate],
+    [],
   );
 
   const filtered = useMemo(() => {

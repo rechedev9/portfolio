@@ -4,7 +4,7 @@ import path from 'node:path';
 
 const BASE = process.env.BASE_URL ?? 'http://127.0.0.1:5173';
 const OUT = process.env.OUT_DIR ?? '/tmp/portfolio-e2e';
-const CHROME = process.env.CHROME_PATH ?? '/usr/bin/google-chrome';
+const CHROME = process.env.CHROME_PATH ?? '/usr/local/bin/google-chrome';
 
 const results = [];
 
@@ -46,49 +46,41 @@ async function main() {
   await page.waitForSelector('h1');
 
   const title = await page.title();
-  if (title.includes('Applied AI Backend Engineer')) ok('document title', title);
+  if (title.includes('Applied AI Engineer') && !title.includes('Backend')) ok('document title', title);
   else fail('document title', title);
 
   for (const t of [
     'Luis Reche',
-    'Applied AI Backend Engineer',
-    '/me',
-    '/always',
-    '/highlights',
-    '/projects',
-    '/live',
+    'Applied AI Engineer',
+    'ClipHub',
+    'SocialPro',
+    '100+ users',
     'Agentero',
-    'TickCut',
     'Gravity Room',
-    'Shenron',
+    'software consultant',
+    'Palma, Spain',
+    'Google Cloud',
+    'Berrus (2025 — present)',
   ]) {
     if (await textExists(page, t)) ok(`home text: ${t}`);
     else fail(`home text: ${t}`);
   }
 
-  // Social + CV link
-  const cvHref = await page.$eval('a[aria-label="Download CV"]', (a) => a.getAttribute('href'));
-  if (cvHref === '/luis-reche-cv.pdf') ok('CV link href');
+  const banned = await page.evaluate(() => document.body.innerText);
+  if (!/Backend Engineer|Full Stack Engineer|TickCut|Shenron|\/workflow/i.test(banned)) ok('no stale titles or removed items');
+  else fail('no stale titles or removed items', 'found a retired title, TickCut, Shenron, or /workflow');
+
+  const cvHref = await page.$eval('a[download]', (a) => a.getAttribute('href'));
+  if (cvHref === '/Luis-Reche-Applied-AI-Engineer-CV.pdf') ok('CV link href');
   else fail('CV link href', cvHref);
 
-  const cvRes = await page.goto(BASE + '/luis-reche-cv.pdf', { waitUntil: 'domcontentloaded' });
+  const cvRes = await page.goto(BASE + '/Luis-Reche-Applied-AI-Engineer-CV.pdf', { waitUntil: 'domcontentloaded' });
   if (cvRes && cvRes.ok() && (cvRes.headers()['content-type'] || '').includes('pdf')) {
     ok('CV PDF served', String(cvRes.status()));
   } else {
     fail('CV PDF served', cvRes ? `${cvRes.status()} ${cvRes.headers()['content-type']}` : 'no response');
   }
   await page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
-
-  // Live icons load
-  const icons = await page.$$eval('#live img', (imgs) =>
-    imgs.map((i) => ({ src: i.getAttribute('src'), w: i.naturalWidth, h: i.naturalHeight, complete: i.complete })),
-  );
-  if (icons.length >= 3) ok('live icons count', String(icons.length));
-  else fail('live icons count', String(icons.length));
-  for (const icon of icons) {
-    if (icon.complete && icon.w > 0) ok(`icon loads ${icon.src}`);
-    else fail(`icon loads ${icon.src}`, JSON.stringify(icon));
-  }
 
   await shot(page, '01-home-light');
 
@@ -107,11 +99,11 @@ async function main() {
   await shot(page, '03-command-palette');
 
   // Filter without leaving the page
-  await page.type('input[aria-label="Search commands"]', 'TickCut');
+  await page.type('input[aria-label="Search commands"]', 'ClipHub');
   const filtered = await page.$$eval('[role="option"]', (opts) =>
     opts.map((o) => (o.textContent || '').trim()),
   );
-  if (filtered.some((t) => t.toLowerCase().includes('tickcut'))) {
+  if (filtered.some((t) => t.toLowerCase().includes('cliphub'))) {
     ok('command palette filter', filtered.slice(0, 3).join(' | '));
   } else {
     fail('command palette filter', filtered.join(' | ') || '(empty)');
@@ -134,57 +126,6 @@ async function main() {
   });
   ok('command palette Ctrl+K close');
 
-  // Theme switcher panel
-  await page.click('button[aria-label="Theme switcher"]');
-  await page.waitForSelector('.theme-switcher-panel');
-  ok('theme switcher panel');
-  await shot(page, '04-theme-switcher');
-
-  // Footer / Matrix theme — wait for boot sequence
-  await page.goto(BASE + '/matrix', { waitUntil: 'domcontentloaded' });
-  try {
-    await page.waitForFunction(
-      () => document.body.innerText.includes('Applied AI') || document.body.innerText.includes('Type a command'),
-      { timeout: 12000 },
-    );
-    ok('matrix theme boots');
-  } catch {
-    fail('matrix theme boots', 'boot content not found');
-  }
-  await shot(page, '05-matrix');
-
-  await page.goto(BASE + '/cs', { waitUntil: 'domcontentloaded' });
-  try {
-    await page.waitForFunction(
-      () =>
-        document.body.innerText.includes('Applied AI') ||
-        document.body.innerText.includes('about') ||
-        document.querySelector('.cs-console-output'),
-      { timeout: 12000 },
-    );
-    ok('cs theme boots');
-  } catch {
-    fail('cs theme boots', 'boot content not found');
-  }
-  if (await page.$('.cs-page, .cs-console-window, main')) ok('cs theme shell');
-  else fail('cs theme shell');
-  await shot(page, '06-cs');
-
-  await page.goto(BASE + '/pokemon', { waitUntil: 'domcontentloaded' });
-  await new Promise((r) => setTimeout(r, 500));
-  if (await page.$('.poke-page, .poke-gbc, main')) ok('pokemon theme loads');
-  else fail('pokemon theme loads');
-  // Power on for fuller visual
-  const power = await page.$('.poke-power-led, button[aria-label*="Power"], .poke-power-off');
-  if (power) {
-    await power.click();
-    await new Promise((r) => setTimeout(r, 1500));
-    ok('pokemon power toggle');
-  } else {
-    ok('pokemon power toggle', 'no power button (skipped)');
-  }
-  await shot(page, '07-pokemon');
-
   // Mobile viewport home
   await page.setViewport({ width: 390, height: 844, isMobile: true, deviceScaleFactor: 2 });
   await page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
@@ -201,11 +142,14 @@ async function main() {
   await page.setViewport({ width: 1280, height: 900 });
   await page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
   const hrefs = await page.$$eval('a[href]', (as) => as.map((a) => a.href));
+  const removedHrefs = hrefs.filter((h) => /shenron|\/workflow/i.test(h));
+  if (removedHrefs.length === 0) ok('no links to removed pages');
+  else fail('no links to removed pages', removedHrefs.join(', '));
   for (const need of [
-    'https://agentero.com/',
-    'https://tickcut.gravityroom.app/',
+    'https://www.agentero.com/',
+    'https://cliphub.gravityroom.app/',
     'https://gravityroom.app/',
-    'https://github.com/rechedev9/shenron',
+    'https://github.com/luis-reche-ag/agent-git-toolkit',
   ]) {
     if (hrefs.some((h) => h.startsWith(need) || h === need || h.includes(need.replace(/\/$/, '')))) {
       ok(`link present ${need}`);

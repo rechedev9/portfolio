@@ -84,6 +84,14 @@ export function MoonIcon({ className = 'size-5' }: IconProps): ReactElement {
   );
 }
 
+export function ArrowUpRightIcon({ className = 'size-4' }: IconProps): ReactElement {
+  return (
+    <svg className={className} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+      <path d="M4 12 12 4M6 4h6v6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 export function CommandIcon({ className = 'size-5' }: IconProps): ReactElement {
   return (
     <svg className={className} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

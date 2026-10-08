@@ -7,38 +7,29 @@ export function NotFound(): ReactElement {
 
   useEffect(() => {
     document.title = '404 | Luis Reche';
+    document.body.classList.add('clean-body');
+    return (): void => {
+      document.body.classList.remove('clean-body');
+    };
   }, []);
 
   return (
-    <main className="min-h-screen bg-terminal-bg flex items-center justify-center font-mono text-terminal-green p-4">
-      <div className="max-w-lg w-full">
-        <h1 className="text-4xl font-bold mb-4">404</h1>
-        <p className="text-terminal-dim mb-2">{'>'} cd {pathname}</p>
-        <p className="text-terminal-red mb-6">
-          bash: cd: {pathname}: No such file or directory
+    <main className="flex min-h-screen items-center p-6 sm:p-12 md:p-16">
+      <div className="reveal mx-auto w-full md:max-w-[37.5rem]">
+        <h1 className="font-mono text-2xl text-neutral-500 opacity-75 dark:text-neutral-300">
+          /404
+        </h1>
+        <p className="mt-4 text-3xl font-semibold tracking-tight text-accent-ink">Page not found</p>
+        <p className="mt-3 text-xl leading-relaxed text-gray-500 dark:text-gray-400">
+          Nothing lives at{' '}
+          <code className="font-mono text-base text-black dark:text-white">{pathname}</code>.
         </p>
-        <p className="text-terminal-dim mb-1">Available routes:</p>
-        <ul className="mb-6 space-y-1">
-          <li>
-            <Link to="/" className="underline hover:text-terminal-cyan">
-              /
-            </Link>
-            {' — Matrix Terminal'}
-          </li>
-          <li>
-            <Link to="/cs" className="underline hover:text-terminal-cyan">
-              /cs
-            </Link>
-            {' — CS 1.6'}
-          </li>
-          <li>
-            <Link to="/pokemon" className="underline hover:text-terminal-cyan">
-              /pokemon
-            </Link>
-            {' — Pokémon'}
-          </li>
-        </ul>
-        <p className="animate-blink">█</p>
+        <Link
+          to="/"
+          className="mt-8 inline-block rounded border-2 border-dashed border-border px-3 py-2 font-mono text-sm text-black transition-colors hover:bg-neutral-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:text-white dark:hover:bg-neutral-900"
+        >
+          ← Back to luisreche.dev
+        </Link>
       </div>
     </main>
   );
