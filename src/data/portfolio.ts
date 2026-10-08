@@ -173,7 +173,7 @@ export const EXPERIENCE: readonly Job[] = [
       'US network that gives independent insurance agents carrier access and the software to run an agency. I work from Spain.',
     highlights: [
       'Infrastructure on Google Cloud, backend services in Go, and the marketplace interface in Next.js.',
-      'A lot of the marketplace feature work, and many critical internal tools.',
+      'End-to-end ownership of marketplace features and critical internal tooling.',
       'One of those tools is public: a coding agent cannot commit or push until the checks pass. The rules started from Agentero’s codebase.',
     ],
   },
