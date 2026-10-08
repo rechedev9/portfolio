@@ -17,6 +17,7 @@ export type Profile = {
 export type Flagship = {
   readonly name: string;
   readonly client: string;
+  readonly clientRole: string;
   readonly clientUrl: string;
   readonly metric: string;
   readonly pitch: string;
@@ -96,14 +97,15 @@ export const PIPELINE: readonly { readonly label: string; readonly text: string 
 export const FLAGSHIP: Flagship = {
   name: 'ClipHub',
   client: 'SocialPro',
+  clientRole: 'software consultant',
   clientUrl: 'https://socialpro.es',
   metric: '100+ users',
   pitch:
-    'Send a CS2 demo, get an edited video of the best plays. A Windows desktop app I built for SocialPro, a gaming agency.',
+    'Send a CS2 demo, get an edited video of the best plays. A Windows desktop app I built for SocialPro as their software consultant.',
   points: [
     'Go services for the pipeline, a Next.js studio, and an Electron shell that ships the Windows app.',
     '130 versioned releases. The latest public release is ClipHub Studio 5.4.4.',
-    'Built for SocialPro. 100+ people use it.',
+    'Built for SocialPro as their software consultant. 100+ people use it.',
   ],
   tech: ['Go', 'TypeScript', 'Next.js', 'Electron', 'FFmpeg'],
   links: [
@@ -113,14 +115,6 @@ export const FLAGSHIP: Flagship = {
 };
 
 export const PROJECTS: readonly Project[] = [
-  {
-    name: 'Shenron',
-    kind: 'Multi-agent delivery',
-    pitch:
-      'After a person approves the plan, two independent reviewers have to accept the same commit before it ships. A bounded correction loop, plus a 12-agent QA skill.',
-    tech: ['Claude Code', 'Codex', 'Git worktrees'],
-    links: [{ label: 'Source', href: 'https://github.com/rechedev9/shenron' }],
-  },
   {
     name: 'agent-git-toolkit',
     kind: 'Agent guardrails',
@@ -171,14 +165,16 @@ export const PROJECTS: readonly Project[] = [
 
 export const EXPERIENCE: readonly Job[] = [
   {
-    title: 'Full Stack Engineer',
+    title: 'Applied AI Engineer',
     company: 'Agentero',
     url: 'https://www.agentero.com',
     period: 'Apr 2026 — Present',
     description:
       'US network that gives independent insurance agents carrier access and the software to run an agency. I work from Spain.',
     highlights: [
-      'Published guardrails so a coding agent cannot commit or push until the checks pass. The rules started from Agentero’s codebase.',
+      'Infrastructure on Google Cloud, backend services in Go, and the marketplace interface in Next.js.',
+      'A lot of the marketplace feature work, and many critical internal tools.',
+      'One of those tools is public: a coding agent cannot commit or push until the checks pass. The rules started from Agentero’s codebase.',
     ],
   },
   {
@@ -188,8 +184,8 @@ export const EXPERIENCE: readonly Job[] = [
     period: '2025 — Present',
     description: 'I design and build the product, from the first meeting to production.',
     highlights: [
-      'ClipHub for SocialPro: a CS2 demo-to-video app with 100+ users.',
-      'Berrus: Discord notifications, faster SQL, and an Electron desktop client.',
+      'ClipHub for SocialPro, as their software consultant: a CS2 demo-to-video app with 100+ users.',
+      'Berrus (2025 — present): Discord notifications, faster SQL, and an Electron desktop client.',
       'Piroboom: a Next.js storefront for a shop in Elche.',
     ],
   },

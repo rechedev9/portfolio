@@ -229,7 +229,7 @@ export function Portfolio(): ReactElement {
           flagship={{
             kicker: 'Flagship',
             name: FLAGSHIP.name,
-            detail: `Built for ${FLAGSHIP.client} · ${FLAGSHIP.metric}`,
+            detail: `Built for ${FLAGSHIP.client} as their ${FLAGSHIP.clientRole} · ${FLAGSHIP.metric}`,
             href: '#flagship',
           }}
           ctas={{
@@ -259,6 +259,7 @@ export function Portfolio(): ReactElement {
                       >
                         {FLAGSHIP.client}
                       </a>
+                      {`, as their ${FLAGSHIP.clientRole}`}
                     </dd>
                   </div>
                   <div className="flex min-h-9 items-center rounded-full border border-accent/40 bg-background px-3">
