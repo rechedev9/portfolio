@@ -23,4 +23,5 @@ npm run lint
 ## Content
 
 - CV: `public/Luis-Reche-Applied-AI-Engineer-CV.pdf` (same file also at `public/luis-reche-cv.pdf` so older links keep working)
+- Edit the CV in `cv/luis-reche.html`, then run `npm run cv` to rebuild both PDFs (set `CHROME_PATH` if Chrome is elsewhere)
 - Command palette: `⌘K` / `Ctrl+K`
