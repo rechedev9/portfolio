@@ -1,19 +1,19 @@
 # Luis Reche
 
-> Applied AI Engineer in Palma, Spain. I turn LLMs and coding agents into software people use. I use AI to accelerate the work and keep a human in the loop.
+> Applied AI Engineer in Palma, Spain. I use LLMs and coding agents to ship software faster, with a human in the loop: I review and approve what ships. I build the whole product: backend, web, mobile, desktop and infrastructure.
 
 ## Experience
 
-- Applied AI Engineer at Agentero, Apr 2026 to present. Infrastructure on Google Cloud, backend services in Go, and the marketplace interface in Next.js.
-- Freelance software engineer for SocialPro, 2025 to present. The agency website, a brand portal and the first internal CRM, and the Piroboom website for one of their clients.
-- Freelance product engineer at RecheDev, 2021 to present. ClipHub, and Berrus, a browser role-playing game.
+- Applied AI Engineer at Agentero, Apr 2026 to present. I own marketplace features and critical internal tooling end to end. Infrastructure on Google Cloud, backend services in Go and the marketplace interface in Next.js.
+- Freelance software engineer for SocialPro, 2025 to present. I designed and built socialpro.es, a brand portal and the first internal CRM, and replaced the WordPress site of Piroboom, a client of the agency.
+- Freelance product engineer at RecheDev, 2021 to present. ClipHub, built for SocialPro as their software consultant, and Berrus, another team's browser role-playing game.
 
 ## Projects
 
-- [ClipHub](https://cliphub.gravityroom.app/): Windows desktop app that turns a CS2 demo into an edited video of the best plays.
-- [SocialPro](https://socialpro.es): website of a gaming and esports creator agency, with a brand portal and the first internal CRM.
-- [Piroboom](https://pirotecniaelche.es): website of a fireworks shop in Elche, live in production, with a searchable catalogue reader and enquiry forms.
-- [Gravity Room](https://gravityroom.app): live strength tracker with automatic progression, on web and mobile.
+- [ClipHub](https://cliphub.gravityroom.app/): send a Counter-Strike 2 demo, get an edited video of the best plays. A Windows app whose Go pipeline parses the demo, records the plays in the game and edits the video.
+- [SocialPro](https://socialpro.es): the website of a gaming and esports agency: creator roster with audience numbers, services, case studies and blog, plus a brand portal and the first internal CRM.
+- [Piroboom](https://pirotecniaelche.es): the website of a fireworks shop in Elche, live in production. Its 82 MB PDF catalogue is now a searchable 16-page web reader.
+- [Gravity Room](https://gravityroom.app): a free strength training tracker that calculates the weights for your next session, on web and mobile.
 - [Honey Encryption Proxy](https://github.com/rechedev9/honey-encryption-proxy): local proxy in front of Claude Code that swaps proprietary names for stand-ins before a request leaves the machine.
 - [riskforge](https://github.com/rechedev9/riskforge): insurance quote gateway in Go with Terraform for Cloud Run, Spanner and Pub/Sub. A portfolio project.
 

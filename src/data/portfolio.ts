@@ -63,13 +63,13 @@ export const PROFILE: Profile = {
   name: 'Luis Reche',
   fullName: 'Luis Lucas Reche',
   title: 'Applied AI Engineer',
-  headline: 'I turn LLMs and coding agents into software people use.',
+  headline: 'I use AI to ship faster, with a human in the loop.',
   subhead: [
-    { text: 'I use AI to ' },
-    { text: 'accelerate the work', strong: true },
-    { text: ' and keep a ' },
-    { text: 'human in the loop', strong: true },
-    { text: '. I ship the product, from the service to the interface, and the guardrails that keep the agents honest.' },
+    { text: 'LLMs and coding agents speed up the work. ' },
+    { text: 'I review and approve what ships.', strong: true },
+    { text: ' I build ' },
+    { text: 'the whole product', strong: true },
+    { text: ': backend, web, mobile, desktop and infrastructure.' },
   ],
   location: 'Palma, Spain',
   site: 'luisreche.dev',
@@ -90,7 +90,7 @@ export const PROJECTS: readonly Project[] = [
     kind: '100+ users · 130 releases',
     client: { label: 'SocialPro', href: 'https://socialpro.es' },
     pitch:
-      'Send a CS2 demo, get an edited video of the best plays. A Windows desktop app I built for SocialPro as their software consultant.',
+      'Send a Counter-Strike 2 demo, get an edited video of the best plays. A Windows app I built for SocialPro as their software consultant. Its Go pipeline parses the demo, records the plays in the game and edits the video.',
     links: [
       { label: 'Live site', href: 'https://cliphub.gravityroom.app/' },
       { label: 'Releases', href: 'https://github.com/rechedev9/cliphub/releases' },
@@ -102,7 +102,7 @@ export const PROJECTS: readonly Project[] = [
     name: 'SocialPro',
     kind: 'Client · gaming and esports agency',
     pitch:
-      'The website of a gaming and esports creator agency: creator roster, services, case studies and blog. I designed and built it, along with a brand portal and the first internal CRM, on Next.js and PostgreSQL.',
+      'The agency’s website: creator roster with audience numbers, services, case studies and blog. I designed and built it, plus a brand portal and the first internal CRM, on Next.js and PostgreSQL.',
     links: [{ label: 'Live site', href: 'https://socialpro.es' }],
     image: { src: '/shots/socialpro.webp', alt: 'SocialPro home page: a hero that reads Conectamos creadores con marcas' },
   },
@@ -110,7 +110,7 @@ export const PROJECTS: readonly Project[] = [
     name: 'Piroboom',
     kind: 'Client · fireworks shop in Elche',
     pitch:
-      'The website of a fireworks shop in Elche, live in production. An 82 MB PDF catalogue became a searchable web reader, with enquiry forms for products and events. I designed and built it from the first sketch to launch.',
+      'The shop’s only catalogue was an 82 MB PDF. It is now a searchable 16-page web reader that loads page by page on a phone. I designed and built the site from first sketch to production, with 110 unit and 42 browser tests.',
     links: [
       { label: 'Live site', href: 'https://pirotecniaelche.es' },
       { label: 'Source', href: 'https://github.com/rechedev9/piroelche' },
@@ -121,7 +121,7 @@ export const PROJECTS: readonly Project[] = [
     name: 'Gravity Room',
     kind: 'Own product · web and mobile',
     pitch:
-      'A live strength tracker with automatic progression. React and TanStack on the web, Expo on mobile, Elysia and Postgres behind them.',
+      'A free strength training tracker that calculates the weights for your next session. React and TanStack on the web, Expo on mobile, Elysia and Postgres behind them.',
     links: [
       { label: 'Live site', href: 'https://gravityroom.app' },
       { label: 'Source', href: 'https://github.com/rechedev9/gravity-room' },
@@ -130,16 +130,16 @@ export const PROJECTS: readonly Project[] = [
   },
   {
     name: 'Honey Encryption Proxy',
-    kind: 'LLM privacy',
+    kind: 'Developer tool · LLM privacy',
     pitch:
-      'A local proxy in front of Claude Code. It swaps proprietary names for format-preserving stand-ins before the request leaves the machine, then restores them in the stream.',
+      'A local proxy in front of Claude Code. It swaps proprietary names in source code for format-preserving stand-ins before a request leaves the machine, then restores them in the streamed reply.',
     links: [{ label: 'Source', href: 'https://github.com/rechedev9/honey-encryption-proxy' }],
   },
   {
     name: 'riskforge',
     kind: 'Portfolio · insurance systems',
     pitch:
-      'A quote gateway I built to study the domain: parallel carrier calls in Go, and Terraform for Cloud Run, Spanner and Pub/Sub. A portfolio project, not a production system.',
+      'A quote gateway I built to study the insurance domain: parallel carrier calls in Go, and Terraform for Cloud Run, Spanner and Pub/Sub. A portfolio project, not a production system.',
     links: [{ label: 'Source', href: 'https://github.com/rechedev9/riskforge' }],
   },
 ];
@@ -153,8 +153,8 @@ export const EXPERIENCE: readonly Job[] = [
     description:
       'US network that gives independent insurance agents carrier access and the software to run an agency. I work from Spain.',
     highlights: [
-      'Infrastructure on Google Cloud, backend services in Go, and the marketplace interface in Next.js.',
-      'End-to-end ownership of marketplace features and critical internal tooling.',
+      'I own marketplace features and critical internal tooling end to end.',
+      'Infrastructure on Google Cloud, backend services in Go and the marketplace interface in Next.js.',
     ],
   },
   {
@@ -163,10 +163,10 @@ export const EXPERIENCE: readonly Job[] = [
     url: 'https://socialpro.es',
     period: '2025 to present',
     description:
-      'Gaming and esports creator agency. I work with them as a freelancer, on their website and for their clients.',
+      'Gaming and esports agency that connects creators with brands in Spain and Latin America. I started before their website launched.',
     highlights: [
-      'socialpro.es: I designed and built the agency website, a brand portal and the first internal CRM.',
-      'Piroboom: the website of a fireworks shop in Elche, from the first sketch to production.',
+      'socialpro.es: I designed and built the website, a brand portal and the first internal CRM.',
+      'Piroboom: I replaced the WordPress site of a fireworks shop in Elche, a client of the agency. Live in production.',
     ],
   },
   {
@@ -175,10 +175,10 @@ export const EXPERIENCE: readonly Job[] = [
     url: 'https://rechedev.cloud',
     period: '2021 to present',
     description:
-      'Freelance since 2021. I started with PC optimisation for competitive gaming, and now I design and build the product, from the first meeting to production.',
+      'My freelance practice. It began with PC optimisation for competitive gaming. Now I take products from first meeting to production.',
     highlights: [
-      'ClipHub for SocialPro, as their software consultant: a CS2 demo-to-video app with 100+ users.',
-      'Berrus, a browser role-playing game: Discord notifications, faster SQL, and an Electron desktop client.',
+      'ClipHub: a CS2 demo-to-video app with 100+ users. I built it for SocialPro as their software consultant.',
+      'Berrus: Discord notifications, faster SQL and an Electron desktop client for another team’s browser role-playing game.',
     ],
   },
 ];

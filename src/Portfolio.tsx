@@ -256,7 +256,7 @@ export function Portfolio(): ReactElement {
 
           <Section id="contact" title="Contact">
             <p className="max-w-xl text-pretty text-neutral-ink">
-              Open to applied AI and product engineering roles. Based in {PROFILE.location}, working remote.
+              Open to applied AI and product engineering roles. Remote from {PROFILE.location}.
             </p>
             <a
               href={`mailto:${CONTACT.email}`}
