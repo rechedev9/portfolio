@@ -72,7 +72,7 @@ async function main() {
     'software consultant',
     'Palma, Spain',
     'Google Cloud',
-    'Berrus, a browser role-playing game',
+    'Berrus: Discord notifications',
     'Piroboom',
   ]) {
     if (await textExists(page, t)) ok(`home text: ${t}`);
