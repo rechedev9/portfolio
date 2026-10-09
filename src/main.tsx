@@ -3,10 +3,13 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Portfolio } from './Portfolio';
 import { NotFound } from './NotFound';
+import { applyThemeColor, isDark } from './theme';
 import './index.css';
 
 const root = document.getElementById('root');
 if (!root) throw new Error('Root element not found');
+
+applyThemeColor(isDark());
 
 createRoot(root).render(
   <StrictMode>

@@ -1,154 +1,78 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import type { ReactElement, ReactNode } from 'react';
-import {
-  CONTACT,
-  EDUCATION,
-  EXPERIENCE,
-  FLAGSHIP,
-  PIPELINE,
-  PROFILE,
-  PROJECTS,
-  PROOF_POINTS,
-  SKILLS,
-  SOCIAL_LINKS,
-} from './data/portfolio';
-import type { Link as ProjectLink } from './data/portfolio';
+import { CONTACT, EDUCATION, EXPERIENCE, PROFILE, PROJECTS, SKILLS, SOCIAL_LINKS } from './data/portfolio';
 import { CommandPalette } from './components/CommandPalette';
-import { Hero } from './components/Hero';
-import { ArrowUpRightIcon, CommandIcon, MoonIcon, SunIcon } from './components/icons';
-import { socialIconFor } from './components/SocialIcons';
+import { ArrowUpRightIcon, MoonIcon, SunIcon } from './components/icons';
+import { isDark, subscribeTheme, toggleTheme } from './theme';
 
-const FOCUS =
-  'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent';
+const FOCUS = 'rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground';
 
-const NAV = [
-  { href: '#flagship', label: 'ClipHub' },
-  { href: '#projects', label: 'Work' },
-  { href: '#experience', label: 'Experience' },
-  { href: '#contact', label: 'Contact' },
-] as const;
+const LINK = `underline decoration-foreground/50 underline-offset-4 transition-[text-decoration-color] duration-150 hover:decoration-foreground ${FOCUS}`;
+
+// Padding with a matching negative margin: a taller tap target that does not move the text.
+const TAP = '-my-1.5 py-1.5';
+
+const NEW_TAB = ' (opens in a new tab)';
+
+const ROW = 'grid gap-2 md:grid-cols-[12rem_1fr] md:gap-8';
+
+// Every screenshot is captured at the same viewport, so one intrinsic size fits all.
+const SHOT = { width: 1280, height: 800 } as const;
 
 function Section({
   id,
-  label,
   title,
   children,
 }: {
   readonly id: string;
-  readonly label: string;
   readonly title: string;
   readonly children: ReactNode;
 }): ReactElement {
   return (
-    <section id={id} aria-labelledby={`heading-${id}`} className="reveal-on-scroll scroll-mt-24 pt-20 sm:pt-28">
-      <p className="mb-3 font-mono text-xs tracking-[0.16em] text-neutral-ink uppercase">{label}</p>
-      <h2 id={`heading-${id}`} className="mb-8 max-w-2xl text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
+    <section
+      id={id}
+      aria-labelledby={`heading-${id}`}
+      className="grid scroll-mt-4 gap-6 pt-20 sm:pt-28 lg:grid-cols-[10rem_1fr] lg:gap-8"
+    >
+      <h2 id={`heading-${id}`} className="font-serif text-[1.375rem] leading-6 italic">
         {title}
       </h2>
-      {children}
+      <div>{children}</div>
     </section>
   );
 }
 
-function Tags({ items }: { readonly items: readonly string[] }): ReactElement {
-  return (
-    <ul className="flex flex-wrap gap-1.5">
-      {items.map((item) => (
-        <li key={item} className="rounded-full border border-border px-2.5 py-0.5 font-mono text-[0.72rem] text-neutral-ink">
-          {item}
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-function ExternalLinks({ links, project }: { readonly links: readonly ProjectLink[]; readonly project: string }): ReactElement {
-  return (
-    <div className="flex flex-wrap gap-x-5 gap-y-1">
-      {links.map((link) => (
-        <a
-          key={link.href}
-          href={link.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`${project}: ${link.label} (opens in a new tab)`}
-          className={`group inline-flex min-h-11 items-center gap-1 text-sm font-medium text-accent-ink underline decoration-accent/40 underline-offset-4 hover:decoration-accent ${FOCUS}`}
-        >
-          {link.label}
-          <ArrowUpRightIcon className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-        </a>
-      ))}
-    </div>
-  );
-}
-
-function NavIconButton({
+function ExternalLink({
+  href,
   label,
-  onClick,
   children,
 }: {
-  readonly label: string;
-  readonly onClick: () => void;
+  readonly href: string;
+  readonly label?: string;
   readonly children: ReactNode;
 }): ReactElement {
   return (
-    <button
-      type="button"
-      title={label}
-      onClick={onClick}
-      className={`grid size-11 cursor-pointer place-items-center rounded-md border border-transparent hover:border-border ${FOCUS}`}
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
       aria-label={label}
+      className={`group inline-flex items-center gap-1 ${TAP} ${LINK}`}
     >
       {children}
-    </button>
+      <span className="sr-only">{NEW_TAB}</span>
+      <ArrowUpRightIcon className="size-3 text-neutral-ink transition-transform duration-150 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+    </a>
   );
-}
-
-function useScrollReveal(): void {
-  useEffect(() => {
-    const nodes = document.querySelectorAll<HTMLElement>('.reveal-on-scroll');
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduced || !('IntersectionObserver' in window)) {
-      nodes.forEach((node) => node.classList.add('is-visible'));
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            io.unobserve(entry.target);
-          }
-        }
-      },
-      { rootMargin: '0px 0px -8% 0px', threshold: 0.05 },
-    );
-    nodes.forEach((node) => io.observe(node));
-    return (): void => io.disconnect();
-  }, []);
 }
 
 export function Portfolio(): ReactElement {
   const [paletteOpen, setPaletteOpen] = useState(false);
-  const [dark, setDark] = useState(false);
+  const dark = useSyncExternalStore(subscribeTheme, isDark);
   const year = new Date().getFullYear();
-  useScrollReveal();
 
   useEffect(() => {
-    document.title = `${PROFILE.name} — ${PROFILE.title}`;
-    document.body.classList.add('clean-body');
-
-    const syncDark = (): void => {
-      const isDark = document.documentElement.classList.contains('dark');
-      setDark(isDark);
-      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', isDark ? '#0a0a0a' : '#ffffff');
-    };
-    syncDark();
-    window.addEventListener('theme-change', syncDark);
-    return (): void => {
-      document.body.classList.remove('clean-body');
-      window.removeEventListener('theme-change', syncDark);
-    };
+    document.title = `${PROFILE.name} · ${PROFILE.title}`;
   }, []);
 
   useEffect(() => {
@@ -171,161 +95,81 @@ export function Portfolio(): ReactElement {
     };
   }, [paletteOpen]);
 
-  const toggleDark = useCallback((): void => {
-    const next = !document.documentElement.classList.contains('dark');
-    document.documentElement.classList.toggle('dark', next);
-    localStorage.setItem('theme', next ? 'dark' : 'light');
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', next ? '#0a0a0a' : '#ffffff');
-    setDark(next);
-    window.dispatchEvent(new Event('theme-change'));
-  }, []);
-
   return (
     <>
       <a
         href="#main"
-        className="sr-only z-50 rounded-md bg-background px-4 py-2 text-foreground focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:outline-2 focus:outline-accent"
+        className="sr-only z-50 rounded-md bg-background px-4 py-2 text-foreground focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:outline-2 focus:outline-foreground"
       >
         Skip to content
       </a>
 
-      <header className="sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur-md">
-        <nav className="mx-auto flex h-14 max-w-6xl items-center justify-between px-5 sm:px-8" aria-label="Primary">
-          <a href="#hero" className={`flex items-center gap-2.5 rounded-sm ${FOCUS}`}>
-            <span aria-hidden="true" className="block size-6 rounded-[5px] bg-linear-to-br from-primary to-accent" />
-            <span className="text-sm font-semibold tracking-tight">{PROFILE.name}</span>
-          </a>
-          <div className="flex items-center gap-1">
-            <ul className="mr-1 hidden items-center gap-5 text-sm text-neutral-ink md:flex">
-              {NAV.map((link) => (
-                <li key={link.href}>
-                  <a href={link.href} className={`rounded-sm hover:text-foreground ${FOCUS}`}>
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-            <NavIconButton label={dark ? 'Switch to light mode' : 'Switch to dark mode'} onClick={toggleDark}>
-              {dark ? <SunIcon /> : <MoonIcon />}
-            </NavIconButton>
-            <NavIconButton label="Open command palette" onClick={() => setPaletteOpen(true)}>
-              <CommandIcon className="size-5" />
-            </NavIconButton>
+      <div className="mx-auto max-w-5xl px-6 text-[0.9375rem] leading-relaxed sm:px-8">
+        <header className="flex min-h-[min(100svh,54rem)] flex-col pt-8 pb-14 sm:pt-10 sm:pb-20">
+          <div className="flex items-start justify-between gap-6">
+            <div>
+              <h1 className="font-semibold tracking-tight">{PROFILE.name}</h1>
+              <p className="text-neutral-ink">
+                {PROFILE.title} · {PROFILE.location}
+              </p>
+            </div>
+            <button
+              type="button"
+              title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+              aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+              onClick={toggleTheme}
+              className={`-mt-2.5 -mr-3 grid size-11 cursor-pointer place-items-center text-neutral-ink transition-[color,scale] duration-150 ease-out hover:text-foreground active:scale-95 ${FOCUS}`}
+            >
+              {dark ? <SunIcon className="size-[1.125rem]" /> : <MoonIcon className="size-[1.125rem]" />}
+            </button>
           </div>
-        </nav>
-      </header>
 
-      <main id="main">
-        <Hero
-          name={PROFILE.name}
-          role={PROFILE.title}
-          headline={PROFILE.headline}
-          subhead={PROFILE.subhead}
-          status={{ label: 'Currently at Agentero', href: 'https://www.agentero.com' }}
-          location={PROFILE.location}
-          proofPoints={PROOF_POINTS}
-          pipelineTitle={FLAGSHIP.name}
-          pipeline={PIPELINE}
-          flagship={{
-            kicker: 'Flagship',
-            name: FLAGSHIP.name,
-            detail: `Built for ${FLAGSHIP.client} as their ${FLAGSHIP.clientRole} · ${FLAGSHIP.metric}`,
-            href: '#flagship',
-          }}
-          ctas={{
-            projects: { label: 'See the work', href: '#flagship' },
-            cv: { label: 'Download CV', href: CONTACT.cv, download: CONTACT.cvFileName },
-            contact: { label: 'Email me', href: `mailto:${CONTACT.email}` },
-          }}
-        />
-
-        <div className="mx-auto max-w-6xl px-5 pb-20 sm:px-8">
-          <Section id="flagship" label="Flagship" title="ClipHub turns a match demo into an edited video.">
-            <article className="relative overflow-hidden rounded-2xl border border-border bg-neutral-50/70 p-6 sm:p-10 dark:bg-neutral-900/40">
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute -top-24 -right-16 size-72 rounded-full bg-linear-to-br from-primary/40 to-accent/30 blur-3xl"
-              />
-              <div className="relative">
-                <dl className="mb-6 flex flex-wrap gap-2 text-sm">
-                  <div className="flex min-h-9 items-center gap-1.5 rounded-full border border-border bg-background px-3">
-                    <dt className="text-neutral-ink">Built for</dt>
-                    <dd>
-                      <a
-                        href={FLAGSHIP.clientUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`font-medium text-accent-ink underline decoration-accent/40 underline-offset-4 ${FOCUS}`}
-                      >
-                        {FLAGSHIP.client}
-                      </a>
-                      {`, as their ${FLAGSHIP.clientRole}`}
-                    </dd>
-                  </div>
-                  <div className="flex min-h-9 items-center rounded-full border border-accent/40 bg-background px-3">
-                    <dt className="sr-only">Traction</dt>
-                    <dd className="font-semibold text-accent-ink">{FLAGSHIP.metric}</dd>
-                  </div>
-                </dl>
-                <p className="max-w-2xl text-lg leading-relaxed text-pretty text-neutral-ink sm:text-xl">{FLAGSHIP.pitch}</p>
-                <ul className="mt-8 grid gap-5 sm:grid-cols-3">
-                  {FLAGSHIP.points.map((point) => (
-                    <li key={point} className="border-t border-border pt-4 text-sm leading-relaxed text-neutral-ink">
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <Tags items={FLAGSHIP.tech} />
-                  <ExternalLinks links={FLAGSHIP.links} project={FLAGSHIP.name} />
-                </div>
-              </div>
-            </article>
-          </Section>
-
-          <Section id="projects" label="Selected work" title="Products, agent tooling, and the interface around them.">
-            <ul className="grid gap-4 sm:grid-cols-2">
-              {PROJECTS.map((project) => (
-                <li key={project.name} className="flex flex-col rounded-xl border border-border p-6">
-                  <p className="mb-2 font-mono text-[0.7rem] tracking-[0.14em] text-neutral-ink uppercase">{project.kind}</p>
-                  <h3 className="mb-2 text-lg font-semibold tracking-tight">{project.name}</h3>
-                  <p className="mb-5 flex-1 text-[0.95rem] leading-relaxed text-neutral-ink">{project.pitch}</p>
-                  <Tags items={project.tech} />
-                  <div className="mt-2">
-                    <ExternalLinks links={project.links} project={project.name} />
-                  </div>
+          <div className="mt-auto pt-24">
+            <p className="hero-statement rise max-w-[20ch] font-semibold text-balance">{PROFILE.headline}</p>
+            <p className="rise mt-8 max-w-[38rem] text-lg leading-relaxed text-pretty text-neutral-ink sm:text-xl sm:leading-relaxed [animation-delay:80ms]">
+              {PROFILE.subhead.map((segment) =>
+                segment.strong ? (
+                  <strong key={segment.text} className="font-normal text-foreground">
+                    {segment.text}
+                  </strong>
+                ) : (
+                  segment.text
+                ),
+              )}
+            </p>
+            <ul className="rise mt-8 flex flex-wrap gap-x-7 gap-y-2 [animation-delay:160ms]">
+              {SOCIAL_LINKS.map((link) => (
+                <li key={link.id}>
+                  {link.id === 'github' || link.id === 'linkedin' ? (
+                    <ExternalLink href={link.href}>{link.label}</ExternalLink>
+                  ) : (
+                    <a href={link.href} download={link.download} className={`inline-block ${TAP} ${LINK}`}>
+                      {link.label}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
-          </Section>
+          </div>
+        </header>
 
-          <Section id="experience" label="Experience" title="Where the work happens.">
+        <main id="main">
+          <Section id="experience" title="Experience">
             <ol className="space-y-12">
               {EXPERIENCE.map((job) => (
-                <li key={job.company} className="grid gap-2 sm:grid-cols-[11rem_1fr] sm:gap-8">
-                  <p className="font-mono text-sm text-neutral-ink">{job.period}</p>
+                <li key={job.company} className={ROW}>
                   <div>
-                    <h3 className="text-lg font-semibold tracking-tight">
-                      {job.title}
-                      <span className="font-normal text-neutral-ink"> · </span>
-                      {job.url ? (
-                        <a
-                          href={job.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`text-accent-ink underline decoration-accent/40 underline-offset-4 hover:decoration-accent ${FOCUS}`}
-                        >
-                          {job.company}
-                        </a>
-                      ) : (
-                        job.company
-                      )}
+                    <h3 className="font-medium">
+                      {job.url ? <ExternalLink href={job.url}>{job.company}</ExternalLink> : job.company}
                     </h3>
-                    <p className="mt-1 mb-3 text-neutral-ink">{job.description}</p>
-                    <ul className="space-y-1.5 text-[0.95rem] leading-relaxed">
+                    <p className="text-neutral-ink tabular-nums">{job.period}</p>
+                  </div>
+                  <div className="max-w-xl">
+                    <p className="font-medium">{job.title}</p>
+                    <p className="mt-1 text-pretty text-neutral-ink">{job.description}</p>
+                    <ul className="mt-4 space-y-2">
                       {job.highlights.map((highlight) => (
-                        <li key={highlight} className="relative pl-5">
-                          <span aria-hidden="true" className="absolute top-[0.7em] left-0 h-px w-2.5 bg-accent" />
+                        <li key={highlight} className="text-pretty">
                           {highlight}
                         </li>
                       ))}
@@ -336,78 +180,107 @@ export function Portfolio(): ReactElement {
             </ol>
           </Section>
 
-          <Section id="stack" label="Stack" title="What I reach for.">
-            <dl className="grid gap-x-10 gap-y-6 sm:grid-cols-2">
+          <Section id="projects" title="Projects">
+            <ul className="space-y-12">
+              {PROJECTS.map((project) => (
+                <li key={project.name} className={ROW}>
+                  <div>
+                    <h3 className="font-medium">{project.name}</h3>
+                    {project.client ? (
+                      <p className="text-neutral-ink">
+                        For{' '}
+                        <a href={project.client.href} target="_blank" rel="noopener noreferrer" className={LINK}>
+                          {project.client.label}
+                          <span className="sr-only">{NEW_TAB}</span>
+                        </a>
+                      </p>
+                    ) : null}
+                    <p className="text-neutral-ink">{project.kind}</p>
+                  </div>
+                  <div className="max-w-xl">
+                    <p className="text-pretty">{project.pitch}</p>
+                    <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-1">
+                      {project.links.map((link) => (
+                        <li key={link.href}>
+                          <ExternalLink
+                            href={link.href}
+                            label={`${project.name}: ${link.label}${NEW_TAB}`}
+                          >
+                            {link.label}
+                          </ExternalLink>
+                        </li>
+                      ))}
+                    </ul>
+                    {project.image ? (
+                      <img
+                        src={project.image.src}
+                        alt={project.image.alt}
+                        width={SHOT.width}
+                        height={SHOT.height}
+                        loading="lazy"
+                        decoding="async"
+                        className="mt-5 h-auto w-full rounded-lg border border-border"
+                      />
+                    ) : null}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </Section>
+
+          <Section id="stack" title="Stack">
+            <dl className="space-y-4">
               {SKILLS.map((group) => (
-                <div key={group.category} className="border-t border-border pt-4">
-                  <dt className="mb-2 text-sm font-semibold">{group.category}</dt>
-                  <dd className="text-[0.95rem] leading-relaxed text-neutral-ink">{group.items.join(' · ')}</dd>
+                <div key={group.category} className={ROW}>
+                  <dt className="font-medium">{group.category}</dt>
+                  <dd className="max-w-xl">{group.items.join(' · ')}</dd>
                 </div>
               ))}
             </dl>
-            <div className="mt-10 grid gap-8 border-t border-border pt-6 text-sm text-neutral-ink sm:grid-cols-2">
-              <div>
-                <h3 className="mb-2 font-semibold text-foreground">Education</h3>
-                <ul className="space-y-1.5">
-                  {EDUCATION.map((item) => (
-                    <li key={item.title}>
-                      {item.title} <span className="font-mono text-xs">· {item.period}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h3 className="mb-2 font-semibold text-foreground">Languages</h3>
-                <p>{PROFILE.languages.join(' · ')}</p>
-              </div>
-            </div>
           </Section>
 
-          <Section id="contact" label="Contact" title="Need someone who ships applied AI? Write to me.">
-            <div className="flex flex-col gap-6 rounded-2xl border border-border p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
-              <p className="max-w-md text-neutral-ink">
-                Open to applied AI and product engineering roles. Based in {PROFILE.location}, working remote.
-              </p>
-              <a
-                href={`mailto:${CONTACT.email}`}
-                className={`inline-flex min-h-11 items-center justify-center rounded-full bg-foreground px-6 text-sm font-semibold text-background hover:opacity-85 ${FOCUS}`}
-              >
-                {CONTACT.email}
-              </a>
-            </div>
-            <ul className="mt-6 flex flex-wrap gap-2">
-              {SOCIAL_LINKS.map((link) => {
-                const external = link.id === 'github' || link.id === 'linkedin';
-                return (
-                  <li key={link.id}>
-                    <a
-                      href={link.href}
-                      target={external ? '_blank' : undefined}
-                      rel={external ? 'noopener noreferrer' : undefined}
-                      download={link.download}
-                      className={`inline-flex min-h-11 items-center gap-2 rounded-full border border-border px-4 text-sm hover:bg-neutral-50 dark:hover:bg-neutral-900 ${FOCUS}`}
-                    >
-                      {socialIconFor(link.id)}
-                      {link.id === 'email' ? 'Email' : link.label}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
+          <Section id="education" title="Education">
+            <dl className="space-y-4">
+              {EDUCATION.map((item) => (
+                <div key={item.title} className={ROW}>
+                  <dt className="text-neutral-ink tabular-nums">{item.period}</dt>
+                  <dd className="max-w-xl">{item.title}</dd>
+                </div>
+              ))}
+              <div className={ROW}>
+                <dt className="text-neutral-ink">Languages</dt>
+                <dd className="max-w-xl">{PROFILE.languages.join(' · ')}</dd>
+              </div>
+            </dl>
           </Section>
-        </div>
-      </main>
 
-      <footer className="border-t border-border">
-        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-8 font-mono text-xs text-neutral-ink sm:flex-row sm:items-center sm:justify-between sm:px-8">
+          <Section id="contact" title="Contact">
+            <p className="max-w-xl text-pretty text-neutral-ink">
+              Open to applied AI and product engineering roles. Based in {PROFILE.location}, working remote.
+            </p>
+            <a
+              href={`mailto:${CONTACT.email}`}
+              className={`mt-4 inline-block text-[clamp(1.5rem,4.5vw,2.75rem)] leading-tight font-semibold tracking-tight decoration-1 underline-offset-8 ${LINK}`}
+            >
+              {CONTACT.email}
+            </a>
+          </Section>
+        </main>
+
+        <footer className="mt-24 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-border py-8 text-sm text-neutral-ink sm:mt-32">
           <span>
             © {year} {PROFILE.fullName} · {PROFILE.site}
           </span>
-          <span>
-            <kbd className="rounded border border-border px-1">Ctrl</kbd>+<kbd className="rounded border border-border px-1">K</kbd> to navigate
-          </span>
-        </div>
-      </footer>
+          <button
+            type="button"
+            aria-keyshortcuts="Control+K Meta+K"
+            onClick={() => setPaletteOpen(true)}
+            className={`cursor-pointer transition-colors duration-150 hover:text-foreground ${FOCUS}`}
+          >
+            Command palette · Ctrl+K
+          </button>
+        </footer>
+      </div>
 
       <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
     </>

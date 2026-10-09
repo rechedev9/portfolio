@@ -1,25 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <defs>
-    <linearGradient id="wash" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#2a1218"/>
-      <stop offset="55%" stop-color="#0a0a0a"/>
-      <stop offset="100%" stop-color="#1a120f"/>
-    </linearGradient>
-    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#ffb696"/>
-      <stop offset="100%" stop-color="#ff7a95"/>
-    </linearGradient>
-    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
-      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-    </pattern>
-  </defs>
-  <rect width="1200" height="630" fill="url(#wash)"/>
-  <rect width="1200" height="630" fill="url(#grid)"/>
-  <circle cx="980" cy="120" r="180" fill="#ff7a95" opacity="0.18"/>
-  <circle cx="160" cy="540" r="160" fill="#ffb696" opacity="0.16"/>
-  <rect x="80" y="88" width="72" height="8" rx="4" fill="url(#bar)"/>
-  <text x="80" y="250" fill="#fafafa" font-family="Plus Jakarta Sans, ui-sans-serif, sans-serif" font-size="84" font-weight="650">Luis Reche</text>
-  <text x="80" y="330" fill="#fecdd3" font-family="Plus Jakarta Sans, ui-sans-serif, sans-serif" font-size="42" font-weight="600">Applied AI Engineer</text>
-  <text x="80" y="420" fill="#d4d4d4" font-family="Plus Jakarta Sans, ui-sans-serif, sans-serif" font-size="28">LLMs and coding agents, shipped as product.</text>
-  <text x="80" y="530" fill="#a3a3a3" font-family="JetBrains Mono, ui-monospace, monospace" font-size="20">ClipHub · 100+ users · Agentero · luisreche.dev</text>
+  <rect width="1200" height="630" fill="#faf8f3"/>
+  <text x="80" y="104" fill="#141413" font-family="Plus Jakarta Sans, ui-sans-serif, sans-serif" font-size="30" font-weight="600" letter-spacing="-0.6">Luis Reche</text>
+  <text x="80" y="144" fill="#6b6a63" font-family="Plus Jakarta Sans, ui-sans-serif, sans-serif" font-size="26">Applied AI Engineer · Palma, Spain</text>
+  <text x="1120" y="104" text-anchor="end" fill="#6b6a63" font-family="Plus Jakarta Sans, ui-sans-serif, sans-serif" font-size="26">luisreche.dev</text>
+  <text fill="#141413" font-family="Plus Jakarta Sans, ui-sans-serif, sans-serif" font-size="92" font-weight="600" letter-spacing="-4.1">
+    <tspan x="76" y="372">I turn LLMs and</tspan>
+    <tspan x="76" y="462">coding agents into</tspan>
+    <tspan x="76" y="552">software people use.</tspan>
+  </text>
 </svg>

@@ -5,9 +5,7 @@
     <script>
       (function () {
         try {
-          var t = localStorage.getItem('theme');
-          var dark = t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches);
-          if (dark) document.documentElement.classList.add('dark');
+          if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
         } catch (e) {}
       })();
     </script>
@@ -17,18 +15,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Primary Meta Tags -->
-    <title>Luis Reche — Applied AI Engineer</title>
-    <meta name="title" content="Luis Reche — Applied AI Engineer" />
-    <meta name="description" content="Applied AI Engineer in Palma. I turn LLMs and coding agents into software people use. Currently at Agentero. ClipHub, built for SocialPro as their software consultant, has 100+ users." />
+    <title>Luis Reche · Applied AI Engineer</title>
+    <meta name="title" content="Luis Reche · Applied AI Engineer" />
+    <meta name="description" content="Applied AI Engineer in Palma. I turn LLMs and coding agents into software people use. ClipHub, built for SocialPro as their software consultant, has 100+ users." />
     <meta name="author" content="Luis Lucas Reche" />
-    <meta name="keywords" content="Luis Reche, Applied AI Engineer, Go, TypeScript, agent systems, ClipHub, Agentero, portfolio, Spain" />
+    <meta name="keywords" content="Luis Reche, Applied AI Engineer, agent systems, ClipHub, portfolio, Spain" />
     <link rel="canonical" href="https://luisreche.dev/" />
 
     <!-- Open Graph / Facebook / LinkedIn / WhatsApp -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://luisreche.dev/" />
-    <meta property="og:title" content="Luis Reche — Applied AI Engineer" />
-    <meta property="og:description" content="Applied AI Engineer in Palma. I turn LLMs and coding agents into software people use. Currently at Agentero. ClipHub, built for SocialPro as their software consultant, has 100+ users." />
+    <meta property="og:title" content="Luis Reche · Applied AI Engineer" />
+    <meta property="og:description" content="Applied AI Engineer in Palma. I turn LLMs and coding agents into software people use. ClipHub, built for SocialPro as their software consultant, has 100+ users." />
     <meta property="og:image" content="https://luisreche.dev/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -38,17 +36,17 @@
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://luisreche.dev/" />
-    <meta name="twitter:title" content="Luis Reche — Applied AI Engineer" />
-    <meta name="twitter:description" content="Applied AI Engineer in Palma. I turn LLMs and coding agents into software people use. Currently at Agentero. ClipHub, built for SocialPro as their software consultant, has 100+ users." />
+    <meta name="twitter:title" content="Luis Reche · Applied AI Engineer" />
+    <meta name="twitter:description" content="Applied AI Engineer in Palma. I turn LLMs and coding agents into software people use. ClipHub, built for SocialPro as their software consultant, has 100+ users." />
     <meta name="twitter:image" content="https://luisreche.dev/og-image.png" />
 
     <!-- Theme -->
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#faf8f3" />
 
     <!-- Fonts (single request for all families) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&family=Instrument+Serif:ital@1&family=JetBrains+Mono&display=swap" rel="stylesheet" />
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -57,7 +55,7 @@
         "@type": "Person",
         "name": "Luis Lucas Reche",
         "jobTitle": "Applied AI Engineer",
-        "description": "Applied AI Engineer who ships LLM and coding-agent products people use. Currently at Agentero, across Google Cloud, Go, and Next.js. Built ClipHub for SocialPro as their software consultant.",
+        "description": "Applied AI Engineer who ships LLM and coding-agent products people use, with a human in the loop.",
         "url": "https://luisreche.dev",
         "email": "rechedev@hotmail.com",
         "image": "https://luisreche.dev/og-image.png",
@@ -68,19 +66,14 @@
         },
         "knowsLanguage": ["Spanish", "Catalan", "English"],
         "knowsAbout": [
-          "Go", "TypeScript", "Applied AI", "Agent Systems", "MCP",
-          "GCP", "Cloud Run", "Terraform", "PostgreSQL", "Cloud Spanner",
-          "Docker", "GitHub Actions", "React", "Next.js"
+          "Applied AI", "Agent Systems", "Claude Code", "MCP",
+          "Go", "PostgreSQL", "TypeScript", "React", "Next.js",
+          "Expo", "Electron", "Docker", "GCP", "Terraform", "GitHub Actions"
         ],
         "sameAs": [
           "https://github.com/rechedev9",
-          "https://linkedin.com/in/luisrecheamado"
+          "https://www.linkedin.com/in/luisrecheamado"
         ],
-        "worksFor": {
-          "@type": "Organization",
-          "name": "Agentero",
-          "url": "https://agentero.com"
-        },
         "alumniOf": [
           {
             "@type": "EducationalOrganization",
@@ -95,7 +88,7 @@
         "@type": "WebSite",
         "name": "Luis Reche",
         "url": "https://luisreche.dev",
-        "description": "Applied AI Engineer — products, agent tooling, Go and TypeScript.",
+        "description": "Applied AI Engineer. Products and agent tooling, built with AI and a human in the loop.",
         "inLanguage": "en"
       }
     </script>
@@ -109,31 +102,30 @@
       <header>
         <h1>Luis Lucas Reche</h1>
         <p><strong>Applied AI Engineer</strong></p>
-        <p>Palma, Spain · Currently at Agentero</p>
+        <p>Palma, Spain</p>
         <p>I turn LLMs and coding agents into software people use.</p>
       </header>
 
       <main>
         <section>
-          <h2>ClipHub</h2>
-          <p>Windows app that turns a CS2 demo into an edited video. Built for <a href="https://socialpro.es">SocialPro</a> as their software consultant. 100+ users.</p>
-          <p><a href="https://cliphub.gravityroom.app/">cliphub.gravityroom.app</a> · <a href="https://github.com/rechedev9/cliphub">GitHub</a></p>
-        </section>
-
-        <section>
           <h2>Experience</h2>
-          <h3>Applied AI Engineer — Agentero</h3>
-          <p>Apr 2026 — Present. Infrastructure on Google Cloud, Go backend, and the marketplace frontend in Next.js. End-to-end ownership of marketplace features and critical internal tooling.</p>
-          <h3>Freelance product engineer</h3>
-          <p>2025 — Present. ClipHub for SocialPro as their software consultant, Berrus (2025 — present), Piroboom.</p>
+          <h3>Applied AI Engineer, Agentero</h3>
+          <p>Apr 2026 to present. Infrastructure on Google Cloud, backend services in Go, and the marketplace interface in Next.js. End-to-end ownership of marketplace features and critical internal tooling.</p>
+          <h3>Freelance software engineer, SocialPro</h3>
+          <p>2025 to present. Design and build of <a href="https://socialpro.es">socialpro.es</a>, a brand portal and the first internal CRM. The Piroboom website for a fireworks shop in Elche.</p>
+          <h3>Freelance product engineer, RecheDev</h3>
+          <p>2021 to present. ClipHub for SocialPro, as their software consultant. Berrus, a browser role-playing game: Discord notifications, faster SQL, and an Electron desktop client.</p>
         </section>
 
         <section>
-          <h2>Selected work</h2>
+          <h2>Projects</h2>
           <ul>
-            <li><a href="https://github.com/luis-reche-ag/agent-git-toolkit">agent-git-toolkit</a> — public guardrails so a coding agent cannot commit until the checks pass.</li>
-            <li><a href="https://gravityroom.app">Gravity Room</a> — strength tracker, web and mobile.</li>
-            <li><a href="https://github.com/rechedev9/honey-encryption-proxy">Honey Encryption Proxy</a> — local privacy proxy for Claude Code.</li>
+            <li><a href="https://cliphub.gravityroom.app/">ClipHub</a>: Windows app that turns a CS2 demo into an edited video. Built for SocialPro as their software consultant. 100+ users, 130 releases.</li>
+            <li><a href="https://socialpro.es">SocialPro</a>: website of a gaming and esports creator agency, with a brand portal and the first internal CRM.</li>
+            <li><a href="https://pirotecniaelche.es">Piroboom</a>: website of a fireworks shop in Elche, live in production.</li>
+            <li><a href="https://gravityroom.app">Gravity Room</a>: strength tracker, web and mobile.</li>
+            <li><a href="https://github.com/rechedev9/honey-encryption-proxy">Honey Encryption Proxy</a>: local privacy proxy for Claude Code.</li>
+            <li><a href="https://github.com/rechedev9/riskforge">riskforge</a>: insurance quote gateway, a portfolio project.</li>
           </ul>
         </section>
 

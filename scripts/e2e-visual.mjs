@@ -18,7 +18,17 @@ function fail(name, detail = '') {
   console.error(`✗ ${name}${detail ? ` — ${detail}` : ''}`);
 }
 
+async function loadImages(page) {
+  return page.evaluate(async () => {
+    const images = [...document.images];
+    for (const image of images) image.loading = 'eager';
+    await Promise.all(images.map((image) => image.decode().catch(() => undefined)));
+    return images.map((image) => ({ width: image.naturalWidth, alt: image.alt }));
+  });
+}
+
 async function shot(page, name) {
+  await loadImages(page);
   const file = path.join(OUT, `${name}.png`);
   await page.screenshot({ path: file, fullPage: true });
   return file;
@@ -40,6 +50,8 @@ async function main() {
 
   const page = await browser.newPage();
   page.setDefaultTimeout(15000);
+  // Full-page captures should show the settled page, not the hero mid-animation.
+  await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
 
   // ---- Home light ----
   await page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
@@ -60,7 +72,8 @@ async function main() {
     'software consultant',
     'Palma, Spain',
     'Google Cloud',
-    'Berrus (2025 — present)',
+    'Berrus, a browser role-playing game',
+    'Piroboom',
   ]) {
     if (await textExists(page, t)) ok(`home text: ${t}`);
     else fail(`home text: ${t}`);
@@ -69,6 +82,13 @@ async function main() {
   const banned = await page.evaluate(() => document.body.innerText);
   if (!/Backend Engineer|Full Stack Engineer|TickCut|Shenron|\/workflow/i.test(banned)) ok('no stale titles or removed items');
   else fail('no stale titles or removed items', 'found a retired title, TickCut, Shenron, or /workflow');
+
+  const images = await loadImages(page);
+  if (images.length === 4 && images.every((image) => image.width === 1280 && image.alt)) {
+    ok('project screenshots load', String(images.length));
+  } else {
+    fail('project screenshots load', JSON.stringify(images));
+  }
 
   const cvHref = await page.$eval('a[download]', (a) => a.getAttribute('href'));
   if (cvHref === '/Luis-Reche-Applied-AI-Engineer-CV.pdf') ok('CV link href');
@@ -93,7 +113,7 @@ async function main() {
   await shot(page, '02-home-dark');
 
   // Command palette open via button
-  await page.click('button[aria-label="Open command palette"]');
+  await page.click('button[aria-keyshortcuts]');
   await page.waitForSelector('[role="dialog"][aria-label="Command palette"]');
   ok('command palette opens');
   await shot(page, '03-command-palette');
@@ -149,7 +169,6 @@ async function main() {
     'https://www.agentero.com/',
     'https://cliphub.gravityroom.app/',
     'https://gravityroom.app/',
-    'https://github.com/luis-reche-ag/agent-git-toolkit',
   ]) {
     if (hrefs.some((h) => h.startsWith(need) || h === need || h.includes(need.replace(/\/$/, '')))) {
       ok(`link present ${need}`);
