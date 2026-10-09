@@ -1,11 +1,11 @@
 {
-  "name": "Luis Reche — Applied AI Engineer",
+  "name": "Luis Reche · Applied AI Engineer",
   "short_name": "Luis Reche",
-  "description": "Applied AI Engineer. Products, agent tooling, Go and TypeScript.",
+  "description": "Applied AI Engineer. Products and agent tooling, built with AI and a human in the loop.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#ff7a95",
+  "background_color": "#faf8f3",
+  "theme_color": "#faf8f3",
   "icons": [
     {
       "src": "/favicon.svg",

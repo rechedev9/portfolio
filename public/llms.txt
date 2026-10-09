@@ -1,0 +1,41 @@
+# Luis Reche
+
+> Applied AI Engineer in Palma, Spain. I turn LLMs and coding agents into software people use. I use AI to accelerate the work and keep a human in the loop.
+
+## Experience
+
+- Applied AI Engineer at Agentero, Apr 2026 to present. Infrastructure on Google Cloud, backend services in Go, and the marketplace interface in Next.js.
+- Freelance software engineer for SocialPro, 2025 to present. The agency website, a brand portal and the first internal CRM, and the Piroboom website for one of their clients.
+- Freelance product engineer at RecheDev, 2021 to present. ClipHub, and Berrus, a browser role-playing game.
+
+## Projects
+
+- [ClipHub](https://cliphub.gravityroom.app/): Windows desktop app that turns a CS2 demo into an edited video of the best plays.
+- [SocialPro](https://socialpro.es): website of a gaming and esports creator agency, with a brand portal and the first internal CRM.
+- [Piroboom](https://pirotecniaelche.es): website of a fireworks shop in Elche, live in production, with a searchable catalogue reader and enquiry forms.
+- [Gravity Room](https://gravityroom.app): live strength tracker with automatic progression, on web and mobile.
+- [Honey Encryption Proxy](https://github.com/rechedev9/honey-encryption-proxy): local proxy in front of Claude Code that swaps proprietary names for stand-ins before a request leaves the machine.
+- [riskforge](https://github.com/rechedev9/riskforge): insurance quote gateway in Go with Terraform for Cloud Run, Spanner and Pub/Sub. A portfolio project.
+
+## Stack
+
+- AI and agents: Claude Code, Codex, MCP servers, Skills and plugins, Multi-agent workflows, Human approval gates
+- Backend: Go, Bun, Elysia, PostgreSQL, Drizzle, SQLite
+- Web: TypeScript, React, Next.js, TanStack, Astro, Tailwind CSS
+- Mobile and desktop: Expo, React Native, Electron, Rust core with UniFFI
+- Infrastructure: Docker, GCP, Terraform, Vercel, GitHub Actions
+
+## Education and languages
+
+- Higher technical diploma in web application development (DAW), 2024 to 2026
+- Harvard CS50: Introduction to Computer Science, 2024
+- University of Helsinki: Java Programming MOOC, 2024
+- Anthropic: Claude Code in Action, 2026
+- Spanish (native), Catalan (native), English (advanced)
+
+## Contact
+
+- Email: rechedev@hotmail.com
+- [GitHub](https://github.com/rechedev9)
+- [LinkedIn](https://www.linkedin.com/in/luisrecheamado)
+- [CV (PDF)](https://luisreche.dev/Luis-Reche-Applied-AI-Engineer-CV.pdf)

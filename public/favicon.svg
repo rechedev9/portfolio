@@ -1,4 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="6" fill="#0a0a0a" stroke="#00ff41" stroke-width="1.5"/>
-  <text x="6" y="23" font-family="monospace" font-size="22" font-weight="bold" fill="#00ff41">&gt;_</text>
+  <style>
+    rect { fill: #141413; }
+    g { stroke: #faf8f3; }
+    @media (prefers-color-scheme: dark) {
+      rect { fill: #faf8f3; }
+      g { stroke: #141413; }
+    }
+  </style>
+  <rect width="32" height="32" rx="7"/>
+  <g fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 9.5v13h6"/>
+    <path d="M18 22.5v-13h3.6a3.5 3.5 0 0 1 0 7H18m3.4 0 3.1 6"/>
+  </g>
 </svg>

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ReactElement, KeyboardEvent as ReactKeyboardEvent } from 'react';
-import { CONTACT, FLAGSHIP, PROFILE, PROJECTS } from '../data/portfolio';
+import { CONTACT, PROFILE, PROJECTS } from '../data/portfolio';
+import { toggleTheme } from '../theme';
 
 type PaletteItem = {
   readonly id: string;
@@ -16,7 +17,7 @@ type CommandPaletteProps = {
 };
 
 function scrollToId(id: string): void {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.getElementById(id)?.scrollIntoView({ block: 'start' });
 }
 
 export function CommandPalette({ open, onClose }: CommandPaletteProps): ReactElement | null {
@@ -35,32 +36,32 @@ function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): Re
   const items = useMemo<readonly PaletteItem[]>(
     () => [
       {
-        id: 'flagship',
-        label: 'Go to ClipHub',
-        hint: 'section',
-        keywords: 'flagship socialpro',
-        action: () => scrollToId('flagship'),
-      },
-      {
-        id: 'projects',
-        label: 'Go to work',
-        hint: 'section',
-        keywords: 'projects',
-        action: () => scrollToId('projects'),
-      },
-      {
         id: 'experience',
         label: 'Go to experience',
         hint: 'section',
-        keywords: 'agentero work',
+        keywords: 'agentero socialpro jobs',
         action: () => scrollToId('experience'),
+      },
+      {
+        id: 'projects',
+        label: 'Go to projects',
+        hint: 'section',
+        keywords: 'work',
+        action: () => scrollToId('projects'),
       },
       {
         id: 'stack',
         label: 'Go to stack',
         hint: 'section',
-        keywords: 'skills education',
+        keywords: 'skills',
         action: () => scrollToId('stack'),
+      },
+      {
+        id: 'education',
+        label: 'Go to education',
+        hint: 'section',
+        keywords: 'languages',
+        action: () => scrollToId('education'),
       },
       {
         id: 'contact',
@@ -68,13 +69,6 @@ function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): Re
         hint: 'section',
         keywords: 'email',
         action: () => scrollToId('contact'),
-      },
-      {
-        id: 'open-flagship',
-        label: `Open ${FLAGSHIP.name}`,
-        hint: 'live',
-        keywords: 'cliphub socialpro',
-        action: () => window.open(FLAGSHIP.links[0]?.href, '_blank', 'noopener,noreferrer'),
       },
       ...PROJECTS.flatMap((project) =>
         project.links.map((link) => ({
@@ -123,14 +117,7 @@ function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): Re
         label: 'Toggle light / dark',
         hint: 'action',
         keywords: 'mode appearance',
-        action: () => {
-          const next = !document.documentElement.classList.contains('dark');
-          document.documentElement.classList.toggle('dark', next);
-          localStorage.setItem('theme', next ? 'dark' : 'light');
-          const meta = document.querySelector('meta[name="theme-color"]');
-          if (meta) meta.setAttribute('content', next ? '#0a0a0a' : '#ffffff');
-          window.dispatchEvent(new Event('theme-change'));
-        },
+        action: toggleTheme,
       },
     ],
     [],
@@ -201,7 +188,7 @@ function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): Re
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-start justify-center bg-black/40 px-4 pt-[12vh] backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-start justify-center bg-black/30 px-4 pt-[12vh]"
       role="dialog"
       aria-modal="true"
       aria-label="Command palette"
@@ -220,7 +207,7 @@ function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): Re
             }}
             onKeyDown={onKeyDown}
             placeholder={`Search ${PROFILE.name.toLowerCase()}…`}
-            className="w-full bg-transparent py-2.5 text-base text-foreground outline-none placeholder:text-neutral-400"
+            className="w-full bg-transparent py-2.5 text-base text-foreground outline-none placeholder:text-neutral-ink"
             aria-label="Search commands"
             aria-controls="command-palette-list"
             aria-autocomplete="list"
@@ -235,32 +222,30 @@ function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): Re
           role="listbox"
         >
           {filtered.length === 0 && (
-            <li className="px-4 py-3 text-sm text-neutral-500">No matches</li>
+            <li className="px-4 py-3 text-sm text-neutral-ink">No matches</li>
           )}
           {filtered.map((item, index) => (
             <li key={item.id} role="option" aria-selected={index === activeIndex}>
               <button
                 type="button"
                 data-index={index}
-                className={`flex w-full items-center justify-between gap-3 px-4 py-2.5 text-left text-sm transition-colors ${
-                  index === activeIndex
-                    ? 'bg-neutral-100 dark:bg-neutral-800'
-                    : 'hover:bg-neutral-50 dark:hover:bg-neutral-900'
+                className={`flex w-full items-center justify-between gap-3 px-4 py-2.5 text-left text-sm ${
+                  index === activeIndex ? 'bg-foreground/6' : ''
                 }`}
                 onMouseEnter={() => setActiveIndex(index)}
                 onClick={() => runItem(item)}
               >
                 <span className="truncate text-foreground">{item.label}</span>
-                <span className="shrink-0 font-mono text-xs text-neutral-400">{item.hint}</span>
+                <span className="shrink-0 text-xs text-neutral-ink">{item.hint}</span>
               </button>
             </li>
           ))}
         </ul>
-        <div className="flex flex-wrap gap-x-3 gap-y-1 border-t border-border px-4 py-2 font-mono text-xs text-neutral-400">
+        <div className="flex flex-wrap gap-x-3 gap-y-1 border-t border-border px-4 py-2 text-xs text-neutral-ink">
           <span>↑↓ move</span>
           <span>↵ open</span>
           <span>esc close</span>
-          <span>⌘K</span>
+          <span>Ctrl+K</span>
         </div>
       </div>
     </div>

@@ -2,35 +2,49 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Luis Reche — Applied AI Engineer</title>
+    <title>Luis Reche · Applied AI Engineer</title>
     <style>
       @page { size: A4; margin: 16mm 16mm 14mm; }
       * { box-sizing: border-box; }
       body {
         margin: 0;
-        color: #161616;
-        font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+        color: #141413;
+        font-family: "Plus Jakarta Sans", "Noto Sans", "Segoe UI", sans-serif;
         font-size: 11px;
         line-height: 1.45;
       }
       h1 { margin: 0; font-size: 26px; letter-spacing: -0.03em; }
-      .role { margin: 2px 0 0; color: #9f1239; font-size: 14px; font-weight: 650; }
-      .line { margin: 6px 0 0; color: #525252; }
+      .role { margin: 2px 0 0; font-size: 14px; font-weight: 600; }
+      .line { margin: 6px 0 0; color: #6b6a63; }
+      .summary { margin: 10px 0 0; }
       a { color: inherit; text-decoration: none; }
       h2 {
         margin: 16px 0 6px;
         padding-bottom: 3px;
-        border-bottom: 1px solid #e5e5e5;
+        border-bottom: 1px solid #e6e2d8;
         font-size: 11px;
         letter-spacing: 0.12em;
+        font-kerning: none;
         text-transform: uppercase;
+        break-after: avoid;
       }
-      h3 { margin: 8px 0 0; font-size: 12.5px; }
-      .when { float: right; color: #525252; font-weight: 500; }
+      h3 {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 12px;
+        margin: 8px 0 0;
+        font-size: 12.5px;
+        break-after: avoid;
+      }
+      .when { color: #6b6a63; font-weight: 500; white-space: nowrap; }
       p { margin: 3px 0; }
       ul { margin: 4px 0 0; padding-left: 16px; }
-      li { margin: 2px 0; }
-      .meta { color: #525252; }
+      li { margin: 2px 0; break-inside: avoid; }
+      .meta { color: #6b6a63; }
+      .stack { display: grid; grid-template-columns: max-content 1fr; gap: 2px 14px; margin: 4px 0 0; }
+      .stack dt { font-weight: 700; }
+      .stack dd { margin: 0; }
     </style>
   </head>
   <body>
@@ -46,40 +60,62 @@
       </p>
     </header>
 
-    <p>
-      I turn LLMs and coding agents into software people use. Go and TypeScript, from the service to the interface, with guardrails so the agents stay honest.
+    <p class="summary">
+      I turn LLMs and coding agents into software people use. I use AI to accelerate the work and keep a human in the loop. I ship the product, from the service to the interface, and the guardrails that keep the agents honest.
     </p>
 
     <h2>Experience</h2>
-    <h3>Applied AI Engineer, Agentero <span class="when">Apr 2026 — Present</span></h3>
+    <h3><span>Applied AI Engineer, <a href="https://www.agentero.com">Agentero</a></span> <span class="when">Apr 2026 to present</span></h3>
     <p class="meta">US network that gives independent insurance agents carrier access and the software to run an agency. Spain-based.</p>
     <ul>
-      <li>Infrastructure on Google Cloud, backend in Go, and the marketplace frontend in Next.js.</li>
-      <li>End-to-end ownership of marketplace features and critical internal tooling, including public guardrails so a coding agent cannot commit or push until the checks pass.</li>
+      <li>Infrastructure on Google Cloud, backend services in Go, and the marketplace interface in Next.js.</li>
+      <li>End-to-end ownership of marketplace features and critical internal tooling.</li>
     </ul>
 
-    <h3>Freelance product engineer, RecheDev <span class="when">2025 — Present</span></h3>
-    <p class="meta">Design and build, from the first meeting to production.</p>
+    <h3><span>Freelance software engineer, <a href="https://socialpro.es">SocialPro</a></span> <span class="when">2025 to present</span></h3>
+    <p class="meta">Gaming and esports creator agency. Freelance work on their website and for their clients.</p>
+    <ul>
+      <li>socialpro.es: design and build of the agency website, a brand portal and the first internal CRM.</li>
+      <li>Piroboom: the website of a fireworks shop in Elche, from the first sketch to production. An 82 MB PDF catalogue became a searchable web reader.</li>
+    </ul>
+
+    <h3><span>Freelance product engineer, <a href="https://rechedev.cloud">RecheDev</a></span> <span class="when">2021 to present</span></h3>
+    <p class="meta">Freelance since 2021: first PC optimisation for competitive gaming, now design and build from the first meeting to production.</p>
     <ul>
       <li>ClipHub for SocialPro, as their software consultant: a Windows app that turns a CS2 demo into an edited video. 100+ users.</li>
-      <li>Berrus (2025 — present): Discord notifications, faster SQL, and an Electron desktop client.</li>
-      <li>Piroboom: a Next.js storefront for a fireworks shop in Elche.</li>
+      <li>Berrus, a browser role-playing game: Discord notifications, faster SQL, and an Electron desktop client.</li>
     </ul>
 
-    <h2>Selected work</h2>
+    <h2>Projects</h2>
     <ul>
-      <li><strong>ClipHub</strong> — Go pipeline, Next.js studio, Electron shell. Built for SocialPro as their software consultant. 100+ users.</li>
-      <li><strong>Honey Encryption Proxy</strong> — local proxy that hides proprietary names before they reach an LLM API.</li>
-      <li><strong>Gravity Room</strong> — live strength tracker. React, Expo, Elysia, Postgres. gravityroom.app</li>
-      <li><strong>riskforge</strong> — portfolio project. Insurance quote gateway in Go, Terraform for Cloud Run, Spanner and Pub/Sub.</li>
+      <li><strong>ClipHub</strong>: Windows desktop app that turns a CS2 demo into an edited video. Go, Next.js and Electron. 130 releases. <a href="https://cliphub.gravityroom.app/">cliphub.gravityroom.app</a></li>
+      <li><strong>SocialPro</strong>: website, brand portal and first internal CRM of a gaming and esports creator agency. <a href="https://socialpro.es">socialpro.es</a></li>
+      <li><strong>Piroboom</strong>: production website of a fireworks shop in Elche. Catalogue reader and enquiry forms. <a href="https://pirotecniaelche.es">pirotecniaelche.es</a></li>
+      <li><strong>Gravity Room</strong>: live strength tracker with automatic progression. React, Expo, Elysia, Postgres. <a href="https://gravityroom.app">gravityroom.app</a></li>
+      <li><strong><a href="https://github.com/rechedev9/honey-encryption-proxy">Honey Encryption Proxy</a></strong>: local proxy that hides proprietary names before they reach an LLM API.</li>
+      <li><strong><a href="https://github.com/rechedev9/riskforge">riskforge</a></strong>: portfolio project. Insurance quote gateway in Go, Terraform for Cloud Run, Spanner and Pub/Sub.</li>
     </ul>
+
+    <h2>Stack</h2>
+    <dl class="stack">
+      <dt>AI and agents</dt>
+      <dd>Claude Code · Codex · MCP servers · Skills and plugins · Multi-agent workflows · Human approval gates</dd>
+      <dt>Backend</dt>
+      <dd>Go · Bun · Elysia · PostgreSQL · Drizzle · SQLite</dd>
+      <dt>Web</dt>
+      <dd>TypeScript · React · Next.js · TanStack · Astro · Tailwind CSS</dd>
+      <dt>Mobile and desktop</dt>
+      <dd>Expo · React Native · Electron · Rust core with UniFFI</dd>
+      <dt>Infrastructure</dt>
+      <dd>Docker · GCP · Terraform · Vercel · GitHub Actions</dd>
+    </dl>
 
     <h2>Education</h2>
     <ul>
-      <li>Higher technical diploma in web application development (DAW) — 2024–2026</li>
-      <li>Harvard CS50, Introduction to Computer Science — 2024</li>
-      <li>University of Helsinki, Java Programming MOOC — 2024</li>
-      <li>Anthropic, Claude Code in Action — 2026</li>
+      <li>Higher technical diploma in web application development (DAW) · 2024 to 2026</li>
+      <li>Harvard CS50, Introduction to Computer Science · 2024</li>
+      <li>University of Helsinki, Java Programming MOOC · 2024</li>
+      <li>Anthropic, Claude Code in Action · 2026</li>
     </ul>
 
     <h2>Languages</h2>
