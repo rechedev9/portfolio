@@ -6,6 +6,11 @@
       (function () {
         try {
           document.documentElement.classList.add('sc-js');
+          // sc-js hides content until the app reveals it. If the app has not started after 3 s (a blocked or
+          // failed bundle), drop the class so nothing stays hidden.
+          setTimeout(function () {
+            if (!document.documentElement.hasAttribute('data-app')) document.documentElement.classList.remove('sc-js');
+          }, 3000);
           if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
         } catch (e) {}
       })();

@@ -33,7 +33,7 @@ type FolioProps = LogProps & {
 // At the colophon the log leaves the margin, because the page itself now carries the complete record.
 export function MarginFolio({ stamped, chapter, closing }: FolioProps): ReactElement {
   return (
-    <aside className="hidden lg:block">
+    <aside className="hidden lg:block print:hidden">
       <div className="sticky top-0 flex h-svh flex-col py-10">
         <p key={chapter} aria-hidden="true" className="folio-title font-serif text-[1.375rem] leading-6 italic">
           {chapter}
@@ -42,7 +42,9 @@ export function MarginFolio({ stamped, chapter, closing }: FolioProps): ReactEle
           aria-label="Shipped"
           className={`mt-12 text-[0.8125rem] leading-snug transition-[opacity,visibility] duration-300 ease-out ${closing ? 'invisible opacity-0' : ''}`}
         >
-          <p className="text-neutral-ink">Shipped</p>
+          <p className="ship-label text-neutral-ink" data-empty={stamped.size === 0 ? '' : undefined}>
+            Shipped
+          </p>
           <ol className="mt-4 space-y-3.5">
             {SHIP_LOG.map((line) => (
               <li key={line.id} className="ship-line" data-stamped={stamped.has(line.id) ? '' : undefined}>
@@ -71,7 +73,7 @@ export function PhoneLog({ stamped, hidden }: LogProps & { readonly hidden: bool
   return (
     <div
       aria-hidden="true"
-      className={`fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background px-6 pt-2.5 pb-[calc(0.625rem+env(safe-area-inset-bottom))] text-[0.8125rem] leading-snug transition-[translate,opacity] duration-300 ease-out sm:px-10 lg:hidden ${
+      className={`fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background px-6 pt-2.5 pb-[calc(0.625rem+env(safe-area-inset-bottom))] text-[0.8125rem] leading-snug transition-[translate,opacity] duration-300 ease-out sm:px-10 lg:hidden print:hidden ${
         shown ? '' : 'translate-y-full opacity-0'
       }`}
     >
@@ -91,7 +93,7 @@ export function PhoneLog({ stamped, hidden }: LogProps & { readonly hidden: bool
 // The colophon: the same log, complete, as the record the page closes on.
 export function ShipRecord(): ReactElement {
   return (
-    <ol className="max-w-xl border-t border-border text-[0.8125rem] leading-snug">
+    <ol data-ship-record="" className="max-w-xl border-t border-border text-[0.8125rem] leading-snug">
       {SHIP_LOG.map((line) => (
         <li key={line.id} className="grid grid-cols-[1fr_auto] gap-x-6 border-b border-border py-2.5">
           <a

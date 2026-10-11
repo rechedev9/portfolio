@@ -8,6 +8,9 @@ import './index.css';
 const root = document.getElementById('root');
 if (!root) throw new Error('Root element not found');
 
+// Tells the inline script in index.html that the app started, so it keeps the reveal states.
+document.documentElement.setAttribute('data-app', '');
+
 applyThemeColor(isDark());
 
 const app = (
@@ -18,7 +21,8 @@ const app = (
   </StrictMode>
 );
 
-// The build prerenders the home page into #root. Every other path gets the same file, so it renders from scratch.
+// The build prerenders the home page into #root. Unknown paths are served 404.html, which has an empty root;
+// a host that falls back to index.html instead (vite preview) still gets a clean render here.
 if (root.hasChildNodes() && window.location.pathname === '/') {
   hydrateRoot(root, app);
 } else {

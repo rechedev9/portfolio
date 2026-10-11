@@ -17,7 +17,6 @@ import {
 } from './data/portfolio';
 import type { Project } from './data/portfolio';
 import { actRange } from './scroll/act-context';
-import { CountUp } from './scroll/count-up';
 import { Cue } from './scroll/cue';
 import { InView } from './scroll/in-view';
 import { Reveal } from './scroll/reveal';
@@ -90,17 +89,20 @@ function useReadingPosition(): ReadingPosition {
     );
     for (const element of document.querySelectorAll('[data-chapter]')) chapters.observe(element);
 
+    // The log leaves the margin once the complete record is on screen or above it. The margin matches the
+    // record's own reveal, so the log is never missing from both places.
     const colophon = new IntersectionObserver(
       (entries) => {
         const last = entries.at(-1);
         if (!last) return;
-        setClosing(last.isIntersecting);
-        if (last.isIntersecting) setReach(SHIP_LOG.length);
+        const reached = last.isIntersecting || last.boundingClientRect.top < 0;
+        setClosing(reached);
+        if (reached) setReach(SHIP_LOG.length);
       },
-      { rootMargin: '0px 0px -25% 0px' },
+      { rootMargin: '0px 0px -12% 0px' },
     );
-    const contact = document.getElementById('contact');
-    if (contact) colophon.observe(contact);
+    const record = document.querySelector('[data-ship-record]');
+    if (record) colophon.observe(record);
 
     return (): void => {
       ships.disconnect();
@@ -111,6 +113,35 @@ function useReadingPosition(): ReadingPosition {
 
   const stamped = useMemo(() => new Set(SHIP_LOG.slice(0, reach).map((line) => line.id)), [reach]);
   return { stamped, chapter, closing };
+}
+
+// A pinned stage is one viewport tall and clips what does not fit. When its content is taller than the
+// viewport (a phone on its side, heavy zoom), the act is marked unpinned and index.css lays it out as an
+// ordinary section, so nothing is cut off.
+function useStageFit(): void {
+  useEffect(() => {
+    const stages = [...document.querySelectorAll('.sc-stage')];
+    const measure = (): void => {
+      for (const stage of stages) {
+        const content = stage.firstElementChild;
+        const act = stage.closest('.sc-act');
+        if (!content || !act) continue;
+        const needed = content.scrollHeight + Number.parseFloat(getComputedStyle(stage).paddingTop);
+        act.toggleAttribute('data-unpinned', needed > document.documentElement.clientHeight + 1);
+      }
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    for (const stage of stages) {
+      if (stage.firstElementChild) observer.observe(stage.firstElementChild);
+    }
+    window.addEventListener('resize', measure);
+    void document.fonts.ready.then(measure);
+    return (): void => {
+      observer.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, []);
 }
 
 function Chapter({
@@ -240,6 +271,7 @@ export function Portfolio(): ReactElement {
   const [paletteOpen, setPaletteOpen] = useState(false);
   const dark = useSyncExternalStore(subscribeTheme, isDark, () => false);
   const { stamped, chapter, closing } = useReadingPosition();
+  useStageFit();
   const year = new Date().getFullYear();
   const [gravityRoom, piroboom, socialPro, ...smaller] = PROJECTS;
 
@@ -293,7 +325,7 @@ export function Portfolio(): ReactElement {
                   title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
                   aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
                   onClick={toggleTheme}
-                  className={`-mt-2.5 -mr-3 grid size-11 cursor-pointer place-items-center text-neutral-ink transition-[color,scale] duration-150 ease-out hover:text-foreground active:scale-95 ${FOCUS}`}
+                  className={`-mt-2.5 -mr-3 grid size-11 cursor-pointer place-items-center text-neutral-ink transition-[color,scale] duration-150 ease-out hover:text-foreground active:scale-95 print:hidden ${FOCUS}`}
                 >
                   {dark ? <SunIcon className="size-[1.125rem]" /> : <MoonIcon className="size-[1.125rem]" />}
                 </button>
@@ -302,8 +334,7 @@ export function Portfolio(): ReactElement {
               <div className="mt-auto">
                 <p className="hero-statement rise font-semibold">
                   <span className="statement-agents block text-balance">{PROFILE.statement.agents}</span>
-                  <span className="sc-sr">{PROFILE.statement.mine}</span>
-                  <span aria-hidden="true" className="block text-balance">
+                  <span className="block text-balance">
                     {MINE_WORDS.map((word, index) => (
                       <Fragment key={`${word}-${index}`}>
                         <span className="statement-word" style={{ animationRange: wordRange(index) }}>
@@ -377,7 +408,9 @@ export function Portfolio(): ReactElement {
 
             <Chapter id="projects" title="Projects">
               {/* The peak. The frame holds, the screenshot wipes open, then three facts arrive one by one. */}
-              <ScrollAct device="pin" span={2.6} id={`ship-${FLAGSHIP.id}`}>
+              <ScrollAct device="pin" span={2.6}>
+                {/* The log links here: late enough in the pin that the screenshot is open and the facts are lit. */}
+                <span id={`ship-${FLAGSHIP.id}`} aria-hidden="true" className="peak-anchor" />
                 <Stage className="flex items-start pt-8 lg:items-center lg:pt-0">
                   <article
                     data-ship={FLAGSHIP.ship}
@@ -392,7 +425,7 @@ export function Portfolio(): ReactElement {
                           <div key={figure.label} className="flex flex-col-reverse">
                             <dt className="text-neutral-ink">{figure.label}</dt>
                             <dd className="text-3xl leading-tight font-semibold tracking-tight tabular-nums">
-                              <CountUp from={0} to={figure.value} />+
+                              {figure.value}+
                             </dd>
                           </div>
                         ))}

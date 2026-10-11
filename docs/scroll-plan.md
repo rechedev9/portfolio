@@ -58,7 +58,7 @@ Hard rules from Luis: the employer appears only in Experience, never in the hero
 |---|---|---|---|
 | Claim | pin + kinetic | 1.5 | The statement holds while its weight moves, which is the claim itself |
 | Record | flow | n/a | Dated rows are information and should read at the reader's pace |
-| Flagship | reveal (pinned, with count and cues) | 2.6 | A wipe is a change of state: from reading about work to looking at it |
+| Flagship | reveal (pinned, with cues) | 2.6 | A wipe is a change of state: from reading about work to looking at it |
 | Range | parallax | n/a | Breadth at reading pace; the drift keeps the screenshots alive without a second pin |
 | Substance | in/stagger | n/a | Lists are information, entered quickly |
 | Commitment | progress | n/a | The log, driven by the whole page's scroll, is complete here |
@@ -100,3 +100,17 @@ Fixed on the way:
 The peak reads as the peak: it is the largest change on the sheet and has the longest pin, and the act before it is text only. The end resolves: the last screen holds the record, the address and the footer.
 
 Changed after the check: on a wide screen the margin log now leaves when the colophon arrives, because the two were side by side saying the same thing. Range was left as built. Its third screenshot (SocialPro) is already a smaller figure sharing a row with the two text-only projects, and the act still thins out there; a fourth dark screenshot in a row is the cause, and only different imagery would fix it.
+
+**Review fixes (2026-10-11).** A review limited to what a visitor can run into found nine problems, all fixed:
+
+- A pinned stage clipped whatever did not fit one viewport (a phone on its side, 200% zoom). Acts now unpin when their content is taller than the viewport.
+- Without scroll timelines the pins held a frozen frame for 0.7 and 1.6 screens. Those browsers get unpinned acts.
+- Printing left unseen sections blank. Print now gets the settled page on light tokens.
+- A wrong URL showed the home page first. The build writes `404.html` with an empty root and the catch-all rewrite is gone.
+- A blocked bundle left the reveals hidden for good. The inline script drops `sc-js` after 3 s if the app has not started.
+- The ClipHub link in the log landed on the stage before anything had opened. It now lands late in the pin.
+- The figures showed their final value and then restarted from 0. They are static now.
+- Copying the headline pasted his sentence twice. The words are plain inline text, with no hidden duplicate.
+- "Shipped" sat over an empty list, and the log left the margin before the record appeared. Both are tied to what is on screen.
+
+Checked: harness clean at 1440x900, 390x844, 844x390 and reduced motion; the print PDF read page by page; the no-timeline layout simulated in Chrome. Still not opened in a real Firefox (headless capture hung on this machine), and `404.html` is only proven once Vercel serves the preview.

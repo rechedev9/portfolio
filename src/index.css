@@ -100,10 +100,6 @@ body {
     opacity: var(--dim);
   }
 
-  .statement-word {
-    display: inline-block;
-  }
-
   .folio-title {
     animation: folio-swap 220ms ease-out both;
   }
@@ -119,6 +115,18 @@ body {
     visibility: hidden;
     opacity: 0;
     translate: 0 8px;
+  }
+
+  /* The label waits for the first line, so it never sits over an empty list. */
+  .ship-label {
+    transition:
+      opacity 300ms ease-out,
+      visibility 300ms;
+  }
+
+  html.sc-js .ship-label[data-empty] {
+    visibility: hidden;
+    opacity: 0;
   }
 
   .ship-tick {
@@ -157,6 +165,113 @@ body {
 
   .sc-stage img {
     aspect-ratio: 2 / 1;
+  }
+}
+
+/* The ClipHub link in the log lands late in the pin, where the screenshot is open and the facts are lit. */
+.peak-anchor {
+  position: absolute;
+  top: calc((var(--sc-span) - 1) * 97vh);
+}
+
+/* Unpinned acts. A stage is one viewport tall and clips the rest, so the act is laid out as an ordinary section
+   when its content does not fit (data-unpinned, set in Portfolio.tsx), when the browser has no scroll timelines
+   to move it, and in print. Unlayered, so these win over the kit. */
+.sc-act[data-unpinned] {
+  height: auto;
+}
+
+.sc-act[data-unpinned] > .sc-stage {
+  position: static;
+  height: auto;
+  overflow: visible;
+}
+
+.sc-act[data-unpinned] .peak-anchor {
+  top: 0;
+}
+
+.sc-act[data-unpinned] .sc-cue {
+  animation: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  translate: none !important;
+}
+
+.sc-act[data-unpinned] .sc-reveal {
+  animation: none !important;
+  clip-path: none !important;
+}
+
+.sc-act[data-unpinned] .statement-agents {
+  animation: none;
+  opacity: var(--dim);
+}
+
+.sc-act[data-unpinned] .statement-word {
+  animation: none;
+}
+
+/* Without scroll timelines nothing moves inside a pin, so holding the frame would only stall the scroll. */
+@supports not (animation-timeline: scroll()) {
+  .sc-act--pinned {
+    height: auto;
+  }
+
+  .sc-act--pinned > .sc-stage {
+    position: static;
+  }
+
+  .sc-act--pinned .peak-anchor {
+    top: 0;
+  }
+}
+
+/* Paper gets the whole page, settled: light tokens, nothing pinned, nothing waiting to be scrolled into view. */
+@media print {
+  :root,
+  .dark {
+    color-scheme: light;
+    --color-canvas: #fff;
+    --color-background: #fff;
+    --color-foreground: #141413;
+    --color-neutral-ink: #55544e;
+    --color-border: #d9d5ca;
+    --color-accent: #2a3fbf;
+  }
+
+  .sc-act--pinned {
+    height: auto;
+  }
+
+  .sc-act--pinned > .sc-stage {
+    position: static;
+    height: auto;
+    overflow: visible;
+  }
+
+  .sc-cue,
+  .sc-reveal,
+  .statement-agents,
+  .statement-word,
+  .shot-drift {
+    animation: none !important;
+  }
+
+  .sc-cue {
+    opacity: 1 !important;
+    visibility: visible !important;
+    translate: none !important;
+  }
+
+  .sc-reveal {
+    clip-path: none !important;
+  }
+
+  [data-sc-in],
+  [data-sc-stagger] > * {
+    opacity: 1 !important;
+    translate: none !important;
   }
 }
 
