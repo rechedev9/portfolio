@@ -58,21 +58,23 @@ async function main() {
   await page.waitForSelector('h1');
 
   const title = await page.title();
-  if (title.includes('Applied AI Engineer') && !title.includes('Backend')) ok('document title', title);
+  if (title.includes('Applied AI Product Engineer') && !title.includes('Backend')) ok('document title', title);
   else fail('document title', title);
 
   for (const t of [
     'Luis Reche',
-    'Applied AI Engineer',
+    'Applied AI Product Engineer',
+    'I decide what to build and answer for what ships.',
     'ClipHub',
     'SocialPro',
     '100+ users',
     'Agentero',
     'Gravity Room',
-    'software consultant',
+    'month-end commission payments',
     'Palma, Spain',
     'Google Cloud',
-    'Berrus: Discord notifications',
+    'overclocked their hardware',
+    '82 MB PDF to a 16-page reader',
     'Piroboom',
   ]) {
     if (await textExists(page, t)) ok(`home text: ${t}`);
@@ -80,8 +82,8 @@ async function main() {
   }
 
   const banned = await page.evaluate(() => document.body.innerText);
-  if (!/Backend Engineer|Full Stack Engineer|TickCut|Shenron|\/workflow/i.test(banned)) ok('no stale titles or removed items');
-  else fail('no stale titles or removed items', 'found a retired title, TickCut, Shenron, or /workflow');
+  if (!/Backend Engineer|Full Stack Engineer|TickCut|Shenron|\/workflow|Berrus|human in the loop/i.test(banned)) ok('no stale titles or removed items');
+  else fail('no stale titles or removed items', 'found a retired title, TickCut, Shenron, /workflow, Berrus or the old headline');
 
   const images = await loadImages(page);
   if (images.length === 4 && images.every((image) => image.width === 1280 && image.alt)) {

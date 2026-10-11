@@ -1,44 +1,52 @@
 @import "tailwindcss";
+@import "./scroll/scroll.css" layer(components);
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
+  --color-canvas: #faf8f3;
   --color-background: #faf8f3;
   --color-foreground: #141413;
   --color-neutral-ink: #6b6a63;
   --color-border: #e6e2d8;
+  --color-accent: #2a3fbf;
 
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+  --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
 }
 
 :root {
   color-scheme: light;
+  /* The dimmed half of the statement: 3.4:1 on paper, enough for display type. */
+  --dim: 0.5;
 }
 
 .dark {
   color-scheme: dark;
+  --color-canvas: #141413;
   --color-background: #141413;
   --color-foreground: #f5f3ec;
   --color-neutral-ink: #a3a097;
   --color-border: rgb(255 255 255 / 0.12);
+  --color-accent: #9aa8ff;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
+/* The page background stays on body only: the kit's ground layers sit under it. */
 body {
   margin: 0;
-  background: var(--color-background);
+  background: var(--color-canvas);
   color: var(--color-foreground);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-  background: color-mix(in oklab, var(--color-foreground) 14%, transparent);
+  background: color-mix(in oklab, var(--color-accent) 22%, transparent);
 }
 
 @keyframes rise {
@@ -48,16 +56,243 @@ body {
   }
 }
 
+@keyframes statement-recede {
+  to {
+    opacity: var(--dim);
+  }
+}
+
+@keyframes statement-ink {
+  from {
+    opacity: var(--dim);
+  }
+}
+
+@keyframes drift {
+  from {
+    translate: 0 -3%;
+  }
+  to {
+    translate: 0 3%;
+  }
+}
+
+@keyframes folio-swap {
+  from {
+    opacity: 0;
+  }
+}
+
 /* In the components layer so utilities such as an animation delay can override them. */
 @layer components {
   .hero-statement {
-    font-size: clamp(2.5rem, 7vw + 0.75rem, 5.5rem);
-    line-height: 0.98;
+    font-size: clamp(2.125rem, 5.2vw + 0.6rem, 5rem);
+    line-height: 1;
     letter-spacing: -0.045em;
   }
 
   .rise {
     animation: rise 700ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  }
+
+  /* Settled state, for browsers without scroll timelines: the weight is already his. */
+  .statement-agents {
+    opacity: var(--dim);
+  }
+
+  .folio-title {
+    animation: folio-swap 220ms ease-out both;
+  }
+
+  /* Ship log. Lines hide only under html.sc-js, so a crawler and a reader without JavaScript get the full record. */
+  .ship-line {
+    transition:
+      opacity 420ms cubic-bezier(0.23, 1, 0.32, 1),
+      translate 420ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  html.sc-js .ship-line:not([data-stamped]) {
+    visibility: hidden;
+    opacity: 0;
+    translate: 0 8px;
+  }
+
+  /* The label waits for the first line, so it never sits over an empty list. */
+  .ship-label {
+    transition:
+      opacity 300ms ease-out,
+      visibility 300ms;
+  }
+
+  html.sc-js .ship-label[data-empty] {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .ship-tick {
+    stroke-dasharray: 16;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 380ms cubic-bezier(0.23, 1, 0.32, 1) 140ms;
+  }
+
+  html.sc-js .ship-line:not([data-stamped]) .ship-tick {
+    stroke-dashoffset: 16;
+  }
+
+  .shot-frame {
+    overflow: clip;
+  }
+
+  /* Slightly oversized, so the drift never shows the frame's edge. */
+  .shot-drift {
+    scale: 1.07;
+  }
+}
+
+/* The pinned flagship stage has to fit one screen, so below the wide layout it drops what it can spare.
+   Unlayered, so these win over display utilities. */
+@media (max-width: 1023px) {
+  .sc-stage figcaption,
+  .sc-stage .stage-wide {
+    display: none;
+  }
+}
+
+@media (max-width: 1023px) and (max-height: 740px) {
+  .sc-stage .peak-optional {
+    display: none;
+  }
+
+  .sc-stage img {
+    aspect-ratio: 2 / 1;
+  }
+}
+
+/* The ClipHub link in the log lands late in the pin, where the screenshot is open and the facts are lit. */
+.peak-anchor {
+  position: absolute;
+  top: calc((var(--sc-span) - 1) * 97vh);
+}
+
+/* Unpinned acts. A stage is one viewport tall and clips the rest, so the act is laid out as an ordinary section
+   when its content does not fit (data-unpinned, set in Portfolio.tsx), when the browser has no scroll timelines
+   to move it, and in print. Unlayered, so these win over the kit. */
+.sc-act[data-unpinned] {
+  height: auto;
+}
+
+.sc-act[data-unpinned] > .sc-stage {
+  position: static;
+  height: auto;
+  overflow: visible;
+}
+
+.sc-act[data-unpinned] .peak-anchor {
+  top: 0;
+}
+
+.sc-act[data-unpinned] .sc-cue {
+  animation: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  translate: none !important;
+}
+
+.sc-act[data-unpinned] .sc-reveal {
+  animation: none !important;
+  clip-path: none !important;
+}
+
+.sc-act[data-unpinned] .statement-agents {
+  animation: none;
+  opacity: var(--dim);
+}
+
+.sc-act[data-unpinned] .statement-word {
+  animation: none;
+}
+
+/* Without scroll timelines nothing moves inside a pin, so holding the frame would only stall the scroll. */
+@supports not (animation-timeline: scroll()) {
+  .sc-act--pinned {
+    height: auto;
+  }
+
+  .sc-act--pinned > .sc-stage {
+    position: static;
+  }
+
+  .sc-act--pinned .peak-anchor {
+    top: 0;
+  }
+}
+
+/* Paper gets the whole page, settled: light tokens, nothing pinned, nothing waiting to be scrolled into view. */
+@media print {
+  :root,
+  .dark {
+    color-scheme: light;
+    --color-canvas: #fff;
+    --color-background: #fff;
+    --color-foreground: #141413;
+    --color-neutral-ink: #55544e;
+    --color-border: #d9d5ca;
+    --color-accent: #2a3fbf;
+  }
+
+  .sc-act--pinned {
+    height: auto;
+  }
+
+  .sc-act--pinned > .sc-stage {
+    position: static;
+    height: auto;
+    overflow: visible;
+  }
+
+  .sc-cue,
+  .sc-reveal,
+  .statement-agents,
+  .statement-word,
+  .shot-drift {
+    animation: none !important;
+  }
+
+  .sc-cue {
+    opacity: 1 !important;
+    visibility: visible !important;
+    translate: none !important;
+  }
+
+  .sc-reveal {
+    clip-path: none !important;
+  }
+
+  [data-sc-in],
+  [data-sc-stagger] > * {
+    opacity: 1 !important;
+    translate: none !important;
+  }
+}
+
+/* Page-local scroll: the statement's weight moves from the agents' sentence to his, and screenshots drift in their frames. */
+@supports (animation-timeline: scroll()) {
+  .statement-agents {
+    opacity: 1;
+    animation: statement-recede linear both;
+    animation-timeline: --sc-act;
+    animation-range: contain 8% contain 62%;
+  }
+
+  .statement-word {
+    animation: statement-ink linear both;
+    animation-timeline: --sc-act;
+  }
+
+  .shot-drift {
+    animation: drift linear both;
+    animation-timeline: view();
+    animation-range: cover;
   }
 }
 
@@ -66,7 +301,18 @@ body {
     scroll-behavior: auto;
   }
 
-  .rise {
+  .rise,
+  .folio-title {
     animation: none;
+  }
+
+  .shot-drift {
+    animation: none;
+    translate: none;
+  }
+
+  .ship-line {
+    translate: none !important;
+    transition-duration: 200ms;
   }
 }

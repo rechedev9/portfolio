@@ -1,8 +1,10 @@
 # luisreche.dev
 
-Portfolio for **Luis Reche**, Applied AI Engineer.
+Portfolio for **Luis Reche**, Applied AI Product Engineer.
 
-One page: a full-height statement, then experience, projects (with screenshots in `public/shots/`), stack, education and contact as plain lists on a flat cream background. Content lives in `src/data/portfolio.ts`.
+One scroll-driven page on a flat cream background: a title page with the statement, then experience, projects (with screenshots in `public/shots/`), stack, education and contact. A log in the margin stamps one line per shipped product as the reader passes it. Content lives in `src/data/portfolio.ts`, the scroll kit in `src/scroll/` (copied in, not edited) and the plan behind the page in `docs/scroll-plan.md`.
+
+`vite build` prerenders the home page into `index.html`, so the copy is in the HTML before any JavaScript runs.
 
 ## Stack
 
@@ -22,6 +24,6 @@ npm run lint
 
 ## Content
 
-- CV source: `cv/luis-reche.html`, printed to one A4 page with headless Chrome into both PDF paths below
+- CV source: `cv/luis-reche.html`, printed to two A4 pages with headless Chrome into both PDF paths below
 - CV: `public/Luis-Reche-Applied-AI-Engineer-CV.pdf` (same file also at `public/luis-reche-cv.pdf` so older links keep working)
 - Command palette: `⌘K` / `Ctrl+K`

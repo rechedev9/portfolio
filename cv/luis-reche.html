@@ -2,123 +2,227 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Luis Reche · Applied AI Engineer</title>
+    <title>Luis Reche · Applied AI Product Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=block" rel="stylesheet" />
     <style>
-      @page { size: A4; margin: 16mm 16mm 14mm; }
+      /* Side margins are zero so the black header can bleed to the page edge. */
+      @page { size: A4; margin: 11mm 0; }
+      @page :first { margin-top: 0; }
       * { box-sizing: border-box; }
+      html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       body {
         margin: 0;
-        color: #141413;
-        font-family: "Plus Jakarta Sans", "Noto Sans", "Segoe UI", sans-serif;
-        font-size: 11px;
-        line-height: 1.45;
+        color: #000;
+        font-family: "Inconsolata", "Consolas", monospace;
+        font-size: 11pt;
+        line-height: 1.17;
       }
-      h1 { margin: 0; font-size: 26px; letter-spacing: -0.03em; }
-      .role { margin: 2px 0 0; font-size: 14px; font-weight: 600; }
-      .line { margin: 6px 0 0; color: #6b6a63; }
-      .summary { margin: 10px 0 0; }
       a { color: inherit; text-decoration: none; }
-      h2 {
-        margin: 16px 0 6px;
-        padding-bottom: 3px;
-        border-bottom: 1px solid #e6e2d8;
-        font-size: 11px;
-        letter-spacing: 0.12em;
-        font-kerning: none;
-        text-transform: uppercase;
-        break-after: avoid;
+      p { margin: 0; }
+      svg { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+
+      header { padding: 9mm 12mm 9mm; background: #000; color: #fff; }
+      .id { display: flex; align-items: baseline; gap: 7mm; }
+      h1 { margin: 0; font-size: 20pt; }
+      .role { font-size: 13.5pt; }
+      .contact { display: flex; flex-wrap: wrap; gap: 0 8mm; margin-top: 3.4mm; }
+      .contact > * { display: inline-flex; align-items: center; gap: 2.2mm; }
+      .contact svg { width: 11pt; height: 11pt; }
+
+      main { padding: 0 12mm; }
+      h2 { margin: 6mm 0 2.5mm; font-size: 15.5pt; break-after: avoid; }
+      .entry {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 40mm;
+        column-gap: 6mm;
+        margin-top: 2.6mm;
+        break-inside: avoid;
       }
-      h3 {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        gap: 12px;
-        margin: 8px 0 0;
-        font-size: 12.5px;
-        break-after: avoid;
-      }
-      .when { color: #6b6a63; font-weight: 500; white-space: nowrap; }
-      p { margin: 3px 0; }
-      ul { margin: 4px 0 0; padding-left: 16px; }
-      li { margin: 2px 0; break-inside: avoid; }
-      .meta { color: #6b6a63; }
-      .stack { display: grid; grid-template-columns: max-content 1fr; gap: 2px 14px; margin: 4px 0 0; }
-      .stack dt { font-weight: 700; }
-      .stack dd { margin: 0; }
+      h2 + .entry { margin-top: 0; }
+      h3 { margin: 0; font-size: inherit; }
+      h3 svg { width: 7.5pt; height: 7.5pt; margin-left: 0.6mm; }
+      .side { text-align: right; white-space: nowrap; }
+      ul { margin: 0; padding-left: 4mm; }
     </style>
   </head>
   <body>
+    <svg width="0" height="0" style="position: absolute">
+      <defs>
+        <symbol id="i-mail" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></symbol>
+        <symbol id="i-pin" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></symbol>
+        <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" /><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" /></symbol>
+        <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></symbol>
+        <symbol id="i-github" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" /></symbol>
+        <symbol id="i-ext" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></symbol>
+      </defs>
+    </svg>
+
     <header>
-      <h1>Luis Lucas Reche</h1>
-      <p class="role">Applied AI Engineer</p>
-      <p class="line">Palma, Spain · Remote</p>
-      <p class="line">
-        <a href="mailto:rechedev@hotmail.com">rechedev@hotmail.com</a>
-        · <a href="https://luisreche.dev">luisreche.dev</a>
-        · <a href="https://github.com/rechedev9">github.com/rechedev9</a>
-        · <a href="https://www.linkedin.com/in/luisrecheamado">linkedin.com/in/luisrecheamado</a>
-      </p>
+      <div class="id">
+        <h1>Luis Lucas Reche</h1>
+        <span class="role">Applied AI Product Engineer</span>
+      </div>
+      <div class="contact">
+        <a href="mailto:rechedev@hotmail.com"><svg><use href="#i-mail" /></svg>rechedev@hotmail.com</a>
+        <span><svg><use href="#i-pin" /></svg>Palma, Spain · Remote</span>
+      </div>
+      <div class="contact">
+        <a href="https://luisreche.dev"><svg><use href="#i-link" /></svg>https://luisreche.dev</a>
+        <a href="https://www.linkedin.com/in/luisrecheamado"><svg><use href="#i-linkedin" /></svg>https://www.linkedin.com/in/luisrecheamado/</a>
+      </div>
+      <div class="contact">
+        <a href="https://github.com/rechedev9"><svg><use href="#i-github" /></svg>https://github.com/rechedev9</a>
+      </div>
     </header>
 
-    <p class="summary">
-      I use LLMs and coding agents such as Claude Code and Codex to ship software faster, with a human in the loop: I review and approve what ships. I build end to end, across backend, web, mobile, desktop and infrastructure.
-    </p>
+    <main>
+      <h2>Profile</h2>
+      <p>
+        <strong>Coding agents such as Claude Code and Codex write the code. I decide what to build, design how it works and answer for what ships.</strong>
+        Since 2023 I have taken products from a customer's problem to production and kept them running after launch, across web, mobile, desktop, backend and infrastructure. Two of them are my own products: ClipHub, a desktop app with 100+ users and 130+ releases, and Gravity Room, a strength training app for web and mobile.
+      </p>
 
-    <h2>Experience</h2>
-    <h3><span>Applied AI Engineer, <a href="https://www.agentero.com">Agentero</a></span> <span class="when">Apr 2026 to present</span></h3>
-    <p class="meta">US network that gives independent insurance agents carrier access and the software to run an agency. Spain-based.</p>
-    <ul>
-      <li>Own marketplace features and critical internal tooling end to end.</li>
-      <li>Infrastructure on Google Cloud, backend services in Go and the marketplace interface in Next.js.</li>
-    </ul>
+      <h2>Professional Experience</h2>
+      <div class="entry">
+        <div>
+          <h3>Applied AI Software Engineer, <a href="https://www.agentero.com">Agentero<svg><use href="#i-ext" /></svg></a></h3>
+          <ul>
+            <li>Built, end to end, the internal app that partly automates month-end commission payments, a critical process for a US network of independent insurance agents.</li>
+            <li>Maintained and extended the marketplace where those agents reach insurance carriers, across the Go backend on Google Cloud and the Next.js interface.</li>
+          </ul>
+        </div>
+        <div class="side">Apr 2026 - Ongoing<br />Remote</div>
+      </div>
 
-    <h3><span>Freelance software engineer, <a href="https://socialpro.es">SocialPro</a></span> <span class="when">2025 to present</span></h3>
-    <p class="meta">Gaming and esports agency that connects creators with brands in Spain and Latin America. Freelance since before their website launched.</p>
-    <ul>
-      <li>socialpro.es: designed and built the website, a brand portal and the first internal CRM.</li>
-      <li>Piroboom: replaced the WordPress site of a fireworks shop in Elche, a client of the agency. Live in production.</li>
-    </ul>
+      <div class="entry">
+        <div>
+          <h3>Freelance Applied AI Product Engineer, <a href="https://socialpro.es">SocialPro<svg><use href="#i-ext" /></svg></a></h3>
+          <ul>
+            <li>Built and launched socialpro.es and did its SEO. Monthly Google impressions went from 155 to 18,700 and clicks from 16 to 285 between April and September 2026.</li>
+            <li>Built the brand portal and the first CRM of this gaming and esports agency, as its whole product team.</li>
+            <li>Delivered the complete website of Pirotecnia Elche, a fireworks shop and client of the agency, from design to deployment.</li>
+          </ul>
+        </div>
+        <div class="side">2025 - Ongoing<br />Spain</div>
+      </div>
 
-    <h3><span>Freelance product engineer, <a href="https://rechedev.cloud">RecheDev</a></span> <span class="when">2021 to present</span></h3>
-    <p class="meta">My freelance practice. It began with PC optimisation for competitive gaming. Now I take products from first meeting to production.</p>
-    <ul>
-      <li>ClipHub: a Windows app that turns a CS2 demo into an edited video, built for SocialPro as their software consultant. 100+ users.</li>
-      <li>Berrus: Discord notifications, faster SQL and an Electron desktop client for another team's browser role-playing game.</li>
-    </ul>
+      <div class="entry">
+        <div>
+          <h3>Freelance Applied AI Product Engineer, <a href="https://rechedev.cloud">RecheDev<svg><use href="#i-ext" /></svg></a></h3>
+          <ul>
+            <li>Took my own and client products from the first conversation to production as a one-person product practice.</li>
+            <li>Created ClipHub, my own Windows app that turns a Counter-Strike 2 demo into an edited video. It has 100+ users after 130+ releases, and I share it with SocialPro.</li>
+            <li>Created Gravity Room, my own free and open source strength training app for web and mobile.</li>
+            <li>Tuned PCs for competitive players to lower latency, overclocked their hardware and built custom machines.</li>
+          </ul>
+        </div>
+        <div class="side">2023 - Ongoing<br />Palma, Spain</div>
+      </div>
 
-    <h2>Projects</h2>
-    <ul>
-      <li><strong>ClipHub</strong>: Windows app that turns a Counter-Strike 2 demo into an edited video of the best plays. Go, Next.js and Electron. 130 releases. <a href="https://cliphub.gravityroom.app/">cliphub.gravityroom.app</a></li>
-      <li><strong>SocialPro</strong>: website, brand portal and first internal CRM of a gaming and esports agency. Next.js and PostgreSQL. <a href="https://socialpro.es">socialpro.es</a></li>
-      <li><strong>Piroboom</strong>: an 82 MB PDF catalogue turned into a searchable 16-page web reader. 110 unit and 42 browser tests. <a href="https://pirotecniaelche.es">pirotecniaelche.es</a></li>
-      <li><strong>Gravity Room</strong>: free strength training tracker that calculates the weights for the next session. React, Expo, Elysia, Postgres. <a href="https://gravityroom.app">gravityroom.app</a></li>
-      <li><strong><a href="https://github.com/rechedev9/honey-encryption-proxy">Honey Encryption Proxy</a></strong>: local proxy that swaps proprietary names for stand-ins before a request reaches an LLM API.</li>
-      <li><strong><a href="https://github.com/rechedev9/riskforge">riskforge</a></strong>: portfolio project. Insurance quote gateway in Go, Terraform for Cloud Run, Spanner and Pub/Sub.</li>
-    </ul>
+      <div class="entry">
+        <div>
+          <h3>Pharmacist</h3>
+          <ul>
+            <li>Decided which products to bring in and when, and how to sell them to different customer profiles.</li>
+            <li>Managed the database behind multi-warehouse stock and planned purchasing from stock and sales statistics.</li>
+          </ul>
+        </div>
+        <div class="side">10 years</div>
+      </div>
 
-    <h2>Stack</h2>
-    <dl class="stack">
-      <dt>AI and agents</dt>
-      <dd>Claude Code · Codex · MCP servers · Skills and plugins · Multi-agent workflows · Human approval gates</dd>
-      <dt>Backend</dt>
-      <dd>Go · Bun · Elysia · PostgreSQL · Drizzle · SQLite</dd>
-      <dt>Web</dt>
-      <dd>TypeScript · React · Next.js · TanStack · Astro · Tailwind CSS</dd>
-      <dt>Mobile and desktop</dt>
-      <dd>Expo · React Native · Electron · Rust core with UniFFI</dd>
-      <dt>Infrastructure</dt>
-      <dd>Docker · GCP · Terraform · Vercel · GitHub Actions</dd>
-    </dl>
+      <h2>Projects</h2>
+      <div class="entry">
+        <div>
+          <h3><a href="https://cliphub.gravityroom.app/">ClipHub<svg><use href="#i-ext" /></svg></a></h3>
+          <ul>
+            <li>Replaced manual recording and editing with one flow: the player loads a Counter-Strike 2 demo and gets an edited video of their best plays.</li>
+            <li>Shipped 130+ releases to 100+ users through in-app updates. The app also clips streams and follows FACEIT players.</li>
+            <li>Ran the whole pipeline on the player's PC (parse the demo, record in the game, edit), so making a video uploads nothing.</li>
+          </ul>
+        </div>
+        <div class="side">Own product<br />Windows desktop</div>
+      </div>
+      <div class="entry">
+        <div>
+          <h3><a href="https://gravityroom.app">Gravity Room<svg><use href="#i-ext" /></svg></a></h3>
+          <ul>
+            <li>Built a free, open source app with 18 strength programs that calculates the weights, sets and reps of every session.</li>
+            <li>Wrote one progression engine for web and mobile that raises the load after a completed session and adjusts the plan after a failed one.</li>
+            <li>Added a guest mode so people can try it without an account. The app is in Spanish and English, has no ads and lets users export their data.</li>
+          </ul>
+        </div>
+        <div class="side">Own product<br />Web and mobile</div>
+      </div>
+      <div class="entry">
+        <div>
+          <h3><a href="https://pirotecniaelche.es">Piroboom<svg><use href="#i-ext" /></svg></a></h3>
+          <ul>
+            <li>Built the complete website of a fireworks shop in Elche, from the design and the content to the server it runs on.</li>
+            <li>Designed the site around store visits and enquiries for weddings, gender reveals and other celebrations, because fireworks cannot be shipped in Spain. A retried enquiry is recorded once.</li>
+            <li>Replaced an 82 MB PDF catalogue with a 16-page online reader that has search and zoom, so customers read it without downloading anything.</li>
+          </ul>
+        </div>
+        <div class="side">Client<br />Pirotecnia Elche</div>
+      </div>
+      <div class="entry">
+        <div>
+          <h3><a href="https://socialpro.es">SocialPro<svg><use href="#i-ext" /></svg></a></h3>
+          <ul>
+            <li>Designed and built the public website, the brand portal and the first internal CRM of a gaming and esports agency.</li>
+          </ul>
+        </div>
+        <div class="side">Client</div>
+      </div>
+      <div class="entry">
+        <div>
+          <h3><a href="https://github.com/rechedev9/honey-encryption-proxy">Honey Encryption Proxy<svg><use href="#i-ext" /></svg></a></h3>
+          <ul>
+            <li>Built a local proxy for Claude Code that swaps proprietary names in a prompt's code for stand-ins and restores them in the reply.</li>
+          </ul>
+        </div>
+        <div class="side">Developer tool</div>
+      </div>
+      <div class="entry">
+        <div>
+          <h3><a href="https://github.com/rechedev9/riskforge">riskforge<svg><use href="#i-ext" /></svg></a></h3>
+          <ul>
+            <li>Built an insurance quote gateway that asks several carriers for a price in parallel, as a study project to learn the domain.</li>
+          </ul>
+        </div>
+        <div class="side">Portfolio</div>
+      </div>
 
-    <h2>Education</h2>
-    <ul>
-      <li>Higher technical diploma in web application development (DAW) · 2024 to 2026</li>
-      <li>Harvard CS50, Introduction to Computer Science · 2024</li>
-      <li>University of Helsinki, Java Programming MOOC · 2024</li>
-      <li>Anthropic, Claude Code in Action · 2026</li>
-    </ul>
+      <h2>Education</h2>
+      <div class="entry">
+        <h3>Higher Technical Diploma in Web Application Development (DAW)</h3>
+        <div class="side">2024 - 2026</div>
+      </div>
+      <div class="entry">
+        <h3>Claude Code in Action, Anthropic</h3>
+        <div class="side">2026</div>
+      </div>
+      <div class="entry">
+        <h3>CS50: Introduction to Computer Science, Harvard</h3>
+        <div class="side">2024</div>
+      </div>
+      <div class="entry">
+        <h3>Java Programming MOOC, University of Helsinki</h3>
+        <div class="side">2024</div>
+      </div>
+      <div class="entry">
+        <h3>Degree in Pharmacy, UNED</h3>
+        <div class="side">2016</div>
+      </div>
 
-    <h2>Languages</h2>
-    <p>Spanish (native) · Catalan (native) · English (advanced)</p>
+      <h2>Skills</h2>
+      <p>
+        Product scoping, UX and interface design, SEO, Release management, Claude Code, Codex, MCP servers, Skills and plugins, Multi-agent workflows, Review of agent output, Go, Bun, Elysia, PostgreSQL, Drizzle, SQLite, TypeScript, React, Next.js, TanStack, Astro, Tailwind CSS, Expo, React Native, Electron, Rust (UniFFI), Docker, GCP, Terraform, Vercel, GitHub Actions, PC hardware, overclocking and latency tuning.
+      </p>
+
+      <h2>Languages</h2>
+      <p>Spanish (native), Catalan (native), English (advanced).</p>
+    </main>
   </body>
 </html>
