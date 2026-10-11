@@ -2,7 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Luis Reche · Applied AI Product Engineer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Luis Reche · CV</title>
+    <meta name="description" content="The CV of Luis Reche, Applied AI Product Engineer in Palma, Spain: experience, projects, education and skills. Also available as a PDF." />
+    <link rel="canonical" href="https://luisreche.dev/cv/" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2" />
+    <script>
+      // The paper stays white; only the surround follows the theme chosen on the home page.
+      try {
+        if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+      } catch (e) {}
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=block" rel="stylesheet" />
@@ -45,6 +57,88 @@
       h3 svg { width: 7.5pt; height: 7.5pt; margin-left: 0.6mm; }
       .side { text-align: right; white-space: nowrap; }
       ul { margin: 0; padding-left: 4mm; }
+
+      /* Everything below is for the screen. Print ignores it, so the PDF comes out of this same file unchanged. */
+      .toolbar { display: none; }
+
+      @media screen {
+        :root { --surround: #faf8f3; --ink: #141413; }
+        :root.dark { --surround: #141413; --ink: #f5f3ec; }
+        html { background: var(--surround); }
+        body { padding: 0 16px 56px; }
+        .toolbar {
+          position: sticky;
+          top: 0;
+          z-index: 1;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 16px;
+          max-width: 210mm;
+          margin: 0 auto;
+          padding: 12px 0;
+          background: var(--surround);
+          color: var(--ink);
+          font-size: 15px;
+        }
+        .tool {
+          display: inline-flex;
+          align-items: center;
+          min-height: 44px;
+          border-radius: 2px;
+          text-decoration: underline;
+          text-decoration-color: color-mix(in oklab, currentColor 45%, transparent);
+          text-underline-offset: 4px;
+          transition: text-decoration-color 150ms ease-out;
+        }
+        .tool:hover { text-decoration-color: currentColor; }
+        .tool--primary {
+          padding: 0 16px;
+          border-radius: 8px;
+          background: var(--ink);
+          color: var(--surround);
+          font-weight: 700;
+          text-decoration: none;
+          transition: scale 150ms ease-out;
+        }
+        .tool--primary:active { scale: 0.97; }
+        .tool:focus-visible,
+        .sheet a:focus-visible { outline: 2px solid #2a3fbf; outline-offset: 3px; }
+        :root.dark .tool:focus-visible { outline-color: #9aa8ff; }
+        .sheet {
+          max-width: 210mm;
+          margin: 0 auto;
+          padding-bottom: 12mm;
+          background: #fff;
+          box-shadow:
+            0 1px 2px rgb(20 20 19 / 0.06),
+            0 16px 40px -18px rgb(20 20 19 / 0.25);
+        }
+        .sheet a:hover { text-decoration: underline; text-underline-offset: 3px; }
+      }
+
+      /* A phone gets one column: the dates move above each title and the type grows to a reading size. */
+      @media screen and (max-width: 720px) {
+        body { padding: 0 0 40px; font-size: 15px; line-height: 1.3; }
+        .toolbar { padding: 8px 16px; }
+        .sheet { padding-bottom: 28px; box-shadow: none; }
+        header { padding: 22px 16px; }
+        .id { flex-direction: column; gap: 2px; }
+        h1 { font-size: 24px; }
+        .role { font-size: 16px; }
+        .contact { gap: 4px 20px; margin-top: 8px; }
+        .contact > * { min-height: 28px; overflow-wrap: anywhere; }
+        main { padding: 0 16px; }
+        h2 { margin: 28px 0 10px; font-size: 20px; }
+        .entry { display: flex; flex-direction: column; margin-top: 16px; }
+        .side { display: flex; flex-wrap: wrap; gap: 0 12px; order: -1; margin-bottom: 2px; color: #55544e; font-size: 13px; text-align: left; }
+        ul { padding-left: 16px; }
+        li + li { margin-top: 4px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .tool, .tool--primary { transition: none; }
+      }
     </style>
   </head>
   <body>
@@ -59,6 +153,12 @@
       </defs>
     </svg>
 
+    <nav class="toolbar" aria-label="CV">
+      <a class="tool" href="/">← luisreche.dev</a>
+      <a class="tool tool--primary" href="/Luis-Reche-Applied-AI-Engineer-CV.pdf" download="Luis-Reche-Applied-AI-Engineer-CV.pdf">Download PDF</a>
+    </nav>
+
+    <div class="sheet">
     <header>
       <div class="id">
         <h1>Luis Lucas Reche</h1>
@@ -224,5 +324,6 @@
       <h2>Languages</h2>
       <p>Spanish (native), Catalan (native), English (advanced).</p>
     </main>
+    </div>
   </body>
 </html>

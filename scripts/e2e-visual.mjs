@@ -89,9 +89,28 @@ async function main() {
   if (images.length === 0) ok('no screenshots on the page');
   else fail('no screenshots on the page', JSON.stringify(images));
 
+  if (await page.$('a[href="/cv/"]')) ok('CV page link on home');
+  else fail('CV page link on home');
+
+  // ---- CV page ----
+  await page.goto(BASE + '/cv/', { waitUntil: 'domcontentloaded' });
+  for (const t of ['Luis Lucas Reche', 'Professional Experience', 'Download PDF']) {
+    if (await textExists(page, t)) ok(`cv text: ${t}`);
+    else fail(`cv text: ${t}`);
+  }
   const cvHref = await page.$eval('a[download]', (a) => a.getAttribute('href'));
-  if (cvHref === '/Luis-Reche-Applied-AI-Engineer-CV.pdf') ok('CV link href');
-  else fail('CV link href', cvHref);
+  if (cvHref === '/Luis-Reche-Applied-AI-Engineer-CV.pdf') ok('CV download href');
+  else fail('CV download href', cvHref);
+  await page.setViewport({ width: 390, height: 844, isMobile: true, deviceScaleFactor: 2 });
+  await page.goto(BASE + '/cv/', { waitUntil: 'domcontentloaded' });
+  const cvOverflowX = await page.evaluate(() => {
+    const de = document.documentElement;
+    return de.scrollWidth > de.clientWidth + 2;
+  });
+  if (!cvOverflowX) ok('cv mobile no horizontal overflow');
+  else fail('cv mobile no horizontal overflow', 'scrollWidth > clientWidth');
+  await shot(page, '09-cv-mobile');
+  await page.setViewport({ width: 1280, height: 900 });
 
   const cvRes = await page.goto(BASE + '/Luis-Reche-Applied-AI-Engineer-CV.pdf', { waitUntil: 'domcontentloaded' });
   if (cvRes && cvRes.ok() && (cvRes.headers()['content-type'] || '').includes('pdf')) {

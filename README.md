@@ -24,6 +24,6 @@ npm run lint
 
 ## Content
 
-- CV source: `cv/luis-reche.html`, printed to two A4 pages with headless Chrome into both PDF paths below
+- CV source: `public/cv/index.html`. It is served as a web page at `/cv/` and printed to two A4 pages with headless Chrome into both PDF paths below. Its screen styles sit in `@media screen`, so they do not reach the PDF
 - CV: `public/Luis-Reche-Applied-AI-Engineer-CV.pdf` (same file also at `public/luis-reche-cv.pdf` so older links keep working)
 - Command palette: `⌘K` / `Ctrl+K`

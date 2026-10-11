@@ -101,6 +101,15 @@ function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): Re
         },
       },
       {
+        id: 'cv-page',
+        label: 'View CV',
+        hint: 'link',
+        keywords: 'resume curriculum',
+        action: () => {
+          window.location.href = CONTACT.cvPage;
+        },
+      },
+      {
         id: 'cv',
         label: 'Download CV',
         hint: 'link',

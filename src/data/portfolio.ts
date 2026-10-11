@@ -55,7 +55,6 @@ export type SocialLink = {
   readonly id: 'github' | 'linkedin' | 'email' | 'cv';
   readonly label: string;
   readonly href: string;
-  readonly download?: string;
 };
 
 export type ShipLine = {
@@ -83,6 +82,8 @@ export const CONTACT = {
   email: 'rechedev@hotmail.com',
   github: 'https://github.com/rechedev9',
   linkedin: 'https://www.linkedin.com/in/luisrecheamado',
+  // The CV as a web page. It is the same HTML file the PDF is printed from.
+  cvPage: '/cv/',
   cv: '/Luis-Reche-Applied-AI-Engineer-CV.pdf',
   cvFileName: 'Luis-Reche-Applied-AI-Engineer-CV.pdf',
 } as const;
@@ -286,7 +287,7 @@ export const SOCIAL_LINKS: readonly SocialLink[] = [
   { id: 'email', label: CONTACT.email, href: `mailto:${CONTACT.email}` },
   { id: 'linkedin', label: 'LinkedIn', href: CONTACT.linkedin },
   { id: 'github', label: 'GitHub', href: CONTACT.github },
-  { id: 'cv', label: 'Download CV', href: CONTACT.cv, download: CONTACT.cvFileName },
+  { id: 'cv', label: 'CV', href: CONTACT.cvPage },
 ];
 
 // In page order: each line is stamped when the reader passes the element that carries its id.

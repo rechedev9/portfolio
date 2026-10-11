@@ -1,20 +1,25 @@
 {
-  "name": "Luis Reche · Applied AI Engineer",
+  "name": "Luis Reche · Applied AI Product Engineer",
   "short_name": "Luis Reche",
-  "description": "Applied AI Engineer. Products and agent tooling, built with AI and a human in the loop.",
+  "description": "Applied AI Product Engineer. Coding agents write the code. I decide what to build and answer for what ships.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#faf8f3",
   "theme_color": "#faf8f3",
   "icons": [
     {
-      "src": "/favicon.svg",
+      "src": "/favicon.svg?v=2",
       "sizes": "any",
       "type": "image/svg+xml"
     },
     {
-      "src": "/apple-touch-icon.png",
-      "sizes": "180x180",
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]

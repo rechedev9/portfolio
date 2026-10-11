@@ -281,7 +281,7 @@ export function Portfolio(): ReactElement {
                       {link.id === 'github' || link.id === 'linkedin' ? (
                         <ExternalLink href={link.href}>{link.label}</ExternalLink>
                       ) : (
-                        <a href={link.href} download={link.download} className={`inline-block ${TAP} ${LINK}`}>
+                        <a href={link.href} className={`inline-block ${TAP} ${LINK}`}>
                           {link.label}
                         </a>
                       )}
@@ -462,8 +462,8 @@ export function Portfolio(): ReactElement {
                       <ExternalLink href={CONTACT.github}>GitHub</ExternalLink>
                     </li>
                     <li>
-                      <a href={CONTACT.cv} download={CONTACT.cvFileName} className={`inline-block ${TAP} ${LINK}`}>
-                        Download CV
+                      <a href={CONTACT.cvPage} className={`inline-block ${TAP} ${LINK}`}>
+                        CV
                       </a>
                     </li>
                   </ul>

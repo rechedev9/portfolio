@@ -42,4 +42,5 @@
 - Email: rechedev@hotmail.com
 - [GitHub](https://github.com/rechedev9)
 - [LinkedIn](https://www.linkedin.com/in/luisrecheamado)
+- [CV](https://luisreche.dev/cv/)
 - [CV (PDF)](https://luisreche.dev/Luis-Reche-Applied-AI-Engineer-CV.pdf)
