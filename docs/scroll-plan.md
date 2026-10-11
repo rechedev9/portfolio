@@ -26,12 +26,12 @@ Hard rules from Luis: the employer appears only in Experience, never in the hero
 
 1. Curiosity: one statement on paper whose weight moves from the agents' sentence to his as the reader scrolls.
 2. Trust: plain rows of dated work, nothing moving but the entry.
-3. Delight: the frame holds, the ClipHub screenshot wipes in, the real figures land, three facts arrive one by one.
-4. Appetite: three more products pass at reading pace, each screenshot drifting inside its frame.
+3. Delight: the frame holds, ClipHub is set at display size, a rule draws down the page and three facts arrive one by one.
+4. Appetite: five more products as plain dated rows, entering in order.
 5. Calm: short lists.
 6. Resolve: the page stops on a ten-line record of everything passed and one address.
 
-**Peak.** "You get to ClipHub, the page holds still, the screenshot slides open and the numbers count up to 130 releases." Beat 3.
+**Peak.** "You get to ClipHub, the page holds still, and three facts about it land one at a time while a line draws beside them." Beat 3.
 
 **Tell-someone.** It's the site where a log in the margin fills in with everything he shipped as you read, and the last page is just that log and his email.
 
@@ -46,7 +46,7 @@ Hard rules from Luis: the employer appears only in Experience, never in the hero
 | Grammar | Chaptered editorial |
 | Nav | No bar. A margin folio that names the current chapter, with the ship log under it. On a phone the log is one line fixed at the bottom |
 | Hero | A title page of type on paper, anchored to the lead edge, no media |
-| Act sequence | pin with kinetic weight, flow, pin with reveal and count, parallax, in/stagger, progress. Six acts |
+| Act sequence | pin with kinetic weight, flow, pin with cues and a drawn rule, in/stagger, in/stagger, progress. Six acts |
 | Close | A colophon: the complete log in small type, then the email as a line of running text |
 | Signature move | The ship log: one line stamped per shipped product as the reader passes it, each line a link back |
 
@@ -58,21 +58,21 @@ Hard rules from Luis: the employer appears only in Experience, never in the hero
 |---|---|---|---|
 | Claim | pin + kinetic | 1.5 | The statement holds while its weight moves, which is the claim itself |
 | Record | flow | n/a | Dated rows are information and should read at the reader's pace |
-| Flagship | reveal (pinned, with cues) | 2.6 | A wipe is a change of state: from reading about work to looking at it |
-| Range | parallax | n/a | Breadth at reading pace; the drift keeps the screenshots alive without a second pin |
+| Flagship | pin + cue | 2.4 | The frame holds so the three facts can arrive one at a time; the rule keeps something moving under the hand |
+| Range | in/stagger | n/a | Plain rows like Experience. With no images there is nothing to drift |
 | Substance | in/stagger | n/a | Lists are information, entered quickly |
 | Commitment | progress | n/a | The log, driven by the whole page's scroll, is complete here |
 
-Peak span is 2.6 against 1.5 for the only other pin. The act before the peak is text only.
+Peak span is 2.4 against 1.7 for the only other pin. The act before the peak is text only. Range and Substance now share a device, which the screenshots used to prevent; they read as one run of lists.
 
 ## 6. Assets
 
 | Beat | Asset |
 |---|---|
-| Flagship | `public/shots/cliphub.webp` (1280x800) |
-| Range | `public/shots/gravity-room.webp`, `piroboom.webp`, `socialpro.webp` (1280x800) |
+| All | None. The page is type only |
 
-No clips, so no encoding.
+
+No clips and no images. Luis asked for the four product screenshots to be removed on 2026-10-11, so `public/shots/` is gone.
 
 ## 7. Verification and feel check
 
@@ -114,3 +114,5 @@ Changed after the check: on a wide screen the margin log now leaves when the col
 - "Shipped" sat over an empty list, and the log left the margin before the record appeared. Both are tied to what is on screen.
 
 Checked: harness clean at 1440x900, 390x844, 844x390 and reduced motion; the print PDF read page by page; the no-timeline layout simulated in Chrome. Still not opened in a real Firefox (headless capture hung on this machine), and `404.html` is only proven once Vercel serves the preview.
+
+**Screenshots removed (2026-10-11).** Luis did not like the product screenshots, so the page is type only now. ClipHub stays the peak as a pinned spread: the name at display size on the left, and on the right three facts that arrive one by one beside an accent hairline that draws down as the reader scrolls. The other five projects are rows in the same form as Experience. Harness clean at 1440x900, 390x844, 844x390 and reduced motion; the visual check passes 31 of 31.

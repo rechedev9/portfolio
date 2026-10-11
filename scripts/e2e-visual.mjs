@@ -86,11 +86,8 @@ async function main() {
   else fail('no stale titles or removed items', 'found a retired title, TickCut, Shenron, /workflow, Berrus or the old headline');
 
   const images = await loadImages(page);
-  if (images.length === 4 && images.every((image) => image.width === 1280 && image.alt)) {
-    ok('project screenshots load', String(images.length));
-  } else {
-    fail('project screenshots load', JSON.stringify(images));
-  }
+  if (images.length === 0) ok('no screenshots on the page');
+  else fail('no screenshots on the page', JSON.stringify(images));
 
   const cvHref = await page.$eval('a[download]', (a) => a.getAttribute('href'));
   if (cvHref === '/Luis-Reche-Applied-AI-Engineer-CV.pdf') ok('CV link href');

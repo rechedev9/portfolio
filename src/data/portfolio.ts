@@ -14,12 +14,6 @@ export type Profile = {
   readonly languages: readonly string[];
 };
 
-type Screenshot = {
-  readonly src: string;
-  readonly alt: string;
-  readonly caption: string;
-};
-
 export type Project = {
   readonly id: string;
   // The ship log line this project stamps when the reader passes it.
@@ -29,7 +23,6 @@ export type Project = {
   readonly pitch: string;
   readonly points: readonly string[];
   readonly links: readonly Link[];
-  readonly image?: Screenshot;
 };
 
 // `ship` names the ship log line this achievement stamps when the reader passes it.
@@ -111,11 +104,6 @@ export const FLAGSHIP: Project = {
     { label: 'Releases', href: 'https://github.com/rechedev9/cliphub/releases' },
     { label: 'Source', href: 'https://github.com/rechedev9/cliphub' },
   ],
-  image: {
-    src: '/shots/cliphub.webp',
-    alt: 'ClipHub home page with a sample video rendered from a CS2 demo',
-    caption: 'cliphub.gravityroom.app',
-  },
 };
 
 export const FLAGSHIP_FIGURES = [
@@ -139,11 +127,6 @@ export const PROJECTS: readonly Project[] = [
       { label: 'Live site', href: 'https://gravityroom.app' },
       { label: 'Source', href: 'https://github.com/rechedev9/gravity-room' },
     ],
-    image: {
-      src: '/shots/gravity-room.webp',
-      alt: 'Gravity Room home page: strength plan hero with a free plan button',
-      caption: 'gravityroom.app',
-    },
   },
   {
     id: 'piroboom',
@@ -160,11 +143,6 @@ export const PROJECTS: readonly Project[] = [
       { label: 'Live site', href: 'https://pirotecniaelche.es' },
       { label: 'Source', href: 'https://github.com/rechedev9/piroelche' },
     ],
-    image: {
-      src: '/shots/piroboom.webp',
-      alt: 'Piroboom home page: fireworks shop hero with catalogue and event buttons',
-      caption: 'pirotecniaelche.es',
-    },
   },
   {
     id: 'socialpro',
@@ -175,11 +153,6 @@ export const PROJECTS: readonly Project[] = [
       'After the launch and the SEO work, monthly Google impressions went from 155 to 18,700 and clicks from 16 to 285 between April and September 2026.',
     ],
     links: [{ label: 'Live site', href: 'https://socialpro.es' }],
-    image: {
-      src: '/shots/socialpro.webp',
-      alt: 'SocialPro home page: a hero that reads Conectamos creadores con marcas',
-      caption: 'socialpro.es',
-    },
   },
   {
     id: 'honey-encryption-proxy',

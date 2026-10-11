@@ -2,7 +2,7 @@
 
 Portfolio for **Luis Reche**, Applied AI Product Engineer.
 
-One scroll-driven page on a flat cream background: a title page with the statement, then experience, projects (with screenshots in `public/shots/`), stack, education and contact. A log in the margin stamps one line per shipped product as the reader passes it. Content lives in `src/data/portfolio.ts`, the scroll kit in `src/scroll/` (copied in, not edited) and the plan behind the page in `docs/scroll-plan.md`.
+One scroll-driven page on a flat cream background: a title page with the statement, then experience, projects, stack, education and contact. A log in the margin stamps one line per shipped product as the reader passes it. Content lives in `src/data/portfolio.ts`, the scroll kit in `src/scroll/` (copied in, not edited) and the plan behind the page in `docs/scroll-plan.md`.
 
 `vite build` prerenders the home page into `index.html`, so the copy is in the HTML before any JavaScript runs.
 
