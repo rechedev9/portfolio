@@ -1,36 +1,40 @@
 # Luis Reche
 
-> Applied AI Engineer in Palma, Spain. I use LLMs and coding agents to ship software faster, with a human in the loop: I review and approve what ships. I build the whole product: backend, web, mobile, desktop and infrastructure.
+> Applied AI Product Engineer in Palma, Spain. Coding agents such as Claude Code and Codex write the code. I decide what to build, design how it works and answer for what ships. Since 2023 I have taken products from a customer's problem to production: web, mobile, desktop, backend and infrastructure.
 
 ## Experience
 
-- Applied AI Engineer at Agentero, Apr 2026 to present. I own marketplace features and critical internal tooling end to end. Infrastructure on Google Cloud, backend services in Go and the marketplace interface in Next.js.
-- Freelance software engineer for SocialPro, 2025 to present. I designed and built socialpro.es, a brand portal and the first internal CRM, and replaced the WordPress site of Piroboom, a client of the agency.
-- Freelance product engineer at RecheDev, 2021 to present. ClipHub, built for SocialPro as their software consultant, and Berrus, another team's browser role-playing game.
+- Applied AI Software Engineer at Agentero, Apr 2026 to present. Built, end to end, the internal app that partly automates month-end commission payments. Maintained and extended the marketplace where independent insurance agents reach carriers, across the Go backend on Google Cloud and the Next.js interface.
+- Freelance Applied AI Product Engineer for SocialPro, 2025 to present. Built and launched socialpro.es and did its SEO: monthly Google impressions went from 155 to 18,700 and clicks from 16 to 285 between April and September 2026. Built the brand portal and the first CRM of the agency. Delivered the complete website of Pirotecnia Elche, a client of the agency.
+- Freelance Applied AI Product Engineer at RecheDev, 2023 to present. Took my own and client products from the first conversation to production. Created ClipHub and Gravity Room. Tuned PCs for competitive players, overclocked their hardware and built custom machines.
+- Pharmacist, 10 years. Decided which products to bring in and how to sell them, managed the database behind multi-warehouse stock and planned purchasing from stock and sales statistics.
 
 ## Projects
 
-- [ClipHub](https://cliphub.gravityroom.app/): send a Counter-Strike 2 demo, get an edited video of the best plays. A Windows app whose Go pipeline parses the demo, records the plays in the game and edits the video.
-- [SocialPro](https://socialpro.es): the website of a gaming and esports agency: creator roster with audience numbers, services, case studies and blog, plus a brand portal and the first internal CRM.
-- [Piroboom](https://pirotecniaelche.es): the website of a fireworks shop in Elche, live in production. Its 82 MB PDF catalogue is now a searchable 16-page web reader.
-- [Gravity Room](https://gravityroom.app): a free strength training tracker that calculates the weights for your next session, on web and mobile.
-- [Honey Encryption Proxy](https://github.com/rechedev9/honey-encryption-proxy): local proxy in front of Claude Code that swaps proprietary names for stand-ins before a request leaves the machine.
-- [riskforge](https://github.com/rechedev9/riskforge): insurance quote gateway in Go with Terraform for Cloud Run, Spanner and Pub/Sub. A portfolio project.
+- [ClipHub](https://cliphub.gravityroom.app/): my own Windows app that turns a Counter-Strike 2 demo into an edited video of the player's best plays. 130+ releases, 100+ users. Shared with SocialPro.
+- [Gravity Room](https://gravityroom.app): my own free, open source strength training app for web and mobile. 18 programs, with the weights, sets and reps of every session calculated.
+- [Piroboom](https://pirotecniaelche.es): the complete website of Pirotecnia Elche, a fireworks shop in Elche. Its 82 MB PDF catalogue is now a 16-page online reader with search and zoom.
+- [SocialPro](https://socialpro.es): the public website, the brand portal and the first internal CRM of a gaming and esports agency.
+- [Honey Encryption Proxy](https://github.com/rechedev9/honey-encryption-proxy): a local proxy for Claude Code that swaps proprietary names in a prompt's code for stand-ins and restores them in the reply.
+- [riskforge](https://github.com/rechedev9/riskforge): an insurance quote gateway that asks several carriers for a price in parallel. A study project.
 
 ## Stack
 
-- AI and agents: Claude Code, Codex, MCP servers, Skills and plugins, Multi-agent workflows, Human approval gates
+- Product: Product scoping, UX and interface design, SEO, Release management
+- AI and agents: Claude Code, Codex, MCP servers, Skills and plugins, Multi-agent workflows, Review of agent output
 - Backend: Go, Bun, Elysia, PostgreSQL, Drizzle, SQLite
 - Web: TypeScript, React, Next.js, TanStack, Astro, Tailwind CSS
 - Mobile and desktop: Expo, React Native, Electron, Rust core with UniFFI
 - Infrastructure: Docker, GCP, Terraform, Vercel, GitHub Actions
+- Hardware: PC builds, Overclocking, Latency tuning
 
 ## Education and languages
 
 - Higher technical diploma in web application development (DAW), 2024 to 2026
+- Anthropic: Claude Code in Action, 2026
 - Harvard CS50: Introduction to Computer Science, 2024
 - University of Helsinki: Java Programming MOOC, 2024
-- Anthropic: Claude Code in Action, 2026
+- Degree in Pharmacy, UNED, 2016
 - Spanish (native), Catalan (native), English (advanced)
 
 ## Contact

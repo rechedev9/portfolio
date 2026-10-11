@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ReactElement, KeyboardEvent as ReactKeyboardEvent } from 'react';
-import { CONTACT, PROFILE, PROJECTS } from '../data/portfolio';
+import { CONTACT, FLAGSHIP, PROFILE, PROJECTS } from '../data/portfolio';
 import { toggleTheme } from '../theme';
 
 type PaletteItem = {
@@ -70,7 +70,7 @@ function CommandPaletteDialog({ onClose }: { readonly onClose: () => void }): Re
         keywords: 'email',
         action: () => scrollToId('contact'),
       },
-      ...PROJECTS.flatMap((project) =>
+      ...[FLAGSHIP, ...PROJECTS].flatMap((project) =>
         project.links.map((link) => ({
           id: `${project.name}-${link.label}`,
           label: `${project.name}: ${link.label}`,

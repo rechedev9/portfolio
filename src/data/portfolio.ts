@@ -3,17 +3,12 @@ export type Link = {
   readonly href: string;
 };
 
-type TextSegment = {
-  readonly text: string;
-  readonly strong?: boolean;
-};
-
 export type Profile = {
   readonly name: string;
   readonly fullName: string;
   readonly title: string;
-  readonly headline: string;
-  readonly subhead: readonly TextSegment[];
+  readonly statement: { readonly agents: string; readonly mine: string };
+  readonly subhead: string;
   readonly location: string;
   readonly site: string;
   readonly languages: readonly string[];
@@ -22,24 +17,35 @@ export type Profile = {
 type Screenshot = {
   readonly src: string;
   readonly alt: string;
+  readonly caption: string;
 };
 
 export type Project = {
+  readonly id: string;
+  // The ship log line this project stamps when the reader passes it.
+  readonly ship?: string;
   readonly name: string;
   readonly kind: string;
-  readonly client?: Link;
   readonly pitch: string;
+  readonly points: readonly string[];
   readonly links: readonly Link[];
   readonly image?: Screenshot;
 };
 
+// `ship` names the ship log line this achievement stamps when the reader passes it.
+type Highlight = {
+  readonly text: string;
+  readonly ship?: string;
+};
+
 export type Job = {
+  readonly id: string;
   readonly title: string;
-  readonly company: string;
+  readonly company?: string;
   readonly url?: string;
   readonly period: string;
-  readonly description: string;
-  readonly highlights: readonly string[];
+  readonly description?: string;
+  readonly highlights: readonly Highlight[];
 };
 
 export type SkillGroup = {
@@ -59,18 +65,22 @@ export type SocialLink = {
   readonly download?: string;
 };
 
+export type ShipLine = {
+  readonly id: string;
+  readonly label: string;
+  readonly detail: string;
+};
+
 export const PROFILE: Profile = {
   name: 'Luis Reche',
   fullName: 'Luis Lucas Reche',
-  title: 'Applied AI Engineer',
-  headline: 'I use AI to ship faster, with a human in the loop.',
-  subhead: [
-    { text: 'LLMs and coding agents speed up the work. ' },
-    { text: 'I review and approve what ships.', strong: true },
-    { text: ' I build ' },
-    { text: 'the whole product', strong: true },
-    { text: ': backend, web, mobile, desktop and infrastructure.' },
-  ],
+  title: 'Applied AI Product Engineer',
+  statement: {
+    agents: 'Coding agents write the code.',
+    mine: 'I decide what to build and answer for what ships.',
+  },
+  subhead:
+    'Since 2023 I have taken products from a customer’s problem to production: web, mobile, desktop, backend and infrastructure.',
   location: 'Palma, Spain',
   site: 'luisreche.dev',
   languages: ['Spanish (native)', 'Catalan (native)', 'English (advanced)'],
@@ -84,109 +94,190 @@ export const CONTACT = {
   cvFileName: 'Luis-Reche-Applied-AI-Engineer-CV.pdf',
 } as const;
 
+export const FLAGSHIP: Project = {
+  id: 'cliphub',
+  ship: 'cliphub',
+  name: 'ClipHub',
+  kind: 'Own product · Windows desktop',
+  pitch:
+    'A Windows app that turns a Counter-Strike 2 demo into an edited video of the player’s best plays. It is my own product, and I share it with SocialPro.',
+  points: [
+    'Replaced manual recording and editing with one flow: the player loads a demo and gets the video.',
+    'Shipped 130+ releases through in-app updates. The app also clips streams and follows FACEIT players.',
+    'Ran the whole pipeline on the player’s PC, so making a video uploads nothing.',
+  ],
+  links: [
+    { label: 'Live site', href: 'https://cliphub.gravityroom.app/' },
+    { label: 'Releases', href: 'https://github.com/rechedev9/cliphub/releases' },
+    { label: 'Source', href: 'https://github.com/rechedev9/cliphub' },
+  ],
+  image: {
+    src: '/shots/cliphub.webp',
+    alt: 'ClipHub home page with a sample video rendered from a CS2 demo',
+    caption: 'cliphub.gravityroom.app',
+  },
+};
+
+export const FLAGSHIP_FIGURES = [
+  { value: 130, label: 'releases' },
+  { value: 100, label: 'users' },
+] as const;
+
 export const PROJECTS: readonly Project[] = [
   {
-    name: 'ClipHub',
-    kind: '100+ users · 130 releases',
-    client: { label: 'SocialPro', href: 'https://socialpro.es' },
-    pitch:
-      'Send a Counter-Strike 2 demo, get an edited video of the best plays. A Windows app I built for SocialPro as their software consultant. Its Go pipeline parses the demo, records the plays in the game and edits the video.',
-    links: [
-      { label: 'Live site', href: 'https://cliphub.gravityroom.app/' },
-      { label: 'Releases', href: 'https://github.com/rechedev9/cliphub/releases' },
-      { label: 'Source', href: 'https://github.com/rechedev9/cliphub' },
-    ],
-    image: { src: '/shots/cliphub.webp', alt: 'ClipHub home page with a sample video rendered from a CS2 demo' },
-  },
-  {
-    name: 'SocialPro',
-    kind: 'Client · gaming and esports agency',
-    pitch:
-      'The agency’s website: creator roster with audience numbers, services, case studies and blog. I designed and built it, plus a brand portal and the first internal CRM, on Next.js and PostgreSQL.',
-    links: [{ label: 'Live site', href: 'https://socialpro.es' }],
-    image: { src: '/shots/socialpro.webp', alt: 'SocialPro home page: a hero that reads Conectamos creadores con marcas' },
-  },
-  {
-    name: 'Piroboom',
-    kind: 'Client · fireworks shop in Elche',
-    pitch:
-      'The shop’s only catalogue was an 82 MB PDF. It is now a searchable 16-page web reader that loads page by page on a phone. I designed and built the site from first sketch to production, with 110 unit and 42 browser tests.',
-    links: [
-      { label: 'Live site', href: 'https://pirotecniaelche.es' },
-      { label: 'Source', href: 'https://github.com/rechedev9/piroelche' },
-    ],
-    image: { src: '/shots/piroboom.webp', alt: 'Piroboom home page: fireworks shop hero with catalogue and event buttons' },
-  },
-  {
+    id: 'gravity-room',
+    ship: 'gravity-room',
     name: 'Gravity Room',
     kind: 'Own product · web and mobile',
     pitch:
-      'A free strength training tracker that calculates the weights for your next session. React and TanStack on the web, Expo on mobile, Elysia and Postgres behind them.',
+      'A free, open source strength training app. It has 18 programs and calculates the weights, sets and reps of every session.',
+    points: [
+      'One progression engine for web and mobile raises the load after a completed session and adjusts the plan after a failed one.',
+      'A guest mode lets people try it without an account. It is in Spanish and English, has no ads and lets users export their data.',
+    ],
     links: [
       { label: 'Live site', href: 'https://gravityroom.app' },
       { label: 'Source', href: 'https://github.com/rechedev9/gravity-room' },
     ],
-    image: { src: '/shots/gravity-room.webp', alt: 'Gravity Room home page: strength plan hero with a free plan button' },
+    image: {
+      src: '/shots/gravity-room.webp',
+      alt: 'Gravity Room home page: strength plan hero with a free plan button',
+      caption: 'gravityroom.app',
+    },
   },
   {
-    name: 'Honey Encryption Proxy',
-    kind: 'Developer tool · LLM privacy',
+    id: 'piroboom',
+    ship: 'piroboom',
+    name: 'Piroboom',
+    kind: 'Client · Pirotecnia Elche',
     pitch:
-      'A local proxy in front of Claude Code. It swaps proprietary names in source code for format-preserving stand-ins before a request leaves the machine, then restores them in the streamed reply.',
+      'The complete website of a fireworks shop in Elche, from the design and the content to the server it runs on.',
+    points: [
+      'Fireworks cannot be shipped in Spain, so the site is built around store visits and enquiries for weddings, gender reveals and other celebrations.',
+      'An 82 MB PDF catalogue became a 16-page online reader with search and zoom.',
+    ],
+    links: [
+      { label: 'Live site', href: 'https://pirotecniaelche.es' },
+      { label: 'Source', href: 'https://github.com/rechedev9/piroelche' },
+    ],
+    image: {
+      src: '/shots/piroboom.webp',
+      alt: 'Piroboom home page: fireworks shop hero with catalogue and event buttons',
+      caption: 'pirotecniaelche.es',
+    },
+  },
+  {
+    id: 'socialpro',
+    name: 'SocialPro',
+    kind: 'Client · gaming and esports agency',
+    pitch: 'The public website, the brand portal and the first internal CRM of a gaming and esports agency.',
+    points: [
+      'After the launch and the SEO work, monthly Google impressions went from 155 to 18,700 and clicks from 16 to 285 between April and September 2026.',
+    ],
+    links: [{ label: 'Live site', href: 'https://socialpro.es' }],
+    image: {
+      src: '/shots/socialpro.webp',
+      alt: 'SocialPro home page: a hero that reads Conectamos creadores con marcas',
+      caption: 'socialpro.es',
+    },
+  },
+  {
+    id: 'honey-encryption-proxy',
+    name: 'Honey Encryption Proxy',
+    kind: 'Developer tool',
+    pitch:
+      'A local proxy for Claude Code that swaps proprietary names in a prompt’s code for stand-ins and restores them in the reply.',
+    points: [],
     links: [{ label: 'Source', href: 'https://github.com/rechedev9/honey-encryption-proxy' }],
   },
   {
+    id: 'riskforge',
     name: 'riskforge',
-    kind: 'Portfolio · insurance systems',
+    kind: 'Study project',
     pitch:
-      'A quote gateway I built to study the insurance domain: parallel carrier calls in Go, and Terraform for Cloud Run, Spanner and Pub/Sub. A portfolio project, not a production system.',
+      'An insurance quote gateway that asks several carriers for a price in parallel. I built it to learn the insurance domain.',
+    points: [],
     links: [{ label: 'Source', href: 'https://github.com/rechedev9/riskforge' }],
   },
 ];
 
 export const EXPERIENCE: readonly Job[] = [
   {
-    title: 'Applied AI Engineer',
+    id: 'agentero',
+    title: 'Applied AI Software Engineer',
     company: 'Agentero',
     url: 'https://www.agentero.com',
     period: 'Apr 2026 to present',
-    description:
-      'US network that gives independent insurance agents carrier access and the software to run an agency. I work from Spain.',
+    description: 'US network of independent insurance agents. Remote from Spain.',
     highlights: [
-      'I own marketplace features and critical internal tooling end to end.',
-      'Infrastructure on Google Cloud, backend services in Go and the marketplace interface in Next.js.',
+      {
+        text: 'Built, end to end, the internal app that partly automates month-end commission payments, a critical process for the network.',
+        ship: 'commissions',
+      },
+      {
+        text: 'Maintained and extended the marketplace where those agents reach insurance carriers, across the Go backend on Google Cloud and the Next.js interface.',
+      },
     ],
   },
   {
-    title: 'Freelance software engineer',
+    id: 'socialpro',
+    title: 'Freelance Applied AI Product Engineer',
     company: 'SocialPro',
     url: 'https://socialpro.es',
     period: '2025 to present',
-    description:
-      'Gaming and esports agency that connects creators with brands in Spain and Latin America. I started before their website launched.',
+    description: 'Gaming and esports agency that connects creators with brands.',
     highlights: [
-      'socialpro.es: I designed and built the website, a brand portal and the first internal CRM.',
-      'Piroboom: I replaced the WordPress site of a fireworks shop in Elche, a client of the agency. Live in production.',
+      {
+        text: 'Built and launched socialpro.es and did its SEO. Monthly Google impressions went from 155 to 18,700 and clicks from 16 to 285 between April and September 2026.',
+        ship: 'socialpro',
+      },
+      {
+        text: 'Built the brand portal and the first CRM of the agency, as its whole product team.',
+        ship: 'portal',
+      },
+      {
+        text: 'Delivered the complete website of Pirotecnia Elche, a fireworks shop and client of the agency, from design to deployment.',
+      },
     ],
   },
   {
-    title: 'Freelance product engineer',
+    id: 'rechedev',
+    title: 'Freelance Applied AI Product Engineer',
     company: 'RecheDev',
     url: 'https://rechedev.cloud',
-    period: '2021 to present',
-    description:
-      'My freelance practice. It began with PC optimisation for competitive gaming. Now I take products from first meeting to production.',
+    period: '2023 to present',
+    description: 'My one-person product practice.',
     highlights: [
-      'ClipHub: a CS2 demo-to-video app with 100+ users. I built it for SocialPro as their software consultant.',
-      'Berrus: Discord notifications, faster SQL and an Electron desktop client for another team’s browser role-playing game.',
+      { text: 'Took my own and client products from the first conversation to production.' },
+      {
+        text: 'Created ClipHub and Gravity Room, my own products. ClipHub has 100+ users after 130+ releases.',
+      },
+      {
+        text: 'Tuned PCs for competitive players to lower latency, overclocked their hardware and built custom machines.',
+      },
+    ],
+  },
+  {
+    id: 'pharmacist',
+    title: 'Pharmacist',
+    period: '10 years',
+    highlights: [
+      { text: 'Decided which products to bring in and when, and how to sell them to different customer profiles.' },
+      {
+        text: 'Managed the database behind multi-warehouse stock and planned purchasing from stock and sales statistics.',
+      },
     ],
   },
 ];
 
 export const SKILLS: readonly SkillGroup[] = [
   {
+    category: 'Product',
+    items: ['Product scoping', 'UX and interface design', 'SEO', 'Release management'],
+  },
+  {
     category: 'AI and agents',
-    items: ['Claude Code', 'Codex', 'MCP servers', 'Skills and plugins', 'Multi-agent workflows', 'Human approval gates'],
+    items: ['Claude Code', 'Codex', 'MCP servers', 'Skills and plugins', 'Multi-agent workflows', 'Review of agent output'],
   },
   {
     category: 'Backend',
@@ -204,13 +295,18 @@ export const SKILLS: readonly SkillGroup[] = [
     category: 'Infrastructure',
     items: ['Docker', 'GCP', 'Terraform', 'Vercel', 'GitHub Actions'],
   },
+  {
+    category: 'Hardware',
+    items: ['PC builds', 'Overclocking', 'Latency tuning'],
+  },
 ];
 
 export const EDUCATION: readonly Education[] = [
   { title: 'Higher technical diploma in web application development (DAW)', period: '2024 to 2026' },
+  { title: 'Anthropic: Claude Code in Action', period: '2026' },
   { title: 'Harvard CS50: Introduction to Computer Science', period: '2024' },
   { title: 'University of Helsinki: Java Programming MOOC', period: '2024' },
-  { title: 'Anthropic: Claude Code in Action', period: '2026' },
+  { title: 'Degree in Pharmacy, UNED', period: '2016' },
 ];
 
 export const SOCIAL_LINKS: readonly SocialLink[] = [
@@ -218,4 +314,14 @@ export const SOCIAL_LINKS: readonly SocialLink[] = [
   { id: 'linkedin', label: 'LinkedIn', href: CONTACT.linkedin },
   { id: 'github', label: 'GitHub', href: CONTACT.github },
   { id: 'cv', label: 'Download CV', href: CONTACT.cv, download: CONTACT.cvFileName },
+];
+
+// In page order: each line is stamped when the reader passes the element that carries its id.
+export const SHIP_LOG: readonly ShipLine[] = [
+  { id: 'commissions', label: 'Commission payments app', detail: 'Internal tool, 2026' },
+  { id: 'socialpro', label: 'socialpro.es', detail: '155 to 18,700 impressions a month' },
+  { id: 'portal', label: 'Brand portal and CRM', detail: 'For SocialPro' },
+  { id: 'cliphub', label: 'ClipHub', detail: '130+ releases, 100+ users' },
+  { id: 'gravity-room', label: 'Gravity Room', detail: '18 programs, web and mobile' },
+  { id: 'piroboom', label: 'Piroboom', detail: '82 MB PDF to a 16-page reader' },
 ];

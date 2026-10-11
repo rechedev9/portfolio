@@ -1,8 +1,7 @@
 import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Portfolio } from './Portfolio';
-import { NotFound } from './NotFound';
+import { createRoot, hydrateRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import { App } from './App';
 import { applyThemeColor, isDark } from './theme';
 import './index.css';
 
@@ -11,13 +10,18 @@ if (!root) throw new Error('Root element not found');
 
 applyThemeColor(isDark());
 
-createRoot(root).render(
+const app = (
   <StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Portfolio />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <App />
     </BrowserRouter>
-  </StrictMode>,
+  </StrictMode>
 );
+
+// The build prerenders the home page into #root. Every other path gets the same file, so it renders from scratch.
+if (root.hasChildNodes() && window.location.pathname === '/') {
+  hydrateRoot(root, app);
+} else {
+  root.replaceChildren();
+  createRoot(root).render(app);
+}
