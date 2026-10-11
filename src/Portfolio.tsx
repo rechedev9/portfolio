@@ -19,7 +19,6 @@ import type { Project } from './data/portfolio';
 import { actRange } from './scroll/act-context';
 import { Cue } from './scroll/cue';
 import { InView } from './scroll/in-view';
-import { Reveal } from './scroll/reveal';
 import { ScrollAct } from './scroll/scroll-act';
 import { Stage } from './scroll/stage';
 import { isDark, subscribeTheme, toggleTheme } from './theme';
@@ -36,11 +35,6 @@ const NEW_TAB = ' (opens in a new tab)';
 const PAGE = 'mx-auto w-full max-w-[84rem] px-6 sm:px-10';
 
 const ROW = 'grid gap-2 md:grid-cols-[12rem_1fr] md:gap-8';
-
-const SMALL = 'text-[0.8125rem] leading-snug';
-
-// Every screenshot is captured at the same viewport, so one intrinsic size fits all.
-const SHOT = { width: 1280, height: 800 } as const;
 
 const MINE_WORDS = PROFILE.statement.mine.split(' ');
 
@@ -202,78 +196,12 @@ function ProjectLinks({ project, className }: { readonly project: Project; reado
   );
 }
 
-function ProjectText({ project }: { readonly project: Project }): ReactElement {
-  return (
-    <div className="max-w-xl">
-      <h3 className="text-2xl leading-tight font-semibold tracking-tight">{project.name}</h3>
-      <p className="mt-1 text-neutral-ink">{project.kind}</p>
-      <p className="mt-4 text-pretty">{project.pitch}</p>
-      {project.points.length > 0 ? (
-        <ul className="mt-3 space-y-2">
-          {project.points.map((point) => (
-            <li key={point} className="text-pretty text-neutral-ink">
-              {point}
-            </li>
-          ))}
-        </ul>
-      ) : null}
-      <ProjectLinks project={project} className="mt-4" />
-    </div>
-  );
-}
-
-type ShotProps = {
-  readonly project: Project;
-  readonly drift?: boolean;
-  // Crops to 16:9 below the wide layout, where the pinned stage has to fit one phone screen.
-  readonly crop?: boolean;
-};
-
-function Shot({ project, drift = false, crop = false }: ShotProps): ReactElement | null {
-  if (!project.image) return null;
-  return (
-    <figure>
-      <div className="shot-frame rounded-lg border border-border">
-        <img
-          src={project.image.src}
-          alt={project.image.alt}
-          width={SHOT.width}
-          height={SHOT.height}
-          loading="lazy"
-          decoding="async"
-          className={`h-auto w-full ${drift ? 'shot-drift' : ''} ${crop ? 'aspect-video object-cover object-top lg:aspect-auto' : ''}`}
-        />
-      </div>
-      <figcaption className={`mt-3 text-neutral-ink ${SMALL}`}>{project.image.caption}</figcaption>
-    </figure>
-  );
-}
-
-// A spread: the screenshot in its own column with a caption, the text beside it. `flip` puts the text first.
-function Spread({ project, flip }: { readonly project: Project; readonly flip: boolean }): ReactElement {
-  return (
-    <article
-      id={project.ship ? `ship-${project.ship}` : undefined}
-      data-ship={project.ship}
-      className="grid scroll-mt-24 items-center gap-8 lg:grid-cols-12 lg:gap-12"
-    >
-      <div className={`lg:col-span-7 ${flip ? 'lg:order-2' : ''}`}>
-        <Shot project={project} drift />
-      </div>
-      <div className="lg:col-span-5">
-        <ProjectText project={project} />
-      </div>
-    </article>
-  );
-}
-
 export function Portfolio(): ReactElement {
   const [paletteOpen, setPaletteOpen] = useState(false);
   const dark = useSyncExternalStore(subscribeTheme, isDark, () => false);
   const { stamped, chapter, closing } = useReadingPosition();
   useStageFit();
   const year = new Date().getFullYear();
-  const [gravityRoom, piroboom, socialPro, ...smaller] = PROJECTS;
 
   useEffect(() => {
     document.title = `${PROFILE.name} · ${PROFILE.title}`;
@@ -407,20 +335,20 @@ export function Portfolio(): ReactElement {
             </Chapter>
 
             <Chapter id="projects" title="Projects">
-              {/* The peak. The frame holds, the screenshot wipes open, then three facts arrive one by one. */}
-              <ScrollAct device="pin" span={2.6}>
-                {/* The log links here: late enough in the pin that the screenshot is open and the facts are lit. */}
+              {/* The peak. The frame holds while a rule draws down the page and three facts arrive one by one. */}
+              <ScrollAct device="pin" span={2.4}>
+                {/* The log links here: late enough in the pin that every fact is lit. */}
                 <span id={`ship-${FLAGSHIP.id}`} aria-hidden="true" className="peak-anchor" />
                 <Stage className="flex items-start pt-8 lg:items-center lg:pt-0">
                   <article
                     data-ship={FLAGSHIP.ship}
-                    className="grid w-full gap-x-12 gap-y-5 pb-14 lg:grid-cols-12 lg:items-center lg:gap-y-6 lg:pb-0"
+                    className="grid w-full gap-x-16 gap-y-8 pb-14 lg:grid-cols-12 lg:items-center lg:pb-0"
                   >
                     <div className="lg:col-span-5">
-                      <h3 className="text-3xl leading-none font-semibold tracking-[-0.04em] sm:text-5xl">{FLAGSHIP.name}</h3>
-                      <p className="stage-wide mt-3 text-neutral-ink">{FLAGSHIP.kind}</p>
-                      <p className="mt-4 max-w-md text-pretty">{FLAGSHIP.pitch}</p>
-                      <dl className="peak-optional mt-5 flex gap-10">
+                      <h3 className="flagship-name font-semibold">{FLAGSHIP.name}</h3>
+                      <p className="mt-3 text-neutral-ink">{FLAGSHIP.kind}</p>
+                      <p className="mt-5 max-w-md text-pretty">{FLAGSHIP.pitch}</p>
+                      <dl className="mt-6 flex gap-10">
                         {FLAGSHIP_FIGURES.map((figure) => (
                           <div key={figure.label} className="flex flex-col-reverse">
                             <dt className="text-neutral-ink">{figure.label}</dt>
@@ -430,46 +358,57 @@ export function Portfolio(): ReactElement {
                           </div>
                         ))}
                       </dl>
+                      <ProjectLinks project={FLAGSHIP} className="mt-6" />
                     </div>
-                    <div className="lg:col-span-7 lg:col-start-6 lg:row-span-2 lg:row-start-1">
-                      <Reveal dir="up" from={0.03} to={0.4}>
-                        <Shot project={FLAGSHIP} crop />
-                      </Reveal>
-                    </div>
-                    <div className="lg:col-span-5">
-                      <ul className="max-w-md space-y-2">
+                    <div className="relative pl-6 lg:col-span-6 lg:col-start-7 lg:pl-8">
+                      <span aria-hidden="true" className="facts-rule" />
+                      <ol className="space-y-6 lg:space-y-8">
                         {FLAGSHIP.points.map((point, index) => (
                           <li key={point}>
-                            <Cue as="p" from={0.44 + index * 0.16} className="text-pretty">
+                            <Cue
+                              as="p"
+                              from={0.1 + index * 0.28}
+                              className="text-lg leading-snug font-medium tracking-tight text-pretty lg:text-2xl lg:leading-snug"
+                            >
                               {point}
                             </Cue>
                           </li>
                         ))}
-                      </ul>
-                      <ProjectLinks project={FLAGSHIP} className="peak-optional mt-5" />
+                      </ol>
                     </div>
                   </article>
                 </Stage>
               </ScrollAct>
 
-              <ScrollAct device="flow" className="space-y-24 pt-8 sm:space-y-32">
-                <Spread project={gravityRoom} flip={false} />
-                <Spread project={piroboom} flip />
-                <div className="grid gap-x-12 gap-y-14 lg:grid-cols-12">
-                  <article className="lg:col-span-6">
-                    <Shot project={socialPro} drift />
-                    <div className="mt-6">
-                      <ProjectText project={socialPro} />
-                    </div>
-                  </article>
-                  <div className="space-y-14 lg:col-span-5 lg:col-start-8">
-                    {smaller.map((project) => (
-                      <article key={project.id}>
-                        <ProjectText project={project} />
-                      </article>
-                    ))}
-                  </div>
-                </div>
+              <ScrollAct device="flow" className="pt-16 sm:pt-24">
+                <InView as="ul" stagger={70} className="space-y-14">
+                  {PROJECTS.map((project) => (
+                    <li
+                      key={project.id}
+                      id={project.ship ? `ship-${project.ship}` : undefined}
+                      data-ship={project.ship}
+                      className={`scroll-mt-28 ${ROW}`}
+                    >
+                      <div>
+                        <h3 className="font-medium">{project.name}</h3>
+                        <p className="text-neutral-ink">{project.kind}</p>
+                      </div>
+                      <div className="max-w-xl">
+                        <p className="text-pretty">{project.pitch}</p>
+                        {project.points.length > 0 ? (
+                          <ul className="mt-3 space-y-2">
+                            {project.points.map((point) => (
+                              <li key={point} className="text-pretty text-neutral-ink">
+                                {point}
+                              </li>
+                            ))}
+                          </ul>
+                        ) : null}
+                        <ProjectLinks project={project} className="mt-3" />
+                      </div>
+                    </li>
+                  ))}
+                </InView>
               </ScrollAct>
             </Chapter>
 
