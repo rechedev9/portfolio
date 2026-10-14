@@ -29,7 +29,6 @@ function onMove(ev: PointerEvent): void {
   if (ev.pointerType === "touch") return;
   const vh = window.innerHeight;
   for (const e of entries.values()) {
-    // One rect per element until the page scrolls or resizes, not one per move.
     const r = e.rect ?? e.el.getBoundingClientRect();
     e.rect = r;
     const cx = ev.clientX - (r.left + r.width / 2);
@@ -65,7 +64,6 @@ function onLeave(): void {
   if (!frame) frame = requestAnimationFrame(tick);
 }
 
-// Lerp toward the target so the motion carries weight; stop once it lands.
 function tick(): void {
   frame = 0;
   let busy = false;

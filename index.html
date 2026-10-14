@@ -5,12 +5,6 @@
     <script>
       (function () {
         try {
-          document.documentElement.classList.add('sc-js');
-          // sc-js hides content until the app reveals it. If the app has not started after 3 s (a blocked or
-          // failed bundle), drop the class so nothing stays hidden.
-          setTimeout(function () {
-            if (!document.documentElement.hasAttribute('data-app')) document.documentElement.classList.remove('sc-js');
-          }, 3000);
           if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
         } catch (e) {}
       })();
@@ -21,7 +15,6 @@
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Primary Meta Tags -->
     <title>Luis Reche · Applied AI Product Engineer</title>
     <meta name="title" content="Luis Reche · Applied AI Product Engineer" />
     <meta name="description" content="Luis Reche, Applied AI Product Engineer in Palma, Spain. Coding agents write the code. I decide what to build and answer for what ships." />
@@ -29,7 +22,6 @@
     <meta name="keywords" content="Luis Reche, Applied AI Product Engineer, product engineer, coding agents, ClipHub, Gravity Room, portfolio, Spain" />
     <link rel="canonical" href="https://luisreche.dev/" />
 
-    <!-- Open Graph / Facebook / LinkedIn / WhatsApp -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://luisreche.dev/" />
     <meta property="og:title" content="Luis Reche · Applied AI Product Engineer" />
@@ -40,22 +32,18 @@
     <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content="Luis Reche" />
 
-    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://luisreche.dev/" />
     <meta name="twitter:title" content="Luis Reche · Applied AI Product Engineer" />
     <meta name="twitter:description" content="Luis Reche, Applied AI Product Engineer in Palma, Spain. Coding agents write the code. I decide what to build and answer for what ships." />
     <meta name="twitter:image" content="https://luisreche.dev/og-image.png" />
 
-    <!-- Theme -->
     <meta name="theme-color" content="#faf8f3" />
 
-    <!-- Fonts (single request for all families) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet" />
 
-    <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",

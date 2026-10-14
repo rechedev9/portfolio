@@ -1,5 +1,14 @@
+import { useSyncExternalStore } from 'react';
 import type { ReactElement } from 'react';
-import { SHIP_LOG } from '../data/portfolio';
+import { SHIP_LOG_LINES } from '../data/portfolio';
+
+function subscribeMounted(): () => void {
+  return () => {};
+}
+
+function useMounted(): boolean {
+  return useSyncExternalStore(subscribeMounted, () => true, () => false);
+}
 
 const FOCUS = 'rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent';
 
@@ -32,6 +41,7 @@ type FolioProps = LogProps & {
 // The margin folio: the current chapter, and one line per shipped product the reader has passed.
 // At the colophon the log leaves the margin, because the page itself now carries the complete record.
 export function MarginFolio({ stamped, chapter, closing }: FolioProps): ReactElement {
+  const logLive = useMounted();
   return (
     <aside className="hidden lg:block print:hidden">
       <div className="sticky top-0 flex h-svh flex-col py-10">
@@ -40,13 +50,14 @@ export function MarginFolio({ stamped, chapter, closing }: FolioProps): ReactEle
         </p>
         <nav
           aria-label="Shipped"
+          data-log-live={logLive ? '' : undefined}
           className={`mt-12 text-[0.8125rem] leading-snug transition-[opacity,visibility] duration-300 ease-out ${closing ? 'invisible opacity-0' : ''}`}
         >
           <p className="ship-label text-neutral-ink" data-empty={stamped.size === 0 ? '' : undefined}>
             Shipped
           </p>
           <ol className="mt-4 space-y-3.5">
-            {SHIP_LOG.map((line) => (
+            {SHIP_LOG_LINES.map((line) => (
               <li key={line.id} className="ship-line" data-stamped={stamped.has(line.id) ? '' : undefined}>
                 <a href={`#ship-${line.id}`} className={`group flex gap-2 ${FOCUS}`}>
                   <Tick />
@@ -68,7 +79,7 @@ export function MarginFolio({ stamped, chapter, closing }: FolioProps): ReactEle
 
 // On a phone there is no margin, so the log is one line at the bottom: the last product passed.
 export function PhoneLog({ stamped, hidden }: LogProps & { readonly hidden: boolean }): ReactElement {
-  const last = SHIP_LOG.filter((line) => stamped.has(line.id)).at(-1);
+  const last = SHIP_LOG_LINES.filter((line) => stamped.has(line.id)).at(-1);
   const shown = last !== undefined && !hidden;
   return (
     <div
@@ -94,7 +105,7 @@ export function PhoneLog({ stamped, hidden }: LogProps & { readonly hidden: bool
 export function ShipRecord(): ReactElement {
   return (
     <ol data-ship-record="" className="max-w-xl border-t border-border text-[0.8125rem] leading-snug">
-      {SHIP_LOG.map((line) => (
+      {SHIP_LOG_LINES.map((line) => (
         <li key={line.id} className="grid grid-cols-[1fr_auto] gap-x-6 border-b border-border py-2.5">
           <a
             href={`#ship-${line.id}`}
