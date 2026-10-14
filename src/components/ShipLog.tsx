@@ -38,8 +38,6 @@ type FolioProps = LogProps & {
   readonly closing: boolean;
 };
 
-// The margin folio: the current chapter, and one line per shipped product the reader has passed.
-// At the colophon the log leaves the margin, because the page itself now carries the complete record.
 export function MarginFolio({ stamped, chapter, closing }: FolioProps): ReactElement {
   const logLive = useMounted();
   return (
@@ -77,7 +75,6 @@ export function MarginFolio({ stamped, chapter, closing }: FolioProps): ReactEle
   );
 }
 
-// On a phone there is no margin, so the log is one line at the bottom: the last product passed.
 export function PhoneLog({ stamped, hidden }: LogProps & { readonly hidden: boolean }): ReactElement {
   const last = SHIP_LOG_LINES.filter((line) => stamped.has(line.id)).at(-1);
   const shown = last !== undefined && !hidden;
@@ -101,7 +98,6 @@ export function PhoneLog({ stamped, hidden }: LogProps & { readonly hidden: bool
   );
 }
 
-// The colophon: the same log, complete, as the record the page closes on.
 export function ShipRecord(): ReactElement {
   return (
     <ol data-ship-record="" className="max-w-xl border-t border-border text-[0.8125rem] leading-snug">

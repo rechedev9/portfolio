@@ -88,7 +88,6 @@ export const CONTACT = {
   email: 'rechedev@hotmail.com',
   github: 'https://github.com/rechedev9',
   linkedin: 'https://www.linkedin.com/in/luisrecheamado',
-  // The CV as a web page. It is the same HTML file the PDF is printed from.
   cvPage: '/cv/',
   cv: '/Luis-Reche-Applied-AI-Engineer-CV.pdf',
   cvFileName: 'Luis-Reche-Applied-AI-Engineer-CV.pdf',
