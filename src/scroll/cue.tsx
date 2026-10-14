@@ -41,8 +41,6 @@ function cueWindow(props: CueProps): CueWindow {
       hold: true,
     };
   }
-  // Ramps are fractions of the window; 0.3 each leaves a 40% plateau at full
-  // strength, so a heading is never a triangle the reader has to catch.
   const to = Math.max(clamp01(props.to), from + 0.001);
   const w = to - from;
   const rIn = clamp01(props.rampIn ?? 0.3);
@@ -54,21 +52,11 @@ function pct(v: number): string {
   return `${(v * 100).toFixed(2)}%`;
 }
 
-function keyframes(options: { name: string; w: CueWindow; kinetic: boolean }): string {
-  const { name, w, kinetic } = options;
-  const lift = "translate: 0 calc(2.4vh * var(--sc-rise, 1));";
-  const hidden = kinetic
-    ? "opacity: 1; visibility: hidden;"
-    : `opacity: 0; visibility: hidden; ${lift}`;
-  const shown = kinetic
-    ? "opacity: 1; visibility: visible;"
-    : "opacity: 1; visibility: visible; translate: 0 0;";
+function cueFrames(options: { name: string; w: CueWindow; hidden: string; shown: string; gone: string }): string {
+  const { name, w, hidden, shown, gone } = options;
   if (w.hold) {
     return `@keyframes ${name}{0%{${hidden}animation-timing-function:${SMOOTH}}100%{${shown}}}`;
   }
-  const gone = kinetic
-    ? "opacity: 0; visibility: hidden;"
-    : `opacity: 0; visibility: hidden; ${lift}`;
   // rampIn 0 greets: lit before the range. Otherwise ramps stay off 0% and
   // 100%, where a second keyframe on that offset would light the fill.
   const rampIn = (w.inEnd - w.from) / (w.to - w.from);
@@ -97,8 +85,6 @@ interface Unit {
   order: number;
 }
 
-// A group is a word: one unit in words mode, its characters in chars mode, so
-// a line never breaks inside a word. Whitespace groups have no units.
 interface Group {
   key: string;
   text: string;
@@ -124,7 +110,6 @@ function splitGroups(children: React.ReactNode, mode: "words" | "chars"): Group[
         else word(mode === "words" ? [part] : [...part]);
       }
     } else if (child !== null && child !== undefined && typeof child !== "boolean") {
-      // Inline markup stays one unit, so links and emphasis survive the split.
       word([child]);
     }
   });
@@ -143,12 +128,20 @@ export function Cue(props: CueProps): React.JSX.Element {
     animationRange: range,
     "--sc-rise": rise,
   };
-  // Where the cue is fully lit, for the keyboard focus rescue.
   const peak = w.hold ? Math.min(w.inEnd, 1) : (w.inEnd + w.outStart) / 2;
   const classes = ["sc-cue", kinetic ? "sc-cue--kin" : undefined, className]
     .filter((c) => c !== undefined)
     .join(" ");
-  const css = keyframes({ name: id, w, kinetic: kinetic !== undefined });
+  const fadeHidden = kinetic ? "opacity: 1; visibility: hidden;" : "opacity: 0; visibility: hidden;";
+  const fadeShown = "opacity: 1; visibility: visible;";
+  const fadeGone = kinetic ? "opacity: 0; visibility: hidden;" : "opacity: 0; visibility: hidden;";
+  const lift = "translate: 0 calc(2.4vh * var(--sc-rise, 1));";
+  const riseId = `${id}-rise`;
+  const css =
+    cueFrames({ name: id, w, hidden: fadeHidden, shown: fadeShown, gone: fadeGone }) +
+    (kinetic === undefined
+      ? cueFrames({ name: riseId, w, hidden: lift, shown: "translate: 0 0;", gone: lift })
+      : "");
   let body: React.ReactNode = children;
   if (kinetic) {
     const groups = splitGroups(children, kinetic);
@@ -159,7 +152,6 @@ export function Cue(props: CueProps): React.JSX.Element {
     const ramp = w.inEnd - w.from;
     const unitStyle = (order: number): React.CSSProperties => {
       if (ramp <= 0) return { animationName: "none" };
-      // Units start across 62% of the ramp and all land at its end.
       const start = w.from + ramp * (order / n) * KINETIC_SPREAD;
       const end = Math.min(w.inEnd, start + ramp * (1 - KINETIC_SPREAD));
       return { animationRange: actRange({ pinned: act.pinned, from: start, to: end }) };
@@ -185,6 +177,13 @@ export function Cue(props: CueProps): React.JSX.Element {
           )}
         </span>
       </>
+    );
+  } else {
+    const riseStyle: StyleWithVars = { animationName: riseId, animationRange: range };
+    body = (
+      <span className="sc-cue__rise" style={riseStyle}>
+        {children}
+      </span>
     );
   }
   return (
