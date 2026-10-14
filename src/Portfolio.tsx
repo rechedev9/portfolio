@@ -11,7 +11,7 @@ import {
   FLAGSHIP_FIGURES,
   PROFILE,
   PROJECTS,
-  SHIP_LOG,
+  SHIP_LOG_LINES,
   SKILLS,
   SOCIAL_LINKS,
 } from './data/portfolio';
@@ -52,9 +52,7 @@ type ReadingPosition = {
 
 // Drives the ship log: which products the reader has passed, the chapter under their eyes, and whether the colophon is on screen.
 function useReadingPosition(): ReadingPosition {
-  // How many lines of the log are stamped. The log is in page order, so passing one line stamps every line
-  // before it: a reader who jumps down the page has still passed them.
-  const [reach, setReach] = useState(0);
+  const [stampedThrough, setStampedThrough] = useState(0);
   const [chapter, setChapter] = useState('Experience');
   const [closing, setClosing] = useState(false);
 
@@ -63,9 +61,9 @@ function useReadingPosition(): ReadingPosition {
       (entries) => {
         const furthest = entries
           .filter((entry) => entry.isIntersecting || entry.boundingClientRect.top < 0)
-          .map((entry) => SHIP_LOG.findIndex((line) => line.id === entry.target.getAttribute('data-ship')))
+          .map((entry) => SHIP_LOG_LINES.findIndex((line) => line.id === entry.target.getAttribute('data-ship')))
           .reduce((max, index) => Math.max(max, index + 1), 0);
-        setReach((previous) => Math.max(previous, furthest));
+        setStampedThrough((previous) => Math.max(previous, furthest));
       },
       { rootMargin: '0px 0px -35% 0px' },
     );
@@ -91,7 +89,7 @@ function useReadingPosition(): ReadingPosition {
         if (!last) return;
         const reached = last.isIntersecting || last.boundingClientRect.top < 0;
         setClosing(reached);
-        if (reached) setReach(SHIP_LOG.length);
+        if (reached) setStampedThrough(SHIP_LOG_LINES.length);
       },
       { rootMargin: '0px 0px -12% 0px' },
     );
@@ -105,7 +103,10 @@ function useReadingPosition(): ReadingPosition {
     };
   }, []);
 
-  const stamped = useMemo(() => new Set(SHIP_LOG.slice(0, reach).map((line) => line.id)), [reach]);
+  const stamped = useMemo(
+    () => new Set(SHIP_LOG_LINES.slice(0, stampedThrough).map((line) => line.id)),
+    [stampedThrough],
+  );
   return { stamped, chapter, closing };
 }
 
@@ -319,8 +320,8 @@ export function Portfolio(): ReactElement {
                           {job.highlights.map((highlight) => (
                             <li
                               key={highlight.text}
-                              id={highlight.ship ? `ship-${highlight.ship}` : undefined}
-                              data-ship={highlight.ship}
+                              id={highlight.shipLogId ? `ship-${highlight.shipLogId}` : undefined}
+                              data-ship={highlight.shipLogId}
                               className="scroll-mt-28 text-pretty"
                             >
                               {highlight.text}
@@ -341,7 +342,7 @@ export function Portfolio(): ReactElement {
                 <span id={`ship-${FLAGSHIP.id}`} aria-hidden="true" className="peak-anchor" />
                 <Stage className="flex items-start pt-8 lg:items-center lg:pt-0">
                   <article
-                    data-ship={FLAGSHIP.ship}
+                    data-ship={FLAGSHIP.shipLogId}
                     className="grid w-full gap-x-16 gap-y-8 pb-14 lg:grid-cols-12 lg:items-center lg:pb-0"
                   >
                     <div className="lg:col-span-5">
@@ -385,8 +386,8 @@ export function Portfolio(): ReactElement {
                   {PROJECTS.map((project) => (
                     <li
                       key={project.id}
-                      id={project.ship ? `ship-${project.ship}` : undefined}
-                      data-ship={project.ship}
+                      id={project.shipLogId ? `ship-${project.shipLogId}` : undefined}
+                      data-ship={project.shipLogId}
                       className={`scroll-mt-28 ${ROW}`}
                     >
                       <div>

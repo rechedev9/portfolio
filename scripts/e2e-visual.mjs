@@ -50,10 +50,8 @@ async function main() {
 
   const page = await browser.newPage();
   page.setDefaultTimeout(15000);
-  // Full-page captures should show the settled page, not the hero mid-animation.
   await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
 
-  // ---- Home light ----
   await page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
   await page.waitForSelector('h1');
 
@@ -92,7 +90,6 @@ async function main() {
   if (await page.$('a[href="/cv/"]')) ok('CV page link on home');
   else fail('CV page link on home');
 
-  // ---- CV page ----
   await page.goto(BASE + '/cv/', { waitUntil: 'domcontentloaded' });
   for (const t of ['Luis Lucas Reche', 'Professional Experience', 'Download PDF']) {
     if (await textExists(page, t)) ok(`cv text: ${t}`);
@@ -122,7 +119,6 @@ async function main() {
 
   await shot(page, '01-home-light');
 
-  // Dark mode toggle
   await page.click('button[aria-label="Switch to dark mode"]');
   await page.waitForFunction(() => document.documentElement.classList.contains('dark'));
   const isDark = await page.evaluate(() => document.documentElement.classList.contains('dark'));
@@ -130,13 +126,11 @@ async function main() {
   else fail('dark mode class');
   await shot(page, '02-home-dark');
 
-  // Command palette open via button
   await page.click('button[aria-keyshortcuts]');
   await page.waitForSelector('[role="dialog"][aria-label="Command palette"]');
   ok('command palette opens');
   await shot(page, '03-command-palette');
 
-  // Filter without leaving the page
   await page.type('input[aria-label="Search commands"]', 'ClipHub');
   const filtered = await page.$$eval('[role="option"]', (opts) =>
     opts.map((o) => (o.textContent || '').trim()),
@@ -152,7 +146,6 @@ async function main() {
   });
   ok('command palette closes Esc');
 
-  // Re-open palette with keyboard
   await page.keyboard.down('Control');
   await page.keyboard.press('k');
   await page.keyboard.up('Control');
@@ -164,7 +157,6 @@ async function main() {
   });
   ok('command palette Ctrl+K close');
 
-  // Mobile viewport home
   await page.setViewport({ width: 390, height: 844, isMobile: true, deviceScaleFactor: 2 });
   await page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
   await page.waitForSelector('h1');
@@ -176,7 +168,6 @@ async function main() {
   else fail('mobile no horizontal overflow', 'scrollWidth > clientWidth');
   await shot(page, '08-home-mobile');
 
-  // External project links present
   await page.setViewport({ width: 1280, height: 900 });
   await page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
   const hrefs = await page.$$eval('a[href]', (as) => as.map((a) => a.href));
@@ -195,7 +186,6 @@ async function main() {
     }
   }
 
-  // Console errors — attach before load
   const consoleErrors = [];
   const onPageError = (e) => consoleErrors.push(e.message);
   const onConsole = (msg) => {
@@ -207,7 +197,6 @@ async function main() {
   await new Promise((r) => setTimeout(r, 1500));
   page.off('pageerror', onPageError);
   page.off('console', onConsole);
-  // Filter noisy chrome extension / favicon noise
   const realErrors = consoleErrors.filter(
     (e) => !/favicon|Download the React DevTools/i.test(e),
   );

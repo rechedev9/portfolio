@@ -42,7 +42,26 @@ const RETRY_AFTER_MS = 8000;
 const STUCK_SEEK_MS = 700;
 const REVEAL_TIMEOUT_MS = 2500;
 const PRIME_RELEASE_MS = 2000;
+const SEEK_EPSILON = 0.0005;
 const GESTURES = ["touchstart", "touchend", "pointerdown", "click", "scroll"] as const;
+
+function seekMediaTime(video: HTMLVideoElement, time: number): boolean {
+  if (video.readyState < HTMLMediaElement.HAVE_METADATA) return false;
+  video.currentTime = time;
+  return true;
+}
+
+function revealOnPaintedFrame(video: HTMLVideoElement, reveal: () => void): void {
+  if (typeof video.requestVideoFrameCallback === "function") {
+    video.requestVideoFrameCallback(() => reveal());
+    return;
+  }
+  if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+    reveal();
+    return;
+  }
+  video.addEventListener("loadeddata", reveal, { once: true });
+}
 
 const clips = new Set<Clip>();
 let vh = 0;
@@ -137,8 +156,6 @@ function layoutAll(): void {
       c.startY = c.top;
       c.endY = c.top + Math.max(c.height - vh, 1);
     } else {
-      // The stage is on screen one viewport before the pin and one after it, so
-      // the clip plays across that whole life, clamped to scroll that exists.
       c.startY = c.top - Math.min(vh, c.top);
       c.endY = Math.min(c.top + c.height, maxY);
     }
@@ -196,13 +213,14 @@ function attachClip(c: Clip, blob: Blob): void {
   c.onMeta = (): void => {
     c.ready = true;
     readAll();
-    c.cur = c.target;
-    // Force one seek even at target 0: the reveal waits for 'seeked', and the
-    // loop only seeks when the time has to change.
-    try {
-      v.currentTime = Math.max(c.target * (v.duration || 1), 0.001);
-    } catch {
-      /* decoder not ready for a seek yet; the loop retries */
+    const duration = v.duration;
+    const known = Number.isFinite(duration) && duration > 0;
+    const t = known ? clamp(c.target, { lo: 0, hi: 0.999 }) * duration : v.currentTime;
+    if (!known || Math.abs(v.currentTime - t) <= SEEK_EPSILON) {
+      c.cur = c.target;
+      revealOnPaintedFrame(v, reveal);
+    } else if (seekMediaTime(v, t)) {
+      c.cur = c.target;
     }
     primeClip(c);
     startTick();
@@ -241,11 +259,7 @@ function tick(): void {
       if (!c.stuckAt) c.stuckAt = now;
       else if (now - c.stuckAt > STUCK_SEEK_MS) {
         c.stuckAt = now;
-        try {
-          v.currentTime = v.currentTime + 0.001;
-        } catch {
-          /* retried next frame */
-        }
+        seekMediaTime(v, v.currentTime + 0.001);
       }
       busy = true;
       continue;
@@ -259,13 +273,7 @@ function tick(): void {
     busy = true;
     c.cur += delta * c.lerp;
     const t = clamp(c.cur, { lo: 0, hi: 0.999 }) * (v.duration || 1);
-    if (Math.abs(v.currentTime - t) > eps) {
-      try {
-        v.currentTime = t;
-      } catch {
-        /* retried next frame */
-      }
-    }
+    if (Math.abs(v.currentTime - t) > eps) seekMediaTime(v, t);
   }
   if (busy) tickFrame = requestAnimationFrame(tick);
 }
@@ -282,15 +290,13 @@ function primeClip(c: Clip): void {
       c.primed = true;
       primedCount += 1;
     }
-    try {
-      v.pause();
-      // A primed decoder still shows the stale frame until a different time is
-      // asked for, and the deadband will not ask if it already matches.
-      const dur = v.duration || 1;
+    v.pause();
+    // A primed decoder still shows the stale frame until a different time is
+    // asked for, and the deadband will not ask if it already matches.
+    const dur = v.duration;
+    if (Number.isFinite(dur) && dur > 0) {
       const at = clamp(c.cur, { lo: 0, hi: 0.999 }) * dur + 0.05;
-      v.currentTime = clamp(at, { lo: 0, hi: dur * 0.999 });
-    } catch {
-      /* harmless: the next scroll seeks anyway */
+      seekMediaTime(v, clamp(at, { lo: 0, hi: dur * 0.999 }));
     }
     startTick();
   };
@@ -389,8 +395,6 @@ export function relayoutClips(): void {
   if (wired) scheduleLayout();
 }
 
-// Acts call this so the harness can read the page when no clip registers
-// (reduced motion, or a page without a scrub act).
 export function ensureVerifyBridge(): void {
   if (typeof window !== "undefined" && window.scrollPageBridge === undefined)
     installVerifyBridge(clipStates);

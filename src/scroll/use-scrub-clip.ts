@@ -24,7 +24,6 @@ export function useScrubClip(options: ScrubClipOptions): ScrubClipHandle {
     const video = videoRef.current;
     const actEl = video?.closest<HTMLElement>("[data-sc-act]");
     if (!video || !actEl) return undefined;
-    // Under reduced motion the clip is never fetched; the poster is the frame.
     if (prefersReducedMotion()) return undefined;
     return registerClip({
       video,

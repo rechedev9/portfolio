@@ -16,8 +16,6 @@ function onFocusIn(e: FocusEvent): void {
     el.scrollIntoView({ block: "center", inline: "nearest", behavior: "instant" });
     return;
   }
-  // In a pinned act the element sits still while the page scrolls, so centring
-  // it would scroll out of the cue; go to the act progress where it peaks.
   const r = act.getBoundingClientRect();
   const top = r.top + window.scrollY;
   const travel = Math.max(r.height - window.innerHeight, 1);

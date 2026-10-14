@@ -20,7 +20,6 @@ export function useAct(): ActInfo {
   return useContext(ActContext);
 }
 
-// A pinned act's travel is its `contain` range; a flow act's life is `cover`.
 export function rangeName(pinned: boolean): "contain" | "cover" {
   return pinned ? "contain" : "cover";
 }

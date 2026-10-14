@@ -10,7 +10,6 @@ export interface CountUpProps {
   className?: string;
 }
 
-// Renders the final value so crawlers index it; the tween starts in view.
 export function CountUp(props: CountUpProps): React.JSX.Element {
   const { from, to, decimals = 0, durationMs = 1400, locale = "en", className } = props;
   const ref = useRef<HTMLSpanElement | null>(null);
