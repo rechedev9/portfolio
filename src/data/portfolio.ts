@@ -14,10 +14,17 @@ export type Profile = {
   readonly languages: readonly string[];
 };
 
+export type ShipLogId =
+  | 'commissions'
+  | 'socialpro'
+  | 'portal'
+  | 'cliphub'
+  | 'gravity-room'
+  | 'piroboom';
+
 export type Project = {
   readonly id: string;
-  // The ship log line this project stamps when the reader passes it.
-  readonly ship?: string;
+  readonly shipLogId?: ShipLogId;
   readonly name: string;
   readonly kind: string;
   readonly pitch: string;
@@ -25,10 +32,9 @@ export type Project = {
   readonly links: readonly Link[];
 };
 
-// `ship` names the ship log line this achievement stamps when the reader passes it.
 type Highlight = {
   readonly text: string;
-  readonly ship?: string;
+  readonly shipLogId?: ShipLogId;
 };
 
 export type Job = {
@@ -58,7 +64,7 @@ export type SocialLink = {
 };
 
 export type ShipLine = {
-  readonly id: string;
+  readonly id: ShipLogId;
   readonly label: string;
   readonly detail: string;
 };
@@ -90,7 +96,7 @@ export const CONTACT = {
 
 export const FLAGSHIP: Project = {
   id: 'cliphub',
-  ship: 'cliphub',
+  shipLogId: 'cliphub',
   name: 'ClipHub',
   kind: 'Own product · Windows desktop',
   pitch:
@@ -115,7 +121,7 @@ export const FLAGSHIP_FIGURES = [
 export const PROJECTS: readonly Project[] = [
   {
     id: 'gravity-room',
-    ship: 'gravity-room',
+    shipLogId: 'gravity-room',
     name: 'Gravity Room',
     kind: 'Own product · web and mobile',
     pitch:
@@ -131,7 +137,7 @@ export const PROJECTS: readonly Project[] = [
   },
   {
     id: 'piroboom',
-    ship: 'piroboom',
+    shipLogId: 'piroboom',
     name: 'Piroboom',
     kind: 'Client · Pirotecnia Elche',
     pitch:
@@ -186,7 +192,7 @@ export const EXPERIENCE: readonly Job[] = [
     highlights: [
       {
         text: 'Built, end to end, the internal app that partly automates month-end commission payments, a critical process for the network.',
-        ship: 'commissions',
+        shipLogId: 'commissions',
       },
       {
         text: 'Maintained and extended the marketplace where those agents reach insurance carriers, across the Go backend on Google Cloud and the Next.js interface.',
@@ -203,11 +209,11 @@ export const EXPERIENCE: readonly Job[] = [
     highlights: [
       {
         text: 'Built and launched socialpro.es and did its SEO. Monthly Google impressions went from 155 to 18,700 and clicks from 16 to 285 between April and September 2026.',
-        ship: 'socialpro',
+        shipLogId: 'socialpro',
       },
       {
         text: 'Built the brand portal and the first CRM of the agency, as its whole product team.',
-        ship: 'portal',
+        shipLogId: 'portal',
       },
       {
         text: 'Delivered the complete website of Pirotecnia Elche, a fireworks shop and client of the agency, from design to deployment.',
@@ -290,8 +296,7 @@ export const SOCIAL_LINKS: readonly SocialLink[] = [
   { id: 'cv', label: 'CV', href: CONTACT.cvPage },
 ];
 
-// In page order: each line is stamped when the reader passes the element that carries its id.
-export const SHIP_LOG: readonly ShipLine[] = [
+export const SHIP_LOG_LINES: readonly ShipLine[] = [
   { id: 'commissions', label: 'Commission payments app', detail: 'Internal tool, 2026' },
   { id: 'socialpro', label: 'socialpro.es', detail: '155 to 18,700 impressions a month' },
   { id: 'portal', label: 'Brand portal and CRM', detail: 'For SocialPro' },
