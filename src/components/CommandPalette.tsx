@@ -21,8 +21,6 @@ function scrollToId(id: string): void {
 }
 
 export function CommandPalette({ open, onClose }: CommandPaletteProps): ReactElement | null {
-  // Mounting the dialog only while open gives it fresh query/activeIndex state
-  // on every open, so no reset-in-effect is needed.
   if (!open) return null;
   return <CommandPaletteDialog onClose={onClose} />;
 }
