@@ -46,8 +46,6 @@ function readActs(): ActState[] {
   return out;
 }
 
-// The harness settles on this before every screenshot: a frame taken mid-lerp
-// is a frame the page never holds.
 export function installVerifyBridge(clipSource: () => ClipState[]): void {
   if (typeof window === "undefined") return;
   window.scrollPageBridge = { version: "1", clips: clipSource, acts: readActs };

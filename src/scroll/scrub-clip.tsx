@@ -11,7 +11,6 @@ export interface ScrubClipProps {
   alt?: string;
 }
 
-// The poster holds the frame until a real video frame has painted.
 export function ScrubClip(props: ScrubClipProps): React.JSX.Element {
   const { src, srcMobile, poster, posterMobile, posterWidth, posterHeight, lerp, alt = "" } = props;
   const { videoRef, painted } = useScrubClip({ src, srcMobile, lerp });
