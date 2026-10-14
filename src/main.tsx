@@ -8,9 +8,6 @@ import './index.css';
 const root = document.getElementById('root');
 if (!root) throw new Error('Root element not found');
 
-// Tells the inline script in index.html that the app started, so it keeps the reveal states.
-document.documentElement.setAttribute('data-app', '');
-
 applyThemeColor(isDark());
 
 const app = (

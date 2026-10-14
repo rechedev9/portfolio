@@ -36,7 +36,6 @@ export function ScrollAct(props: ScrollActProps): React.JSX.Element {
     () => ({ device, pinned, dwell, clipMap }),
     [device, pinned, dwell, clipMap],
   );
-  // Below 1.2 viewports a pin has a few pixels of travel and every cue snaps.
   const style: StyleWithVars = { "--sc-span": pinned ? Math.max(span, MIN_SPAN) : 0 };
   if (ground !== undefined) style["--sc-ground"] = ground;
   const classes = ["sc-act", pinned ? "sc-act--pinned" : "sc-act--flow", className]

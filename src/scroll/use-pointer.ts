@@ -1,7 +1,6 @@
 import { useCallback } from "react";
 import { registerPointer } from "./pointer";
 
-// Tilt and magnet both write `transform`; put them on separate elements.
 export function usePointerTilt(options: { maxDeg: number }): React.RefCallback<HTMLElement> {
   const { maxDeg } = options;
   return useCallback<React.RefCallback<HTMLElement>>(

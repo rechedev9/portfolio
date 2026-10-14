@@ -7,8 +7,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 const ROOT = '<div id="root"></div>'
 
-// Renders the home page into index.html at build time, so crawlers and readers without JavaScript get the copy.
-// Also writes 404.html, the same app with an empty root, so a wrong URL never shows the home page first.
+// Writes 404.html, the same app with an empty root, so a wrong URL never shows the home page first.
 function prerenderHome(): Plugin {
   let shell = ''
   let outDir = 'dist'
