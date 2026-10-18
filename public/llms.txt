@@ -1,12 +1,12 @@
 # Luis Reche
 
-> Applied AI Product Engineer in Palma, Spain. Coding agents such as Claude Code and Codex write the code. I decide what to build, design how it works and answer for what ships. Since 2023 I have taken products from a customer's problem to production: web, mobile, desktop, backend and infrastructure.
+> Applied AI Engineer in Palma, Spain. Coding agents such as Claude Code and Codex write the code. I decide what to build, design how it works and answer for what ships. Since 2023 I have taken products from a customer's problem to production: web, mobile, desktop, backend and infrastructure.
 
 ## Experience
 
 - Applied AI Software Engineer at Agentero, Apr 2026 to present. Built, end to end, the internal app that partly automates month-end commission payments. Maintained and extended the marketplace where independent insurance agents reach carriers, across the Go backend on Google Cloud and the Next.js interface.
-- Freelance Applied AI Product Engineer for SocialPro, 2025 to present. Built and launched socialpro.es and did its SEO: monthly Google impressions went from 155 to 18,700 and clicks from 16 to 285 between April and September 2026. Built the brand portal and the first CRM of the agency. Delivered the complete website of Pirotecnia Elche, a client of the agency.
-- Freelance Applied AI Product Engineer at RecheDev, 2023 to present. Took my own and client products from the first conversation to production. Created ClipHub and Gravity Room. Tuned PCs for competitive players, overclocked their hardware and built custom machines.
+- Freelance Applied AI Engineer for SocialPro, 2025 to present. Built and launched socialpro.es and did its SEO: monthly Google impressions went from 155 to 18,700 and clicks from 16 to 285 between April and September 2026. Built the brand portal and the first CRM of the agency. Delivered the complete website of Pirotecnia Elche, a client of the agency.
+- Freelance Applied AI Engineer at RecheDev, 2023 to present. Took my own and client products from the first conversation to production. Created ClipHub and Gravity Room. Tuned PCs for competitive players, overclocked their hardware and built custom machines.
 - Pharmacist, 10 years. Decided which products to bring in and how to sell them, managed the database behind multi-warehouse stock and planned purchasing from stock and sales statistics.
 
 ## Projects
