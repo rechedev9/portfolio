@@ -101,7 +101,7 @@ export const FLAGSHIP: Project = {
     'Ran the whole pipeline on the player’s PC, so making a video uploads nothing.',
   ],
   links: [
-    { label: 'Live site', href: 'https://cliphub.gravityroom.app/' },
+    { label: 'Live site', href: 'https://cliphub.rechedev.cloud/' },
     { label: 'Releases', href: 'https://github.com/rechedev9/cliphub/releases' },
     { label: 'Source', href: 'https://github.com/rechedev9/cliphub' },
   ],
