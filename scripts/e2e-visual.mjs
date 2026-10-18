@@ -185,7 +185,7 @@ async function main() {
   else fail('no links to removed pages', removedHrefs.join(', '));
   for (const need of [
     'https://www.agentero.com/',
-    'https://cliphub.gravityroom.app/',
+    'https://cliphub.rechedev.cloud/',
     'https://gravityroom.app/',
   ]) {
     if (hrefs.some((h) => h.startsWith(need) || h === need || h.includes(need.replace(/\/$/, '')))) {
