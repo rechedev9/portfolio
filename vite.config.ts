@@ -7,6 +7,31 @@ import tailwindcss from '@tailwindcss/vite'
 
 const ROOT = '<div id="root"></div>'
 
+function notFoundDocument(html: string): string {
+  const stripped = html.replace(/\n\s*<link rel="canonical" href="[^"]*" \/>/, '')
+  const titled = stripped
+    .replace(/<title>[^<]*<\/title>/, '<title>404 | Luis Reche</title>')
+    .replace(/<meta name="title" content="[^"]*" \/>/, '<meta name="title" content="404 | Luis Reche" />')
+    .replace(/<meta name="description" content="[^"]*" \/>/, '<meta name="description" content="This page does not exist." />')
+  const robots = '<meta name="robots" content="noindex" />'
+  const withRobots = titled.includes('name="robots"')
+    ? titled
+    : titled.replace(
+        '<meta name="viewport" content="width=device-width, initial-scale=1.0" />',
+        `<meta name="viewport" content="width=device-width, initial-scale=1.0" />\n    ${robots}`,
+      )
+  if (
+    !withRobots.includes(ROOT) ||
+    withRobots.includes('rel="canonical"') ||
+    !withRobots.includes('<meta name="robots" content="noindex" />') ||
+    !withRobots.includes('<title>404 | Luis Reche</title>') ||
+    !withRobots.includes('<meta name="description" content="This page does not exist." />')
+  ) {
+    throw new Error('prerender-home: 404.html head was not rewritten')
+  }
+  return withRobots
+}
+
 // Renders the home page into index.html at build time, so crawlers and readers without JavaScript get the copy.
 // Also writes 404.html, the same app with an empty root, so a wrong URL never shows the home page first.
 function prerenderHome(): Plugin {
@@ -19,7 +44,7 @@ function prerenderHome(): Plugin {
       outDir = path.resolve(config.root, config.build.outDir)
     },
     async closeBundle() {
-      if (shell !== '') await writeFile(path.join(outDir, '404.html'), shell)
+      if (shell !== '') await writeFile(path.join(outDir, '404.html'), notFoundDocument(shell))
     },
     transformIndexHtml: {
       order: 'post',
