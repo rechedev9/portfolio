@@ -66,7 +66,7 @@ export type ShipLine = {
 export const PROFILE: Profile = {
   name: 'Luis Reche',
   fullName: 'Luis Lucas Reche',
-  title: 'Applied AI Product Engineer',
+  title: 'Applied AI Engineer',
   statement: {
     agents: 'Coding agents write the code.',
     mine: 'I decide what to build and answer for what ships.',
@@ -195,7 +195,7 @@ export const EXPERIENCE: readonly Job[] = [
   },
   {
     id: 'socialpro',
-    title: 'Freelance Applied AI Product Engineer',
+    title: 'Freelance Applied AI Engineer',
     company: 'SocialPro',
     url: 'https://socialpro.es',
     period: '2025 to present',
@@ -216,7 +216,7 @@ export const EXPERIENCE: readonly Job[] = [
   },
   {
     id: 'rechedev',
-    title: 'Freelance Applied AI Product Engineer',
+    title: 'Freelance Applied AI Engineer',
     company: 'RecheDev',
     url: 'https://rechedev.cloud',
     period: '2023 to present',
