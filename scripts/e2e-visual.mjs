@@ -58,12 +58,12 @@ async function main() {
   await page.waitForSelector('h1');
 
   const title = await page.title();
-  if (title.includes('Applied AI Product Engineer') && !title.includes('Backend')) ok('document title', title);
+  if (title.includes('Applied AI Engineer') && !title.includes('Product') && !title.includes('Backend')) ok('document title', title);
   else fail('document title', title);
 
   for (const t of [
     'Luis Reche',
-    'Applied AI Product Engineer',
+    'Applied AI Engineer',
     'I decide what to build and answer for what ships.',
     'ClipHub',
     'SocialPro',
@@ -82,7 +82,7 @@ async function main() {
   }
 
   const banned = await page.evaluate(() => document.body.innerText);
-  if (!/Backend Engineer|Full Stack Engineer|TickCut|Shenron|\/workflow|Berrus|human in the loop/i.test(banned)) ok('no stale titles or removed items');
+  if (!/Applied AI Product Engineer|Backend Engineer|Full Stack Engineer|TickCut|Shenron|\/workflow|Berrus|human in the loop/i.test(banned)) ok('no stale titles or removed items');
   else fail('no stale titles or removed items', 'found a retired title, TickCut, Shenron, /workflow, Berrus or the old headline');
 
   const images = await loadImages(page);
@@ -185,7 +185,7 @@ async function main() {
   else fail('no links to removed pages', removedHrefs.join(', '));
   for (const need of [
     'https://www.agentero.com/',
-    'https://cliphub.gravityroom.app/',
+    'https://cliphub.rechedev.cloud/',
     'https://gravityroom.app/',
   ]) {
     if (hrefs.some((h) => h.startsWith(need) || h === need || h.includes(need.replace(/\/$/, '')))) {

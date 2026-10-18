@@ -1,6 +1,6 @@
 # luisreche.dev
 
-Portfolio for **Luis Reche**, Applied AI Product Engineer.
+Portfolio for **Luis Reche**, Applied AI Engineer.
 
 One scroll-driven page on a flat cream background: a title page with the statement, then experience, projects, stack, education and contact. A log in the margin stamps one line per shipped product as the reader passes it. Content lives in `src/data/portfolio.ts`, the scroll kit in `src/scroll/` (copied in, not edited) and the plan behind the page in `docs/scroll-plan.md`.
 
