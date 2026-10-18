@@ -11,7 +11,7 @@
 
 ## Projects
 
-- [ClipHub](https://cliphub.gravityroom.app/): my own Windows app that turns a Counter-Strike 2 demo into an edited video of the player's best plays. 130+ releases, 100+ users. Shared with SocialPro.
+- [ClipHub](https://cliphub.rechedev.cloud/): my own Windows app that turns a Counter-Strike 2 demo into an edited video of the player's best plays. 130+ releases, 100+ users. Shared with SocialPro.
 - [Gravity Room](https://gravityroom.app): my own free, open source strength training app for web and mobile. 18 programs, with the weights, sets and reps of every session calculated.
 - [Piroboom](https://pirotecniaelche.es): the complete website of Pirotecnia Elche, a fireworks shop in Elche. Its 82 MB PDF catalogue is now a 16-page online reader with search and zoom.
 - [SocialPro](https://socialpro.es): the public website, the brand portal and the first internal CRM of a gaming and esports agency.
