@@ -7,7 +7,7 @@ export type Profile = {
   readonly name: string;
   readonly fullName: string;
   readonly title: string;
-  readonly statement: { readonly agents: string; readonly mine: string };
+  readonly statement: { readonly lead: string; readonly mine: string };
   readonly subhead: string;
   readonly location: string;
   readonly site: string;
@@ -68,11 +68,11 @@ export const PROFILE: Profile = {
   fullName: 'Luis Lucas Reche',
   title: 'Applied AI Engineer',
   statement: {
-    agents: 'Coding agents write the code.',
-    mine: 'I decide what to build and answer for what ships.',
+    lead: 'Customers bring the problem.',
+    mine: 'I ship the AI system that solves it and keep it running.',
   },
   subhead:
-    'Since 2023 I have taken products from a customer’s problem to production: web, mobile, desktop, backend and infrastructure.',
+    'Since 2021 I have taken products from a customer’s problem to production: LLM features, web, mobile, desktop, backend and infrastructure. Coding agents do most of the typing; I design the system, review every change and own what ships.',
   location: 'Palma, Spain',
   site: 'luisreche.dev',
   languages: ['Spanish (native)', 'Catalan (native)', 'English (advanced)'],
@@ -101,7 +101,6 @@ export const FLAGSHIP: Project = {
     'Ran the whole pipeline on the player’s PC, so making a video uploads nothing.',
   ],
   links: [
-    { label: 'Live site', href: 'https://cliphub.rechedev.cloud/' },
     { label: 'Releases', href: 'https://github.com/rechedev9/cliphub/releases' },
     { label: 'Source', href: 'https://github.com/rechedev9/cliphub' },
   ],
@@ -156,6 +155,23 @@ export const PROJECTS: readonly Project[] = [
     links: [{ label: 'Live site', href: 'https://socialpro.es' }],
   },
   {
+    id: 'open-source',
+    name: 'Open source',
+    kind: 'Merged contributions',
+    pitch:
+      'Fixes merged in the official Model Context Protocol TypeScript SDK and in advancedfx (HLAE), the Counter-Strike 2 recording tool.',
+    points: [
+      'MCP SDK: the server now passes the negotiated protocol version to the transport, client metadata URLs fail fast at construction, and spec types get compile-time parity checks.',
+      'advancedfx: the Source 2 hooks survive Counter-Strike 2 updates.',
+    ],
+    links: [
+      { label: 'MCP SDK #1660', href: 'https://github.com/modelcontextprotocol/typescript-sdk/pull/1660' },
+      { label: 'MCP SDK #1653', href: 'https://github.com/modelcontextprotocol/typescript-sdk/pull/1653' },
+      { label: 'MCP SDK #1652', href: 'https://github.com/modelcontextprotocol/typescript-sdk/pull/1652' },
+      { label: 'advancedfx #1194', href: 'https://github.com/advancedfx/advancedfx/pull/1194' },
+    ],
+  },
+  {
     id: 'honey-encryption-proxy',
     name: 'Honey Encryption Proxy',
     kind: 'Developer tool',
@@ -185,7 +201,7 @@ export const EXPERIENCE: readonly Job[] = [
     description: 'US network of independent insurance agents. Remote from Spain.',
     highlights: [
       {
-        text: 'Built, end to end, the internal app that partly automates month-end commission payments, a critical process for the network.',
+        text: 'Built, end to end, an internal app that uses an LLM to partly automate month-end commission payments, a critical process for the network.',
         ship: 'commissions',
       },
       {
@@ -210,6 +226,10 @@ export const EXPERIENCE: readonly Job[] = [
         ship: 'portal',
       },
       {
+        text: 'Built the agency’s internal agent platform on top of the CRM: agents work from CRM data under per-run budgets and risk-based policies, redact what they store and wait for a person’s approval before any action with external effects.',
+        ship: 'agents',
+      },
+      {
         text: 'Delivered the complete website of Pirotecnia Elche, a fireworks shop and client of the agency, from design to deployment.',
       },
     ],
@@ -219,7 +239,7 @@ export const EXPERIENCE: readonly Job[] = [
     title: 'Freelance Applied AI Engineer',
     company: 'RecheDev',
     url: 'https://rechedev.cloud',
-    period: '2023 to present',
+    period: '2021 to present',
     description: 'My one-person product practice.',
     highlights: [
       { text: 'Took my own and client products from the first conversation to production.' },
@@ -234,6 +254,7 @@ export const EXPERIENCE: readonly Job[] = [
   {
     id: 'pharmacist',
     title: 'Pharmacist',
+    company: 'Farmacia Portals, Mallorca',
     period: '10 years',
     highlights: [
       { text: 'Decided which products to bring in and when, and how to sell them to different customer profiles.' },
@@ -251,7 +272,17 @@ export const SKILLS: readonly SkillGroup[] = [
   },
   {
     category: 'AI and agents',
-    items: ['Claude Code', 'Codex', 'MCP servers', 'Skills and plugins', 'Multi-agent workflows', 'Review of agent output'],
+    items: [
+      'LLM agents with tool use',
+      'Human approval gates',
+      'Prompt injection defence',
+      'Cost budgets',
+      'MCP servers',
+      'Claude Code',
+      'Codex',
+      'Multi-agent workflows',
+      'Review of agent output',
+    ],
   },
   {
     category: 'Backend',
@@ -280,7 +311,7 @@ export const EDUCATION: readonly Education[] = [
   { title: 'Anthropic: Claude Code in Action', period: '2026' },
   { title: 'Harvard CS50: Introduction to Computer Science', period: '2024' },
   { title: 'University of Helsinki: Java Programming MOOC', period: '2024' },
-  { title: 'Degree in Pharmacy, UNED', period: '2016' },
+  { title: 'Degree in Pharmacy', period: '2016' },
 ];
 
 export const SOCIAL_LINKS: readonly SocialLink[] = [
@@ -295,6 +326,7 @@ export const SHIP_LOG: readonly ShipLine[] = [
   { id: 'commissions', label: 'Commission payments app', detail: 'Internal tool, 2026' },
   { id: 'socialpro', label: 'socialpro.es', detail: '155 to 18,700 impressions a month' },
   { id: 'portal', label: 'Brand portal and CRM', detail: 'For SocialPro' },
+  { id: 'agents', label: 'Agent platform', detail: 'Approval-gated CRM agents' },
   { id: 'cliphub', label: 'ClipHub', detail: '130+ releases, 100+ users' },
   { id: 'gravity-room', label: 'Gravity Room', detail: '18 programs, web and mobile' },
   { id: 'piroboom', label: 'Piroboom', detail: '82 MB PDF to a 16-page reader' },

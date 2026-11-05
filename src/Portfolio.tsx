@@ -261,7 +261,7 @@ export function Portfolio(): ReactElement {
 
               <div className="mt-auto">
                 <p className="hero-statement rise font-semibold">
-                  <span className="statement-agents block text-balance">{PROFILE.statement.agents}</span>
+                  <span className="statement-agents block text-balance">{PROFILE.statement.lead}</span>
                   <span className="block text-balance">
                     {MINE_WORDS.map((word, index) => (
                       <Fragment key={`${word}-${index}`}>
@@ -448,7 +448,7 @@ export function Portfolio(): ReactElement {
                 <InView stagger={70}>
                   <ShipRecord />
                   <p className="mt-14 max-w-[36rem] text-[clamp(1.375rem,2vw+0.875rem,2rem)] leading-[1.15] font-semibold tracking-tight text-balance">
-                    Open to applied AI and product engineering roles, remote from {PROFILE.location}. Write to{' '}
+                    Open to applied AI and forward deployed engineering roles, remote from {PROFILE.location}. Write to{' '}
                     <a href={`mailto:${CONTACT.email}`} className={`decoration-1 underline-offset-[0.2em] ${LINK}`}>
                       {CONTACT.email}
                     </a>
